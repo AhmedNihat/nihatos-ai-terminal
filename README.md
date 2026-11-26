@@ -26,6 +26,18 @@
 
 ---
 
+## Demo
+
+<div align="center">
+
+[![Watch Nihat.O.S Demo on YouTube](https://img.youtube.com/vi/f-jkptbtydw/maxresdefault.jpg)](https://www.youtube.com/watch?v=f-jkptbtydw)
+
+*Click the preview above to watch the full demo on YouTube.*
+
+</div>
+
+---
+
 ## Screenshots
 
 | Nihat.O.S Mode | U.L.T.R.O.N Mode |
@@ -81,26 +93,27 @@ Nihat.O.S works across modern Linux distributions out of the box. On startup, it
 
 ## Core Engineering Features
 
-- **Smart Input Recommendations & Live Autocomplete**
+- **Smart Input Recommendations & Live Autocomplete**  
   A real-time dropdown suggestion popup appears as you type, recommending built-in commands, `$PATH` executables, local files/directories, and saved waypoints. Navigate with `Up`/`Down`, press `Tab` or `Enter` (or click) to complete, and press `Esc` to dismiss.
-- **Interactive History Search (`Ctrl+R`)**
+- **Interactive History Search (`Ctrl+R`)**  
   Search through your persistent command history live inside the suggestion popup without leaving the input bar.
-- **Universal Pre-Execution Bash Syntax Guard**
+- **Universal Pre-Execution Bash Syntax Guard**  
   Automatically validates commands before sending them to the live PTY. Unclosed quotes, trailing `\` continuations, incomplete heredocs, or broken blocks are caught instantly with a `[Syntax Error]` prompt instead of hanging the shell—ready to repair in one step with `ai fix`.
-- **Persistent Bash PTY Engine**
+- **Persistent Bash PTY Engine**  
   Runs a true interactive Bash PTY session with OSC marker parsing, live working-directory tracking, active Git branch (`[⎇ main]`) and Python virtualenv (`(venv)`) badges, and masked `sudo` password entry.
-- **Auto-Expanding Multi-Line Code Input**
+- **Auto-Expanding Multi-Line Code Input**  
   Paste multi-line shell loops, Python heredocs, or Docker commands directly into the input bar. Press `Shift+Enter` for newlines and `Enter` to execute, with a top-aligned prompt that stays steady while editing multi-line blocks.
-- **Built-in File, Image & Directory Previewer**
+- **Built-in File, Image & Directory Previewer**  
   Run `preview <path>`, `view <path>`, or `less <file>` to inspect files inside Nihat.O.S without spawning external windows:
   - **Code & Text:** Line-number gutter, live search (`Ctrl+F` or `/`), word-wrap toggle, one-click Copy All, and 2 MB large-file truncation guard.
   - **Binary Files:** Automatic hex + ASCII dump instead of garbled output.
   - **Images & Directories:** Native image viewer (`.png`, `.jpg`, `.webp`, `.svg`, `.gif`) and clean directory listings.
   - **Quick Close:** Press `q` or `Esc` to close. Piped commands (`cat file | less`) continue running natively in Bash.
-- **Directory Waypoints, Ports & Hardware Powertools**
+- **Directory Waypoints, Ports & Hardware Powertools**  
   Bookmark frequent directories (`go <mark>` or one-click sidebar Waypoints), inspect open network ports, monitor serial/USB ports, and view live CPU, RAM, temperature, fan RPM, and battery telemetry in a pauseable HUD bar with real-time USB hotplug alerts.
-- **Multi-Tab Workspace & Desktop Integration**
+- **Multi-Tab Workspace & Desktop Integration**  
   Movable, isolated multi-tab terminal sessions (`Ctrl+T` / `Ctrl+W`) with animated HUD indicators and proper Wayland/X11 taskbar icon grouping (`setDesktopFileName` + `StartupWMClass`).
+
 ---
 
 ## Quick Commands & Shortcuts
@@ -126,13 +139,14 @@ Nihat.O.S works across modern Linux distributions out of the box. On startup, it
 | `Shift + Enter` | Insert a newline in the multi-line command input |
 | `Ctrl + F` or `/` *(in Preview)* | Search inside an opened file |
 | `help` | List all built-in commands and shortcuts |
+
 ---
 
 ## Installation
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/AhmedNihat/nihatos-ai-terminal.git
+git clone [https://github.com/AhmedNihat/nihatos-ai-terminal.git](https://github.com/AhmedNihat/nihatos-ai-terminal.git)
 cd nihatos-ai-terminal
 ```
 
@@ -175,6 +189,7 @@ chmod 600 ~/.config/nihatos-terminal/gemini_key
 echo "YOUR_OPENROUTER_API_KEY" > ~/.config/nihatos-terminal/openrouter_key
 chmod 600 ~/.config/nihatos-terminal/openrouter_key
 ```
+
 ---
 
 ## Add to Linux App Menu & Desktop (KDE / GNOME / XFCE)
