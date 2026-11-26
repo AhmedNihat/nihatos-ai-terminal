@@ -2046,6 +2046,24 @@ class NihatOSDesktopWindow(QMainWindow):
     def _run_shell(self, cmd: str) -> None:
         if self.shell is None:
             return
+        # Instant pre-execution syntax guard (prevents Bash PS2 hang on unclosed quotes/blocks)
+        try:
+            _chk = subprocess.run(
+                ["bash", "-O", "extglob", "-n"],
+                input=cmd,
+                capture_output=True,
+                text=True,
+                timeout=1.5,
+            )
+            if _chk.returncode != 0:
+                _err = (_chk.stderr or "Invalid bash syntax.").strip().replace("bash: line ", "line ")
+                self._last_cmd = cmd
+                self._last_exit_code = 2
+                self.append_line(f"◈ [Syntax Error] {_err}", "err")
+                self.append_line("  Hint: check for unclosed quotes, brackets, or incomplete blocks (or run 'ai fix').", "dim")
+                return
+        except Exception:
+            pass
         self._last_cmd = cmd
         self._has_ran_shell_cmd = True
         self._cmd_running = True
