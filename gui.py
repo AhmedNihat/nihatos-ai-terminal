@@ -2046,11 +2046,11 @@ class NihatOSDesktopWindow(QMainWindow):
     def _run_shell(self, cmd: str) -> None:
         if self.shell is None:
             return
-        # Instant pre-execution syntax guard (prevents Bash PS2 hang on unclosed quotes/blocks)
+        # Universal pre-execution syntax & completeness guard (catches all PS2 hangs: quotes, \, heredocs, blocks)
         try:
             _chk = subprocess.run(
                 ["bash", "-O", "extglob", "-n"],
-                input=cmd,
+                input=cmd + "\n",
                 capture_output=True,
                 text=True,
                 timeout=1.5,
@@ -2060,7 +2060,20 @@ class NihatOSDesktopWindow(QMainWindow):
                 self._last_cmd = cmd
                 self._last_exit_code = 2
                 self.append_line(f"◈ [Syntax Error] {_err}", "err")
-                self.append_line("  Hint: check for unclosed quotes, brackets, or incomplete blocks (or run 'ai fix').", "dim")
+                self.append_line("  Hint: check syntax or run 'ai fix'.", "dim")
+                return
+            _wrap = subprocess.run(
+                ["bash", "-O", "extglob", "-n"],
+                input=f"if true; then :\n{cmd}\nfi\n",
+                capture_output=True,
+                text=True,
+                timeout=1.5,
+            )
+            if _wrap.returncode != 0:
+                self._last_cmd = cmd
+                self._last_exit_code = 2
+                self.append_line("◈ [Syntax Error] Incomplete command (trailing '\\' continuation or unclosed heredoc).", "err")
+                self.append_line("  Hint: remove trailing '\\' / close heredoc, or run 'ai fix'.", "dim")
                 return
         except Exception:
             pass
