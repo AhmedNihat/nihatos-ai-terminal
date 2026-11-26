@@ -1,0 +1,40 @@
+# NihatOS Terminal static read-only shell wrapper
+# Never modifies ~/.bashrc
+
+bind() { :; }
+
+if [ -n "${NIHATOS_USER_BASHRC:-}" ] && [ -r "${NIHATOS_USER_BASHRC}" ]; then
+    source "${NIHATOS_USER_BASHRC}"
+fi
+
+unset -f bind
+
+export NIHATOS_TERMINAL=1
+
+__nihatos_prompt_hook() {
+    local last_exit=$?
+    local venv_name=""
+    if [ -n "${VIRTUAL_ENV:-}" ]; then
+        venv_name="${VIRTUAL_ENV##*/}"
+    fi
+    printf '\033]7777;READY;%s;%d;%s;%s\007' \
+        "${NIHATOS_NONCE}" \
+        "${last_exit}" \
+        "${PWD}" \
+        "${venv_name}"
+}
+
+if [[ "$(declare -p PROMPT_COMMAND 2>/dev/null)" == "declare -a"* ]]; then
+    PROMPT_COMMAND+=("__nihatos_prompt_hook")
+elif [ -n "${PROMPT_COMMAND:-}" ]; then
+    PROMPT_COMMAND="${PROMPT_COMMAND};__nihatos_prompt_hook"
+else
+    PROMPT_COMMAND="__nihatos_prompt_hook"
+fi
+
+PS0=""
+PS1=""
+PS2=$'\033]7777;CONT;'"${NIHATOS_NONCE}"$'\007'
+
+# Disable slow Fedora PackageKit D-Bus lookup so NihatOS Hint responds instantly
+unset -f command_not_found_handle 2>/dev/null || true

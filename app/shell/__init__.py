@@ -1,0 +1,1 @@
+"""Persistent Bash PTY engine and stream parsers for NihatOS Terminal."""

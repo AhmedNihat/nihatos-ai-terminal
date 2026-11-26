@@ -1,0 +1,1 @@
+"""Automated test suite for NihatOS Terminal Phase 2a."""

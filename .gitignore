@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+*_key
+*.log
+nihatos-log.txt
+test-report.txt
+.vscode/
+.idea/
