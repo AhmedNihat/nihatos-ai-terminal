@@ -81,43 +81,51 @@ Nihat.O.S works across modern Linux distributions out of the box. On startup, it
 
 ## Core Engineering Features
 
-- **Persistent Bash PTY Engine**  
-  Runs a real interactive Bash PTY session with OSC marker parsing, live working-directory tracking, active Git branch (`[⎇ main]`) and Python virtualenv (`(venv)`) badges, masked `sudo` password entry, and interactive history search.
-- **Auto-Expanding Multi-Line Code Input**  
+- **Smart Input Recommendations & Live Autocomplete**
+  A real-time dropdown suggestion popup appears as you type, recommending built-in commands, `$PATH` executables, local files/directories, and saved waypoints. Navigate with `Up`/`Down`, press `Tab` or `Enter` (or click) to complete, and press `Esc` to dismiss.
+- **Interactive History Search (`Ctrl+R`)**
+  Search through your persistent command history live inside the suggestion popup without leaving the input bar.
+- **Universal Pre-Execution Bash Syntax Guard**
+  Automatically validates commands before sending them to the live PTY. Unclosed quotes, trailing `\` continuations, incomplete heredocs, or broken blocks are caught instantly with a `[Syntax Error]` prompt instead of hanging the shell—ready to repair in one step with `ai fix`.
+- **Persistent Bash PTY Engine**
+  Runs a true interactive Bash PTY session with OSC marker parsing, live working-directory tracking, active Git branch (`[⎇ main]`) and Python virtualenv (`(venv)`) badges, and masked `sudo` password entry.
+- **Auto-Expanding Multi-Line Code Input**
   Paste multi-line shell loops, Python heredocs, or Docker commands directly into the input bar. Press `Shift+Enter` for newlines and `Enter` to execute, with a top-aligned prompt that stays steady while editing multi-line blocks.
-- **Built-in File, Image & Directory Previewer**  
+- **Built-in File, Image & Directory Previewer**
   Run `preview <path>`, `view <path>`, or `less <file>` to inspect files inside Nihat.O.S without spawning external windows:
   - **Code & Text:** Line-number gutter, live search (`Ctrl+F` or `/`), word-wrap toggle, one-click Copy All, and 2 MB large-file truncation guard.
   - **Binary Files:** Automatic hex + ASCII dump instead of garbled output.
   - **Images & Directories:** Native image viewer (`.png`, `.jpg`, `.webp`, `.svg`, `.gif`) and clean directory listings.
   - **Quick Close:** Press `q` or `Esc` to close. Piped commands (`cat file | less`) continue running natively in Bash.
-- **Live Hardware Telemetry & USB Hotplug Alerts**  
-  Instant system scans (`sys`) covering kernel, uptime, CPU, RAM, and fan RPM, alongside real-time USB connect/disconnect alerts in the terminal feed.
-- **Multi-Tab Workspace & Desktop Integration**  
-  Isolated multi-tab terminal sessions with proper Wayland/X11 taskbar icon grouping (`setDesktopFileName` + `StartupWMClass`).
-
+- **Directory Waypoints, Ports & Hardware Powertools**
+  Bookmark frequent directories (`go <mark>` or one-click sidebar Waypoints), inspect open network ports, monitor serial/USB ports, and view live CPU, RAM, temperature, fan RPM, and battery telemetry in a pauseable HUD bar with real-time USB hotplug alerts.
+- **Multi-Tab Workspace & Desktop Integration**
+  Movable, isolated multi-tab terminal sessions (`Ctrl+T` / `Ctrl+W`) with animated HUD indicators and proper Wayland/X11 taskbar icon grouping (`setDesktopFileName` + `StartupWMClass`).
 ---
 
 ## Quick Commands & Shortcuts
 
 | Command / Shortcut | Action |
 | :--- | :--- |
+| `Tab` / `Up` / `Down` | Trigger and navigate live command, path, and waypoint recommendations |
+| `Ctrl + R` | Open live interactive command history search |
 | `ai <question>` | Ask the AI copilot (auto-injects live hardware/OS telemetry when relevant) |
 | `ai do <task>` | Generate one safe, distro-specific Bash command from plain English |
-| `ai fix` | Diagnose the last failed command and output, then propose a fix |
+| `ai fix` | Diagnose the last failed command or syntax error and propose a fix |
 | `y` / `n` *(after AI suggestion)* | Run or cancel the pending AI-generated command |
 | `mode nihatos` / `mode ultron` | Switch between Nihat.O.S and U.L.T.R.O.N modes |
 | `Ctrl + M` | Toggle persona and theme |
+| `Ctrl + T` / `Ctrl + W` | Open a new terminal tab / close the current tab |
+| `Ctrl + L` / `Ctrl + K` | Clear terminal output / focus the command input bar |
+| `go <mark>` | Jump directly to a bookmarked waypoint directory |
 | `preview <path>` / `view <path>` / `less <file>` | Open built-in code, text, hex, image, or directory previewer |
 | `tui <cmd>` | Launch an interactive TUI app in your external terminal |
 | `sys` | Display quick system scan (kernel, uptime, memory) |
 | `save [filename]` | Export current terminal output to a file (default: `nihatos-log.txt`) |
 | `copy [N \| all]` | Copy last `N` lines (default `25`) or full output to clipboard |
 | `Shift + Enter` | Insert a newline in the multi-line command input |
-| `Ctrl + K` | Focus the command input bar |
 | `Ctrl + F` or `/` *(in Preview)* | Search inside an opened file |
 | `help` | List all built-in commands and shortcuts |
-
 ---
 
 ## Installation
