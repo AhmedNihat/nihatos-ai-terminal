@@ -1217,7 +1217,20 @@ class NihatOSDesktopWindow(QMainWindow):
         tab = self._current_tab()
         if tab is not None:
             tab["block_cursor"] = c
+        self._last_follow_y = 0
         self.output_view.verticalScrollBar().setValue(0)
+
+    def _follow_live_cursor(self, cur: QTextCursor) -> None:
+        sb = self.output_view.verticalScrollBar()
+        if sb.isSliderDown() or self.output_view.textCursor().hasSelection():
+            return
+        rect = self.output_view.document().documentLayout().blockBoundingRect(cur.block())
+        vp_h = self.output_view.viewport().height()
+        target = max(0, int(rect.bottom()) - vp_h + 24)
+        prev = getattr(self, "_last_follow_y", 0)
+        if abs(sb.value() - prev) <= 120 or abs(sb.value() - target) <= 120:
+            sb.setValue(target)
+            self._last_follow_y = target
 
     def append_line(self, text: str, kind: str | None = None) -> None:
         cur = self._get_block_cursor()
@@ -1230,7 +1243,7 @@ class NihatOSDesktopWindow(QMainWindow):
         tab = self._current_tab()
         if tab is not None:
             tab["block_cursor"] = cur
-        self.output_view.verticalScrollBar().setValue(0)
+        self._follow_live_cursor(cur)
 
     def _queue(self, lines: list[tuple[str, str]]) -> None:
         self._q_token += 1
@@ -1922,7 +1935,7 @@ class NihatOSDesktopWindow(QMainWindow):
         tab = self._current_tab()
         if tab is not None:
             tab["block_cursor"] = cur
-        self.output_view.verticalScrollBar().setValue(0)
+        self._follow_live_cursor(cur)
 
         self._stream_tail = (self._stream_tail + clean)[-240:]
         if self._cmd_running and self.PASSWORD_RE.search(self._stream_tail):
