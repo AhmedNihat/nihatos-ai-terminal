@@ -26,6 +26,14 @@
 
 ---
 
+## Screenshots
+
+| Nihat.O.S Mode | U.L.T.R.O.N Mode |
+| :---: | :---: |
+| ![Nihat.O.S Mode](assets/nihatos-ss.png) | ![U.L.T.R.O.N Mode](assets/ultron-ss.png) |
+
+---
+
 ## Dual Environments: Nihat.O.S vs. U.L.T.R.O.N
 
 Switch the terminal's visual theme, color palette, prompt identity, and AI persona instantly with `Ctrl+M` or `mode ultron` / `mode nihatos`.
