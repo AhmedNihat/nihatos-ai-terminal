@@ -116,7 +116,7 @@ Nihat.O.S works across modern Linux distributions out of the box. On startup, it
 
 ### 1. Clone the Repository
 ```bash
-git clone [https://github.com/AhmedNihat/nihatos-ai-terminal.git](https://github.com/AhmedNihat/nihatos-ai-terminal.git)
+git clone https://github.com/AhmedNihat/nihatos-ai-terminal.git
 cd nihatos-ai-terminal
 ```
 
@@ -132,12 +132,33 @@ chmod +x scripts/setup_venv.sh run-gui.sh
 ./run-gui.sh
 ```
 
-### 4. Configure Your AI API Key
-Inside the terminal, set your API key (saved locally outside the project in `~/.config/nihatos-terminal/`):
-```bash
-nihatos ai key YOUR_API_KEY
-```
+### 4. Get & Configure a Free AI API Key
 
+Nihat.O.S supports **three free-tier AI providers with automatic fallback** in this priority order: **Groq -> Google Gemini -> OpenRouter**. You only need **one** key to start (adding more enables automatic failover).
+
+#### Step A: Get a Free API Key
+- **Groq (Recommended — fastest):** Go to [console.groq.com/keys](https://console.groq.com/keys), sign in, click **Create API Key**, and copy the key (`gsk_...`).
+- **Google Gemini:** Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey), sign in with Google, click **Create API key**, and copy the key (`AIza...`).
+- **OpenRouter (Free models fallback):** Go to [openrouter.ai/keys](https://openrouter.ai/keys), sign in, click **Create Key**, and copy the key (`sk-or-...`).
+
+#### Step B: Save Key in `~/.config/nihatos-terminal/`
+All keys and user settings (`config.json`) stay privately inside `~/.config/nihatos-terminal/`, completely outside the repository:
+
+```bash
+mkdir -p ~/.config/nihatos-terminal
+
+# Primary: Groq (recommended)
+echo "YOUR_GROQ_API_KEY" > ~/.config/nihatos-terminal/groq_key
+chmod 600 ~/.config/nihatos-terminal/groq_key
+
+# Optional fallback: Google Gemini
+echo "YOUR_GEMINI_API_KEY" > ~/.config/nihatos-terminal/gemini_key
+chmod 600 ~/.config/nihatos-terminal/gemini_key
+
+# Optional fallback: OpenRouter
+echo "YOUR_OPENROUTER_API_KEY" > ~/.config/nihatos-terminal/openrouter_key
+chmod 600 ~/.config/nihatos-terminal/openrouter_key
+```
 ---
 
 ## Add to Linux App Menu & Desktop (KDE / GNOME / XFCE)
