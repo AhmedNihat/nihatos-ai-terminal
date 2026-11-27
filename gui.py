@@ -45,6 +45,7 @@ from PyQt6.QtWidgets import (
     QProgressBar,
     QPushButton,
     QTabWidget,
+    QTextBrowser,
     QTextEdit,
     QVBoxLayout,
     QWidget,
@@ -1681,9 +1682,35 @@ class NihatOSDesktopWindow(QMainWindow):
             self.input_box.setText(self.input_box.text() + clip)
             self.input_box.setFocus()
 
+    def _append_help_link(self) -> None:
+        cur = self._get_block_cursor()
+        if cur.positionInBlock() > 0:
+            cur.insertBlock()
+        cur.insertText("  ↳ ", self._fmt("dim"))
+        link_fmt = QTextCharFormat()
+        link_fmt.setForeground(QColor(self.t["accent"]))
+        link_fmt.setFontUnderline(True)
+        link_fmt.setAnchor(True)
+        link_fmt.setAnchorHref("nihatos://ai-fix")
+        cur.insertText("Need help?", link_fmt)
+        cur.insertText(" (click to run ai fix)", self._fmt("dim"))
+        cur.insertBlock()
+        self._block_cursor = cur
+        tab = self._current_tab()
+        if tab is not None:
+            tab["block_cursor"] = cur
+        self._follow_live_cursor(cur)
+
+    def _on_output_anchor_clicked(self, url) -> None:
+        if url.toString() == "nihatos://ai-fix":
+            self._execute("ai fix")
+
     # ── Multi-tab management ──
-    def _make_output_view(self) -> QTextEdit:
-        view = QTextEdit()
+    def _make_output_view(self) -> QTextBrowser:
+        view = QTextBrowser()
+        view.setOpenLinks(False)
+        view.setOpenExternalLinks(False)
+        view.anchorClicked.connect(self._on_output_anchor_clicked)
         view.setObjectName("OutputView")
         view.setReadOnly(True)
         view.setUndoRedoEnabled(False)
@@ -2140,6 +2167,8 @@ class NihatOSDesktopWindow(QMainWindow):
         if self._current_tab() is st:
             self._sync_from_tab(st)
         self._refresh_tab_title(st)
+        if st.get("has_ran_shell_cmd", False) and exit_code == 127 and self._current_tab() is st:
+            self._append_help_link()
 
         if first_ready and getattr(self, "_initial_cmd", ""):
             cmd, self._initial_cmd = self._initial_cmd, ""
@@ -2602,6 +2631,7 @@ class NihatOSDesktopWindow(QMainWindow):
                 status = "✔ configured" if (kp.is_file() and kp.read_text(encoding="utf-8", errors="ignore").strip()) else "✖ not set"
                 self.append_line(f"  ▸ {label:<16} {status}   ({url})", "ok" if "✔" in status else "dim")
             self.append_line("  Set key:    ai key <groq|gemini|openrouter> <YOUR_API_KEY>", "warn")
+            self.append_line("  Example:    ai key groq gsk_1234567890abcdef   (no < > or quotes)", "dim")
             self.append_line("  Remove key: ai key <groq|gemini|openrouter> remove", "dim")
             return
 
@@ -2638,7 +2668,7 @@ class NihatOSDesktopWindow(QMainWindow):
             if len(parts) < 4 or parts[2].lower() not in ("groq", "gemini", "openrouter"):
                 self.append_line("Usage: ai key <groq|gemini|openrouter> <YOUR_API_KEY | remove>  |  ai key delete <provider|all>  |  ai key clear", "warn")
                 return
-            provider, key_val = parts[2].lower(), parts[3].strip()
+            provider, key_val = parts[2].lower(), parts[3].strip().strip("<>\"'")
             cfg_dir = Path.home() / ".config" / "nihatos-terminal"
             cfg_dir.mkdir(parents=True, exist_ok=True)
             kp = cfg_dir / f"{provider}_key"
