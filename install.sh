@@ -1,156 +1,170 @@
 #!/usr/bin/env bash
-set -e
+set -euo pipefail
 
-REPO_URL="https://github.com/AhmedNihat/nihatos-ai-terminal.git"
-INSTALL_DIR="$HOME/.local/share/nihatos-app"
-CONFIG_DIR="$HOME/.config/nihatos-terminal"
-BIN_DIR="$HOME/.local/bin"
+# ==============================================================================
+# Nihat.O.S Universal Installer & Uninstaller
+# Engineering Standards: Strict mode, explicit path guards, atomic cleanup
+# ==============================================================================
 
-echo "◈ Installing Nihat.O.S AI-Native Linux Terminal..."
+readonly APP_NAME="nihatos"
+readonly REPO_URL="https://github.com/AhmedNihat/nihatos-ai-terminal.git"
+readonly INSTALL_DIR="${HOME}/.local/share/nihatos-app"
+readonly CONFIG_DIR="${HOME}/.config/nihatos-terminal"
+readonly BIN_DIR="${HOME}/.local/bin"
+readonly BIN_PATH="${BIN_DIR}/${APP_NAME}"
+readonly DESKTOP_FILE="${HOME}/.local/share/applications/nihatos.desktop"
 
-# 1. Detect distro & install system prerequisites
-if command -v apt &>/dev/null; then
-    echo "▸ Detected Debian/Ubuntu (apt). Installing prerequisites..."
-    sudo apt update
-    sudo apt install -y git python3 python3-venv python3-pip libxcb-cursor0 libegl1 libgl1 libxkbcommon-x11-0
-elif command -v dnf &>/dev/null; then
-    echo "▸ Detected Fedora/RHEL (dnf). Installing prerequisites..."
-    sudo dnf install -y git python3 python3-pip qt6-qtbase-gui xcb-util-cursor
-elif command -v pacman &>/dev/null; then
-    echo "▸ Detected Arch Linux (pacman). Installing prerequisites..."
-    sudo pacman -S --needed --noconfirm git python python-pip qt6-base xcb-util-cursor
-elif command -v zypper &>/dev/null; then
-    echo "▸ Detected openSUSE (zypper). Installing prerequisites..."
-    sudo zypper install -y git python3 python3-pip libqt6-qtbase xcb-util-cursor0
-elif command -v apk &>/dev/null; then
-    echo "▸ Detected Alpine Linux (apk). Installing prerequisites..."
-    sudo apk add git python3 py3-pip qt6-qtbase-x11 xcb-util-cursor
-else
-    echo "⚠ Unknown package manager. Ensure git, python3, venv, and Qt6 libraries are installed."
-fi
+log_info()  { printf "\033[1;36m[INFO]\033[0m %s\n" "$1"; }
+log_ok()    { printf "\033[1;32m[OK]\033[0m %s\n" "$1"; }
+log_warn()  { printf "\033[1;33m[WARN]\033[0m %s\n" "$1"; }
+log_error() { printf "\033[1;31m[ERROR]\033[0m %s\n" "$1" >&2; }
 
-# 2. Clone or update repository
-if [ -d "$INSTALL_DIR/.git" ]; then
-    echo "▸ Updating existing installation..."
-    git -C "$INSTALL_DIR" pull --ff-only
-else
-    echo "▸ Cloning repository into $INSTALL_DIR..."
-    mkdir -p "$(dirname "$INSTALL_DIR")"
-    git clone "$REPO_URL" "$INSTALL_DIR"
-fi
+# Safety guard: Never allow rm -rf on empty, root, or $HOME paths
+safe_remove_dir() {
+    local target="$1"
+    if [[ -z "${target}" || "${target}" == "/" || "${target}" == "${HOME}" ]]; then
+        log_error "Refusing to remove unsafe path: '${target}'"
+        exit 1
+    fi
+    if [[ -d "${target}" ]]; then
+        rm -rf "${target}"
+        log_ok "Removed directory: ${target}"
+    else
+        log_info "Directory not found (skipping): ${target}"
+    fi
+}
 
-# 3. Create isolated virtual environment & install Python packages
-echo "▸ Setting up Python virtual environment (.venv)..."
-cd "$INSTALL_DIR"
-python3 -m venv .venv
-.venv/bin/pip install --upgrade pip -q
-.venv/bin/pip install -r requirements.txt -q
-chmod +x "$INSTALL_DIR/run-gui.sh"
-
-# 4. Interactive Personalization (Custom OS Name & Optional AI Keys)
-mkdir -p "$CONFIG_DIR"
-CUSTOM_NAME="Nihat.O.S"
-
-if [ -t 0 ] || [ -e /dev/tty ]; then
-    echo ""
-    echo "◈ Personalize Your Terminal:"
-    read -r -p "  ▸ Enter your custom OS name (Press Enter for 'Nihat.O.S', e.g. Saad.O.S): " INPUT_NAME </dev/tty
-    if [ -n "$INPUT_NAME" ]; then
-        CUSTOM_NAME="$INPUT_NAME"
+clear_api_keys() {
+    if [[ ! -d "${CONFIG_DIR}" ]]; then
+        log_info "No config directory found at ${CONFIG_DIR}."
+        return 0
     fi
 
-    python3 - "$CONFIG_DIR/config.json" "$CUSTOM_NAME" <<'PY'
-import json, sys
-from pathlib import Path
-p, name = Path(sys.argv[1]), sys.argv[2]
-data = {}
-if p.is_file():
-    try:
-        data = json.loads(p.read_text(encoding="utf-8"))
-    except Exception:
-        data = {}
-data["os_name"] = name
-p.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
-PY
-    echo "    ✓ OS identity set to: $CUSTOM_NAME"
+    local removed=0
+    for key_file in groq_key gemini_key openrouter_key; do
+        if [[ -f "${CONFIG_DIR}/${key_file}" ]]; then
+            rm -f "${CONFIG_DIR}/${key_file}"
+            log_ok "Deleted saved key: ${key_file}"
+            removed=1
+        fi
+    done
 
-    echo ""
-    echo "◈ Optional AI API Key Setup (Press Enter to skip — or run 'ai setup' inside the app later):"
-    read -r -s -p "  ▸ Groq API Key (recommended, free at console.groq.com): " GROQ_KEY </dev/tty
-    echo ""
-    if [ -n "$GROQ_KEY" ]; then
-        printf "%s\n" "$GROQ_KEY" > "$CONFIG_DIR/groq_key"
-        chmod 600 "$CONFIG_DIR/groq_key"
-        echo "    ✓ Groq key saved securely."
+    if [[ "${removed}" -eq 0 ]]; then
+        log_info "No saved API keys found in ${CONFIG_DIR}."
+    fi
+}
+
+uninstall_app() {
+    log_info "Starting Nihat.O.S uninstallation..."
+
+    # 1. Verify and remove app directory
+    if [[ -d "${INSTALL_DIR}" ]]; then
+        safe_remove_dir "${INSTALL_DIR}"
+    else
+        log_warn "Install directory not found at ${INSTALL_DIR}."
     fi
 
-    read -r -s -p "  ▸ Google Gemini API Key (optional, aistudio.google.com): " GEMINI_KEY </dev/tty
-    echo ""
-    if [ -n "$GEMINI_KEY" ]; then
-        printf "%s\n" "$GEMINI_KEY" > "$CONFIG_DIR/gemini_key"
-        chmod 600 "$CONFIG_DIR/gemini_key"
-        echo "    ✓ Gemini key saved securely."
-    fi
-fi
+    # 2. Remove launcher binary & desktop entry
+    [[ -f "${BIN_PATH}" ]] && rm -f "${BIN_PATH}" && log_ok "Removed launcher: ${BIN_PATH}"
+    [[ -f "${DESKTOP_FILE}" ]] && rm -f "${DESKTOP_FILE}" && log_ok "Removed desktop entry: ${DESKTOP_FILE}"
 
-# 5. Create global 'nihatos' CLI wrapper (with built-in update & uninstall)
-mkdir -p "$BIN_DIR"
-cat <<'CLI' > "$BIN_DIR/nihatos"
+    # 3. Prompt to delete saved API keys & config
+    if [[ -d "${CONFIG_DIR}" ]]; then
+        printf "\033[1;33m[PROMPT]\033[0m Also delete saved API keys & config (%s)? [y/N]: " "${CONFIG_DIR}"
+        read -r answer </dev/tty || answer="n"
+        if [[ "${answer}" =~ ^[Yy]$ ]]; then
+            safe_remove_dir "${CONFIG_DIR}"
+        else
+            log_info "Kept config & API keys at ${CONFIG_DIR}."
+        fi
+    fi
+
+    log_ok "Nihat.O.S has been completely uninstalled."
+    exit 0
+}
+
+install_app() {
+    log_info "Checking prerequisites..."
+    for cmd in git python3; do
+        if ! command -v "${cmd}" >/dev/null 2>&1; then
+            log_error "Required command '${cmd}' is not installed. Please install it first."
+            exit 1
+        fi
+    done
+
+    mkdir -p "${HOME}/.local/share" "${BIN_DIR}" "${CONFIG_DIR}"
+
+    # Strict directory check: Update if valid git repo, else clean reinstall
+    if [[ -d "${INSTALL_DIR}" ]]; then
+        if [[ -d "${INSTALL_DIR}/.git" ]]; then
+            log_info "Existing Nihat.O.S installation detected. Updating..."
+            git -C "${INSTALL_DIR}" pull --ff-only
+        else
+            log_warn "Directory ${INSTALL_DIR} exists but is not a valid git repo. Rebuilding cleanly..."
+            safe_remove_dir "${INSTALL_DIR}"
+            git clone "${REPO_URL}" "${INSTALL_DIR}"
+        fi
+    else
+        log_info "Cloning Nihat.O.S into ${INSTALL_DIR}..."
+        git clone "${REPO_URL}" "${INSTALL_DIR}"
+    fi
+
+    # Setup isolated Python virtual environment
+    log_info "Setting up Python virtual environment..."
+    if [[ ! -d "${INSTALL_DIR}/.venv" ]]; then
+        python3 -m venv "${INSTALL_DIR}/.venv"
+    fi
+
+    "${INSTALL_DIR}/.venv/bin/pip" install --upgrade pip >/dev/null
+    if [[ -f "${INSTALL_DIR}/requirements.txt" ]]; then
+        "${INSTALL_DIR}/.venv/bin/pip" install -r "${INSTALL_DIR}/requirements.txt"
+    fi
+
+    # Create smart wrapper launcher with built-in uninstall & key-clear commands
+    cat <<WRAPPER > "${BIN_PATH}"
 #!/usr/bin/env bash
-set -e
-INSTALL_DIR="$HOME/.local/share/nihatos-app"
+set -euo pipefail
 
-case "${1:-}" in
-    update)
-        echo "◈ Updating Nihat.O.S..."
-        git -C "$INSTALL_DIR" pull --ff-only
-        "$INSTALL_DIR/.venv/bin/pip" install -q -r "$INSTALL_DIR/requirements.txt"
-        echo "✅ Updated successfully!"
-        ;;
+case "\${1:-}" in
     uninstall)
-        echo "◈ Removing Nihat.O.S..."
-        rm -rf "$INSTALL_DIR"
-        rm -f "$HOME/.local/bin/nihatos"
-        rm -f "$HOME/.local/share/applications/nihatos-terminal.desktop"
-        update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
-        echo "✅ Uninstalled. (Your config & keys in ~/.config/nihatos-terminal/ were kept safe.)"
+        exec "${INSTALL_DIR}/install.sh" --uninstall
+        ;;
+    key-clear)
+        exec "${INSTALL_DIR}/install.sh" --clear-keys
+        ;;
+    update)
+        exec "${INSTALL_DIR}/install.sh"
         ;;
     *)
-        exec "$INSTALL_DIR/run-gui.sh" "$@"
+        cd "${INSTALL_DIR}"
+        exec "${INSTALL_DIR}/.venv/bin/python" "${INSTALL_DIR}/main.py" "\$@"
         ;;
 esac
-CLI
-chmod +x "$BIN_DIR/nihatos"
+WRAPPER
+    chmod +x "${BIN_PATH}"
 
-# 6. Add to Linux App Menu (.desktop)
-mkdir -p "$HOME/.local/share/applications"
-cat <<DESKTOP > "$HOME/.local/share/applications/nihatos-terminal.desktop"
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=$CUSTOM_NAME
-GenericName=AI Native Terminal
-Comment=AI-Native Linux Terminal System
-Exec=$INSTALL_DIR/run-gui.sh
-Path=$HOME
-Icon=utilities-terminal
-Terminal=false
-Categories=System;TerminalEmulator;Utility;
-Keywords=terminal;shell;ai;nihatos;ultron;jarvis;
-StartupNotify=true
-StartupWMClass=nihatos-terminal
-DESKTOP
-update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
+    # Verify PATH
+    if [[ ":${PATH}:" != *":${BIN_DIR}:"* ]]; then
+        log_warn "${BIN_DIR} is not in your PATH. Add this to ~/.bashrc or ~/.zshrc:"
+        echo "  export PATH=\"\$HOME/.local/bin:\$PATH\""
+    fi
 
-echo ""
-echo "✅ $CUSTOM_NAME installed successfully!"
-echo "  ▸ Launch:    nihatos  (or open '$CUSTOM_NAME' from your App Menu)"
-echo "  ▸ Update:    nihatos update"
-echo "  ▸ Uninstall: nihatos uninstall"
-echo "  ▸ AI Setup:  type 'ai setup' or 'setname <Name>' anytime inside the terminal"
+    log_ok "Nihat.O.S installed successfully!"
+    echo "  Run app       : nihatos"
+    echo "  Update app    : nihatos update"
+    echo "  Clear API keys: nihatos key-clear"
+    echo "  Uninstall app : nihatos uninstall"
+}
 
-if [[ ":$PATH:" != *":$BIN_DIR:"* ]]; then
-    echo ""
-    echo "ℹ Tip: Add ~/.local/bin to your PATH to run 'nihatos' from anywhere:"
-    echo "  echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> ~/.bashrc && source ~/.bashrc"
-fi
+# Argument routing
+case "${1:-}" in
+    --uninstall|uninstall)
+        uninstall_app
+        ;;
+    --clear-keys|key-clear)
+        clear_api_keys
+        ;;
+    *)
+        install_app
+        ;;
+esac
