@@ -95,6 +95,17 @@ uninstall_app() {
         fi
     fi
 
+    if [[ -f "${HOME}/.nihatos_history" ]]; then
+        printf "\033[1;33m[PROMPT]\033[0m Also delete command history (%s)? [y/N]: " "${HOME}/.nihatos_history"
+        read -r answer </dev/tty || answer="n"
+        if [[ "${answer}" =~ ^[Yy]$ ]]; then
+            rm -f "${HOME}/.nihatos_history"
+            log_ok "Removed: ${HOME}/.nihatos_history"
+        else
+            log_info "Kept command history at ${HOME}/.nihatos_history."
+        fi
+    fi
+
     log_ok "Nihat.O.S has been completely uninstalled."
     exit 0
 }
@@ -108,6 +119,17 @@ install_app() {
             exit 1
         fi
     done
+
+    if ! python3 -c "import sys; raise SystemExit(0 if sys.version_info >= (3, 10) else 1)"; then
+        log_error "Python 3.10+ is required (found: $(python3 --version 2>&1))."
+        exit 1
+    fi
+
+    if ! python3 -c "import venv, ensurepip" >/dev/null 2>&1; then
+        log_error "Python venv/ensurepip modules are missing."
+        log_info "On Debian/Ubuntu, install them with: apt install python3-venv"
+        exit 1
+    fi
 
     mkdir -p "${HOME}/.local/share" "${HOME}/.local/share/applications" "${BIN_DIR}" "${CONFIG_DIR}"
 
@@ -128,6 +150,7 @@ install_app() {
         log_info "Cloning Nihat.O.S into ${INSTALL_DIR}..."
         git clone "${REPO_URL}" "${INSTALL_DIR}"
     fi
+    chmod +x "${INSTALL_DIR}/install.sh" "${INSTALL_DIR}/run-gui.sh"
 
     # Setup isolated Python virtual environment
     log_info "Setting up Python virtual environment..."
@@ -147,16 +170,16 @@ set -euo pipefail
 
 case "\${1:-}" in
     uninstall)
-        exec "${INSTALL_DIR}/install.sh" --uninstall
+        exec bash "${INSTALL_DIR}/install.sh" --uninstall
         ;;
     key-clear)
-        exec "${INSTALL_DIR}/install.sh" --clear-keys
+        exec bash "${INSTALL_DIR}/install.sh" --clear-keys
         ;;
     update)
-        exec "${INSTALL_DIR}/install.sh"
+        exec bash "${INSTALL_DIR}/install.sh"
         ;;
     *)
-        cd "${INSTALL_DIR}"
+        cd "${HOME}"
         exec "${INSTALL_DIR}/.venv/bin/python" "${INSTALL_DIR}/gui.py" "\$@"
         ;;
 esac

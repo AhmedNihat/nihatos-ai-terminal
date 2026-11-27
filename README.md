@@ -130,7 +130,7 @@ nihat ~/projects/api [⎇ main] (venv) ❯ ai do find the 10 largest files in th
 
 ## Quick Install
 
-One line. Works on **Ubuntu, Debian, Fedora, Arch, openSUSE and Alpine**, with no `sudo` required:
+One line. Works on **Ubuntu, Debian, Fedora, Arch and openSUSE**, with no `sudo` required:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/AhmedNihat/nihatos-ai-terminal/main/install.sh | bash
@@ -248,7 +248,7 @@ Running AI inside a system terminal demands strict guardrails. You stay in contr
 | **Zero auto-execution** | Every suggestion from `ai do` or `ai fix` needs a manual `y` / `n`. Nothing runs on its own. |
 | **Pre-execution syntax guard** | Catches unclosed quotes, trailing backslashes and broken blocks *before* they reach the PTY, so malformed input never hangs your shell. |
 | **Masked `sudo` prompts** | Password input is masked and never echoed to the buffer, saved to history, or sent to any AI provider. |
-| **Strict local storage** | API keys, `config.json` and history (`~/.nihatos_history`) stay inside `~/.config/nihatos-terminal/` with owner-only permissions (`chmod 600`). |
+| **Strict local storage** | API keys and `config.json` stay inside `~/.config/nihatos-terminal/`, and command history is stored at `~/.nihatos_history`, all with owner-only permissions (`chmod 600`). |
 | **Read-only diagnostics** | System probes only read. No writes, no side effects. |
 | **Zero tracking** | No analytics, no cloud accounts. External API calls happen only when you explicitly run an `ai` command. |
 | **Open and auditable** | GPLv3. Read every line before you run it. |
@@ -268,7 +268,8 @@ On startup it reads `/etc/os-release` and auto-detects your package manager and 
 | **Fedora / RHEL** | Fedora, Nobara, AlmaLinux, Rocky | `dnf` | Native `dnf` commands |
 | **Arch** | Arch, Manjaro, EndeavourOS, CachyOS, Garuda | `pacman` | Native `pacman` commands |
 | **SUSE** | openSUSE Tumbleweed, openSUSE Leap | `zypper` | Native `zypper` commands |
-| **Alpine / Void / Gentoo** | Alpine, Void, Gentoo | `apk` / `xbps-install` / `emerge` | Native commands |
+| **Void / Gentoo** | Void, Gentoo | `xbps-install` / `emerge` | Native commands |
+| **Alpine** *(untested)* | Alpine Linux | `apk` | Needs the distro's own PyQt6 package + `--system-site-packages` (no musllinux wheels) |
 
 **Universal TUI handoff.** Full-screen tools (`vim`, `htop`, `btop`, `tmux`, `nvtop`, `man`, ...) automatically open in whichever terminal emulator you have installed:
 
@@ -303,8 +304,10 @@ On startup it reads `/etc/os-release` and auto-detects your package manager and 
 | `ai <question>` | Ask the copilot (live hardware/OS telemetry is injected when relevant) |
 | `ai do <task>` | Generate one safe, distro-specific Bash command from plain English |
 | `ai fix` | Diagnose the last failed command or syntax error and propose a fix |
+| `ai reset` | Clear AI session chat memory |
 | `ai setup` | Check configured API keys |
 | `ai key <provider> <key>` | Save a Groq / Gemini / OpenRouter key securely |
+| `ai key <provider> remove` | Remove one saved key |
 | `ai key delete <provider>` | Delete one saved key (use `all` for every key) |
 | `ai key clear` | Clear all saved API keys |
 | `y` / `n` | Run or cancel the pending AI-generated command |
@@ -328,6 +331,7 @@ On startup it reads `/etc/os-release` and auto-detects your package manager and 
 | --- | --- |
 | `preview <path>` / `view <path>` / `less <file>` | Built-in code, text, hex, image or directory previewer |
 | `sys` / `ports` / `devices` | System scan, open network ports, USB/serial devices |
+| `search <txt>` | Search the current terminal output |
 | `save [filename]` | Export terminal output to a file (default: `nihatos-log.txt`) |
 | `copy [N]` / `copy all` | Copy last `N` lines (default `25`) or the full output to the clipboard |
 | `setname <Name>` | Rename your terminal OS, e.g. `setname Saad.O.S` |
@@ -348,6 +352,7 @@ cd nihatos-ai-terminal
 python3 -m venv .venv
 .venv/bin/pip install --upgrade pip
 .venv/bin/pip install -r requirements.txt
+# Optional (for running tests): .venv/bin/pip install -r requirements-dev.txt
 chmod +x run-gui.sh
 ./run-gui.sh
 ```
@@ -378,7 +383,8 @@ nihatos-ai-terminal/
 ├── install.sh             # One-line universal installer, updater and CLI wrapper
 ├── gui.py                 # PyQt6 HUD, dual themes, multi-tab UI, AI and distro engine
 ├── run-gui.sh             # Launcher script (starts a clean session in $HOME)
-├── requirements.txt       # Python dependencies (PyQt6, textual, pytest)
+├── requirements.txt       # Runtime Python dependencies (PyQt6)
+├── requirements-dev.txt   # Dev/test dependencies (pytest, textual)
 ├── assets/                # README screenshots
 ├── app/
 │   ├── config.py          # Persistent user configuration and custom OS identity

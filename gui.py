@@ -624,6 +624,7 @@ class HistoryLineEdit(QPlainTextEdit):
                 for cmd in self.history[-MAX_HISTORY:]
             ]
             HISTORY_FILE.write_text("\n".join(encoded) + "\n", encoding="utf-8")
+            os.chmod(HISTORY_FILE, 0o600)
         except OSError:
             pass
 
@@ -1296,7 +1297,7 @@ class NihatOSDesktopWindow(QMainWindow):
             "◈ PROTOCOLS\n"
             "  sys · ports · devices         quick system scans\n"
             "  go <mark>                     jump to a bookmarked directory\n"
-            "  find <txt>                    search the output\n"
+            "  search <txt>                  search the output\n"
             "  save [file] · copy [N|all]    export / clipboard\n"
             "  ai <question>                 ask the AI (persona follows the mode)\n"
             "  ai do <task>                  AI suggests one command, y/n to run\n"
@@ -2219,8 +2220,8 @@ class NihatOSDesktopWindow(QMainWindow):
             items.append(("◈  do <task>", "token", prefix_text, "do", True))
         elif is_first and "/" not in token and not token.startswith((".", "~")):
             builtins = [
-                "ai", "ai do", "ai fix", "ai reset", "clear", "copy", "devices", "find",
-                "go", "help", "mode", "ports", "save", "sys", "tui",
+                "ai", "ai do", "ai fix", "ai reset", "clear", "copy", "devices",
+                "go", "help", "mode", "ports", "save", "search", "sys", "tui",
             ]
             for b in builtins:
                 if b.startswith(token.lower()) and b not in seen_vals:
@@ -2457,7 +2458,7 @@ class NihatOSDesktopWindow(QMainWindow):
         if lo == "help":
             self._help()
             return
-        if lo.startswith("mode"):
+        if lo == "mode" or lo.startswith("mode "):
             arg = lo[4:].strip()
             if arg in THEMES:
                 self._set_theme(arg, boot=True)
@@ -2520,8 +2521,8 @@ class NihatOSDesktopWindow(QMainWindow):
             self._run_shell(f'cd "{marks[name]}"')
             return
 
-        if lo.startswith("find "):
-            query = raw[5:].strip()
+        if lo.startswith("search "):
+            query = raw[7:].strip()
             matches = search_output_lines(self._get_lines(), query)
             if not matches:
                 self.append_line(f"[Search] No matches for '{query}'.")
@@ -2613,7 +2614,8 @@ class NihatOSDesktopWindow(QMainWindow):
                     kp.unlink()
                     deleted.append(prov)
             if deleted:
-                self.append_line(f"◈ Deleted API keys: {", ".join(deleted)}. Run 'ai setup' to add new keys.", "ok")
+                names = ", ".join(deleted)
+                self.append_line(f"◈ Deleted API keys: {names}. Run 'ai setup' to add new keys.", "ok")
             else:
                 self.append_line("◈ No saved API keys found.", "dim")
             return
