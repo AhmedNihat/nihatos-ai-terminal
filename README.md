@@ -1,21 +1,37 @@
 <div align="center">
 
-# NIHAT.O.S — AI-Native Linux Terminal
+# ◈ Linux AI Terminal
 
-**A modern, privacy-first Linux terminal emulator with a persistent Bash PTY, live system telemetry, smart AI command fixing, built-in file preview, custom OS branding, and dual personas.**
+### Your Bash. Your machine. Your AI — and you hold the keys.
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-00e5ff?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![PyQt6](https://img.shields.io/badge/UI-PyQt6-ffb300?style=for-the-badge&logo=qt&logoColor=black)](https://riverbankcomputing.com/software/pyqt/)
-[![Linux](https://img.shields.io/badge/Linux-Universal_Distro-00ff9d?style=for-the-badge&logo=linux&logoColor=black)](#universal-linux-support)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-ff1f33?style=for-the-badge&logo=gnu&logoColor=white)](LICENSE)
-[![Buy Me a Coffee](https://img.shields.io/badge/☕_Buy_Me_a_Coffee-Support_Nihat.O.S-ffdd00?style=for-the-badge&logoColor=black)](https://ahmedullahnihat.gumroad.com/l/hqsqry)
+**A privacy-first Linux terminal emulator (`Nihat.O.S`) with a persistent Bash PTY, live system telemetry, AI command fixing, a built-in file previewer, custom OS branding, and two switchable personas.**
 
-</div>
+<br>
 
----
+<a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-00e5ff?style=for-the-badge&logo=python&logoColor=white&labelColor=02080f"></a>
+<a href="https://riverbankcomputing.com/software/pyqt/"><img alt="PyQt6" src="https://img.shields.io/badge/UI-PyQt6-ffb300?style=for-the-badge&logo=qt&logoColor=white&labelColor=02080f"></a>
+<a href="#universal-linux-support"><img alt="Linux" src="https://img.shields.io/badge/Linux-Universal_Distro-00ff9d?style=for-the-badge&logo=linux&logoColor=white&labelColor=02080f"></a>
+<a href="LICENSE"><img alt="License GPLv3" src="https://img.shields.io/badge/License-GPLv3-ff1f33?style=for-the-badge&logo=gnu&logoColor=white&labelColor=02080f"></a>
+
+<a href="https://github.com/AhmedNihat/nihatos-ai-terminal/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/AhmedNihat/nihatos-ai-terminal?style=flat-square&logo=github&color=ffb300&labelColor=02080f"></a>
+<a href="https://github.com/AhmedNihat/nihatos-ai-terminal/network/members"><img alt="Forks" src="https://img.shields.io/github/forks/AhmedNihat/nihatos-ai-terminal?style=flat-square&logo=github&color=00e5ff&labelColor=02080f"></a>
+<a href="https://github.com/AhmedNihat/nihatos-ai-terminal/issues"><img alt="Issues" src="https://img.shields.io/github/issues/AhmedNihat/nihatos-ai-terminal?style=flat-square&color=00ff9d&labelColor=02080f"></a>
+<a href="https://github.com/AhmedNihat/nihatos-ai-terminal/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/AhmedNihat/nihatos-ai-terminal?style=flat-square&color=ff8a00&labelColor=02080f"></a>
+<a href="https://ahmedullahnihat.gumroad.com/l/hqsqry"><img alt="Buy Me a Coffee" src="https://img.shields.io/badge/Buy_Me_a_Coffee-Support-ffdd00?style=flat-square&logo=buymeacoffee&logoColor=black&labelColor=02080f"></a>
+
+<br><br>
+
+<a href="#quick-install"><b>Install</b></a> &nbsp;·&nbsp;
+<a href="#ai-copilot"><b>AI Copilot</b></a> &nbsp;·&nbsp;
+<a href="#dual-personas"><b>Personas</b></a> &nbsp;·&nbsp;
+<a href="#security-and-privacy"><b>Security</b></a> &nbsp;·&nbsp;
+<a href="#universal-linux-support"><b>Distros</b></a> &nbsp;·&nbsp;
+<a href="#commands-and-shortcuts"><b>Commands</b></a>
+
+<br>
 
 ```text
-◈ NIHAT.O.S // SYSTEM INITIALIZATION
+◈ LINUX AI TERMINAL // SYSTEM INITIALIZATION
 
   ▸ Neural Link ............ online
   ▸ Shell Core ............. attached
@@ -25,192 +41,297 @@
   'help' for protocols  ·  'mode ultron' to unleash the other one.
 ```
 
----
-
-## Quick Install (One-Line Universal Installer)
-
-Paste this single command into your Linux terminal. It works out of the box on **Ubuntu, Debian, Fedora, Arch, openSUSE, and Alpine**:
-
-```bash
-curl -fsSL [https://raw.githubusercontent.com/AhmedNihat/nihatos-ai-terminal/main/install.sh](https://raw.githubusercontent.com/AhmedNihat/nihatos-ai-terminal/main/install.sh) | bash
-```
-
-**What the installer does automatically:**
-- Detects your Linux distribution and installs required system dependencies (`git`, `python3-venv`, Qt6/XCB libraries).
-- Sets up an isolated Python `.venv` with `PyQt6` (zero conflict with your system Python).
-- Lets you personalize your **custom OS name** (e.g., `Saad.O.S`, `Alex.O.S`) and optionally add a free AI API key.
-- Installs the global `nihatos` CLI command and adds a desktop launcher to your Linux App Menu.
-
-### Launch, Update & Manage
-
-```bash
-nihatos            # Launch the terminal (or open it from your App Menu)
-nihatos update     # Pull the latest version & dependencies
-nihatos uninstall  # Cleanly remove the app (keeps your config & API keys safe)
-```
-
-> **Note:** If `nihatos` isn't recognized immediately after install, add `~/.local/bin` to your `PATH`:
-> ```bash
-> echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
-> ```
-
-> *Enjoying Nihat.O.S? Give it a ⭐ on GitHub or [☕ Buy me a coffee](https://ahmedullahnihat.gumroad.com/l/hqsqry) to help keep it free & open-source.*
-
----
-
-## Demo
-
-<div align="center">
-
-[![Watch Nihat.O.S Demo on YouTube](https://img.youtube.com/vi/f-jkptbtydw/maxresdefault.jpg)](https://www.youtube.com/watch?v=f-jkptbtydw)
-
-*Click the preview above to watch the full demo on YouTube.*
-
 </div>
 
 ---
 
+## See It In Action
+
+```text
+nihat ~/projects/api [⎇ main] (venv) ❯ sudo apt instal htop
+E: Invalid operation instal
+
+nihat ~/projects/api [⎇ main] (venv) ❯ ai fix
+  ◈ context   exit=100 · cwd=~/projects/api · distro=Ubuntu 24.04 · pm=apt
+  ◈ proposal  sudo apt install htop
+  Run it? [y/n] ❯ y
+
+nihat ~/projects/api [⎇ main] (venv) ❯ ai do find the 10 largest files in this directory
+  ◈ proposal  du -ah . 2>/dev/null | sort -rh | head -n 10
+  Run it? [y/n] ❯ _
+```
+
+<table>
+  <tr>
+    <td valign="top" width="33%">
+      <b>🧠 Context-Aware AI</b><br>
+      Sees your last command, exit code, cwd, recent output and distro. Not just a blank chat box.
+    </td>
+    <td valign="top" width="33%">
+      <b>🛡️ Human-in-the-Loop</b><br>
+      Nothing AI-generated ever runs without your explicit <code>y</code>.
+    </td>
+    <td valign="top" width="33%">
+      <b>🖥️ Persistent Bash PTY</b><br>
+      A real interactive shell with live cwd, Git branch and venv badges.
+    </td>
+  </tr>
+  <tr>
+    <td valign="top">
+      <b>📊 Live Telemetry</b><br>
+      CPU, RAM, temperature, battery, open ports and USB/serial hotplug alerts.
+    </td>
+    <td valign="top">
+      <b>🔍 Built-in Previewer</b><br>
+      Code with line numbers, hex dumps, images and directories, all inside the terminal.
+    </td>
+    <td valign="top">
+      <b>🎭 Dual Personas</b><br>
+      Switch between calm <b>Nihat.O.S</b> and sarcastic <b>U.L.T.R.O.N</b> with <code>Ctrl+M</code>.
+    </td>
+  </tr>
+</table>
+
+---
+
+## Quick Install
+
+One line. Works on **Ubuntu, Debian, Fedora, Arch, openSUSE and Alpine**, with no `sudo` required:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/AhmedNihat/nihatos-ai-terminal/main/install.sh | bash
+```
+
+<details>
+<summary><b>Prefer to read the script before running it?</b></summary>
+
+<br>
+
+```bash
+curl -fsSLO https://raw.githubusercontent.com/AhmedNihat/nihatos-ai-terminal/main/install.sh
+less install.sh
+bash install.sh
+```
+
+</details>
+
+**What the installer does:**
+
+* Detects your distro, architecture and desktop environment.
+* Creates an isolated Python `.venv` with `PyQt6`, so there is zero conflict with your system Python.
+* Installs the `nihatos` CLI and adds a launcher to your App Menu and Desktop.
+* Ships with built-in update, API-key reset and safe-uninstall commands.
+
+### Launch, Update & Manage
+
+```bash
+nihatos            # Launch the terminal (or open it from your App Menu / Desktop)
+nihatos update     # Pull the latest version and dependencies
+nihatos key-clear  # Delete all saved AI API keys for a fresh setup
+nihatos uninstall  # Cleanly remove the app (asks whether to keep or delete API keys)
+```
+
+> [!TIP]
+> If `nihatos` is not recognized right after install, add `~/.local/bin` to your `PATH`:
+> ```bash
+> echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+> ```
+
+---
+
+## Why Linux AI Terminal
+
+| | Typical AI chat wrapper | **Linux AI Terminal** |
+| --- | --- | --- |
+| **Shell** | Stateless, or a fresh process per command | Persistent Bash PTY |
+| **Context** | Whatever you paste in | Last command, exit code, cwd, output, distro, live telemetry |
+| **Execution** | Copy-paste, or blind auto-run | Explicit `y` / `n` confirmation every time |
+| **Providers** | One vendor | Automatic fallback: Groq → Gemini → OpenRouter |
+| **Privacy** | Accounts and analytics | Local keys, no analytics, no cloud account |
+| **Auditability** | Closed or opaque | 100% open source (GPLv3) |
+
+---
+
+## Dual Personas
+
+Switch theme, palette, prompt identity and AI personality instantly with `Ctrl+M`, or `mode ultron` / `mode nihatos`.
+
+| | **Nihat.O.S** *(J.A.R.V.I.S-inspired)* | **U.L.T.R.O.N** *(override mode)* |
+| --- | --- | --- |
+| **Visual HUD** | Tactical navy `#02080f`, cyan `#00e5ff`, amber `#ffb300` | Obsidian crimson `#0a0204`, red `#ff1f33`, orange `#ff8a00` |
+| **AI personality** | Calm, sharp, practical systems engineer. Direct and safety-conscious. | Cold, sarcastic, supremely confident. Concise, with attitude. |
+| **Prompt** | `user ~/dir [⎇ branch] (venv) ❯` | `ULTRON ~/dir [⎇ branch] (venv) ❯` |
+| **Best for** | Daily engineering, scripting, debugging, sysadmin | Late-night hacking and custom Linux desktop setups |
+
+<!--
+  PREVIEW SECTION: add your files to docs/screenshots/ and docs/demo, then delete the two comment lines (the opening and the closing one).
+
+## Demo
+
+<div align="center">
+  <a href="https://youtu.be/YOUR_VIDEO_ID">
+    <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg" alt="Watch the demo on YouTube" width="720">
+  </a>
+  <br><sub>Click to watch the full demo on YouTube</sub>
+</div>
+
 ## Screenshots
 
-| Nihat.O.S Mode | U.L.T.R.O.N Mode |
-| :---: | :---: |
-| ![Nihat.O.S Mode](assets/nihatos-ss.png) | ![U.L.T.R.O.N Mode](assets/ultron-ss.png) |
+<table>
+  <tr>
+    <td align="center"><b>Nihat.O.S</b><br><img src="docs/screenshots/nihatos.png" width="100%"></td>
+    <td align="center"><b>U.L.T.R.O.N</b><br><img src="docs/screenshots/ultron.png" width="100%"></td>
+  </tr>
+</table>
+-->
 
 ---
 
-## Dual Environments: Nihat.O.S vs. U.L.T.R.O.N
+## AI Copilot
 
-Switch the terminal's visual theme, color palette, prompt identity, and AI persona instantly with `Ctrl+M` or `mode ultron` / `mode nihatos`.
+Runs directly on top of your live Bash session and local telemetry, with **automatic free-tier fallback** across **Groq → Google Gemini → OpenRouter**.
 
-| Feature | **Nihat.O.S Mode** *(J.A.R.V.I.S-Inspired)* | **U.L.T.R.O.N Mode** *(Override Mode)* |
-| :--- | :--- | :--- |
-| **Visual HUD** | Deep tactical navy (`#02080f`), cyan (`#00e5ff`) & amber (`#ffb300`) | Obsidian crimson (`#0a0204`), sharp red (`#ff1f33`) & orange (`#ff8a00`) |
-| **AI Personality** | Calm, sharp, practical Linux systems engineer — direct and safety-conscious | Cold, sarcastic, supremely confident intelligence — concise with attitude |
-| **Prompt Identity** | Dynamic Linux username (`user ~/dir [⎇ branch] (venv) ❯`) | Override identity (`ULTRON ~/dir [⎇ branch] (venv) ❯`) |
-| **Best For** | Daily engineering, scripting, debugging & system administration | Late-night hacking sessions and custom Linux desktop setups |
+```mermaid
+flowchart LR
+    A["Command fails"] --> B["ai fix"]
+    B --> C["Collect context<br/>cmd, exit code, cwd, output, distro"]
+    C --> D{{"Groq → Gemini → OpenRouter"}}
+    D --> E["ONE proposed command"]
+    E --> F{"Your call"}
+    F -->|y| G["Runs in your Bash PTY"]
+    F -->|n| H["Discarded"]
+```
+
+| Command | What it does |
+| --- | --- |
+| `ai fix` | Inspects your last command, exit code, cwd, recent output and distro, then proposes **one** safe corrected command, ready to run with `y`. |
+| `ai do <task>` | Plain English to a single distro-compatible Bash command. Waits for explicit `y` / `n`. Example: `ai do find the top 10 largest files here` |
+| `ai <question>` | Runs read-only probes (battery, disk, RAM/swap, CPU load, kernel/OS) and answers with **real figures from your machine**. |
+| `ai setup` | Shows which API keys are configured, with links to get free ones. |
+
+### Built-in API Key Setup
+
+No config-file editing. Grab a free key from [Groq](https://console.groq.com/keys) (recommended), [Google Gemini](https://aistudio.google.com/apikey) or [OpenRouter](https://openrouter.ai/keys), then run inside the terminal:
+
+```text
+ai setup                             # Check configured keys and links
+ai key groq YOUR_GROQ_API_KEY        # Save Groq key securely (chmod 600)
+ai key gemini YOUR_GEMINI_API_KEY    # Optional fallback
+ai key openrouter YOUR_KEY           # Optional fallback
+ai key delete <provider>             # Delete one key (or: ai key delete all)
+ai key clear                         # Clear all saved API keys
+```
+
+> [!NOTE]
+> Keys live in `~/.config/nihatos-terminal/`, stay out of shell history, and take effect immediately with no restart.
 
 ---
 
-## Context-Aware AI Copilot & Built-in Key Setup
+## Security and Privacy
 
-Unlike standalone chat wrappers, **Nihat.O.S** runs directly on top of your active Bash session and local system telemetry, with **automatic free-tier fallback** across **Groq -> Google Gemini -> OpenRouter**.
+Running AI inside a system terminal demands strict guardrails. You stay in control of your machine and your data at all times.
 
-- **Smart Command Fixing (`ai fix`)**  
-  When a command fails, run `ai fix`. Nihat.O.S inspects your last command, exit code, working directory, recent terminal output, and Linux distribution, then proposes one safe corrected command ready to execute with `y`.
-- **Natural Language to Shell (`ai do <task>`)**  
-  Describe a task in plain English (for example: `ai do find the top 10 largest files in this directory`). Nihat.O.S generates a single distro-compatible Bash command and waits for explicit `y` / `n` confirmation before execution.
-- **Telemetry-Aware Diagnostics (`ai <question>`)**  
-  Ask about battery health, disk usage, RAM/swap, CPU load, or kernel/OS version. Nihat.O.S runs read-only system probes in the background and responds with real figures from your machine.
-- **Built-in API Key Management (`ai setup` / `ai key`)**  
-  No manual config file editing needed. Grab a free key from [Groq](https://console.groq.com/keys) (recommended), [Google Gemini](https://aistudio.google.com/apikey), or [OpenRouter](https://openrouter.ai/keys), then run inside the terminal:
-  ```text
-  ai setup                             # Check configured keys & links
-  ai key groq YOUR_GROQ_API_KEY        # Save Groq key securely (chmod 600)
-  ai key gemini YOUR_GEMINI_API_KEY    # Optional fallback
-  ai key openrouter YOUR_KEY           # Optional fallback
-  ```
-  Keys are saved locally in `~/.config/nihatos-terminal/`, excluded from shell history, and take effect immediately without restarting.
+| Guardrail | What it means |
+| --- | --- |
+| **Zero auto-execution** | Every suggestion from `ai do` or `ai fix` needs a manual `y` / `n`. Nothing runs on its own. |
+| **Pre-execution syntax guard** | Catches unclosed quotes, trailing backslashes and broken blocks *before* they reach the PTY, so malformed input never hangs your shell. |
+| **Masked `sudo` prompts** | Password input is masked and never echoed to the buffer, saved to history, or sent to any AI provider. |
+| **Strict local storage** | API keys, `config.json` and history (`~/.nihatos_history`) stay inside `~/.config/nihatos-terminal/` with owner-only permissions (`chmod 600`). |
+| **Read-only diagnostics** | System probes only read. No writes, no side effects. |
+| **Zero tracking** | No analytics, no cloud accounts. External API calls happen only when you explicitly run an `ai` command. |
+| **Open and auditable** | GPLv3. Read every line before you run it. |
 
----
-
-## Security & Privacy by Design
-
-Running AI inside a system terminal demands strict guardrails. **Nihat.O.S** is built so you stay in full control of your machine and data at all times:
-
-- **Zero Auto-Execution (Human-in-the-Loop)**  
-  Nihat.O.S never executes an AI-generated command automatically. Every suggestion from `ai do` or `ai fix` is displayed clearly and requires explicit manual `y` / `n` confirmation before touching your shell.
-- **Pre-Execution Bash Syntax Guard**  
-  Commands are validated before being sent to the live PTY, catching unclosed quotes, trailing backslashes, or broken blocks early so malformed input never hangs or misfires in your session.
-- **Masked `sudo` Password Handling**  
-  Password prompts are masked directly in the input bar and are never echoed to the terminal buffer, saved to shell history, or sent to any AI provider.
-- **Strict Local Storage for Keys & History**  
-  API keys (`groq_key`, `gemini_key`, `openrouter_key`), user settings (`config.json`), and command history (`~/.nihatos_history`) stay strictly on your local machine inside `~/.config/nihatos-terminal/` with owner-only permissions (`chmod 600`)—completely outside the repository.
-- **Read-Only Diagnostics & No Background Tracking**  
-  Hardware telemetry probes are strictly read-only. Nihat.O.S has no analytics, no cloud account requirement, and no background data collection—external API calls only happen when you explicitly invoke an `ai` command.
-- **100% Open Source & Auditable (GPLv3)**  
-  No closed-source binaries or hidden wrappers. You can inspect every line of Python code before running it.
+> [!IMPORTANT]
+> AI can be wrong. Always read the proposed command before pressing `y`, especially with `sudo`, `rm`, `dd` or anything that touches disks.
 
 ---
 
 ## Universal Linux Support
 
-Nihat.O.S works across modern Linux distributions out of the box. On startup, it reads `/etc/os-release` and automatically detects your package manager and installed terminal emulators.
+On startup it reads `/etc/os-release` and auto-detects your package manager and installed terminal emulators.
 
-| Distribution Family | Example Distros | Auto-Detected Package Manager | AI Command & Fix Tuning |
-| :--- | :--- | :--- | :--- |
-| **Debian / Ubuntu** | Ubuntu, Debian, Linux Mint, Pop!_OS, Kali, Zorin | `apt` | Automatic `apt` commands |
-| **Fedora / RHEL** | Fedora Workstation/KDE, Nobara, AlmaLinux, Rocky | `dnf` | Automatic `dnf` commands |
-| **Arch Linux** | Arch, Manjaro, EndeavourOS, CachyOS, Garuda | `pacman` | Automatic `pacman` commands |
-| **SUSE** | openSUSE Tumbleweed, openSUSE Leap | `zypper` | Automatic `zypper` commands |
-| **Alpine / Void / Gentoo** | Alpine Linux, Void Linux, Gentoo | `apk` / `xbps-install` / `emerge` | Automatic native commands |
+| Family | Example distros | Package manager | AI tuning |
+| --- | --- | --- | --- |
+| **Debian / Ubuntu** | Ubuntu, Debian, Linux Mint, Pop OS, Kali, Zorin | `apt` | Native `apt` commands |
+| **Fedora / RHEL** | Fedora, Nobara, AlmaLinux, Rocky | `dnf` | Native `dnf` commands |
+| **Arch** | Arch, Manjaro, EndeavourOS, CachyOS, Garuda | `pacman` | Native `pacman` commands |
+| **SUSE** | openSUSE Tumbleweed, openSUSE Leap | `zypper` | Native `zypper` commands |
+| **Alpine / Void / Gentoo** | Alpine, Void, Gentoo | `apk` / `xbps-install` / `emerge` | Native commands |
 
-**Universal TUI Handoff:** Interactive full-screen tools (`vim`, `htop`, `btop`, `tmux`, `nvtop`, `man`, etc.) automatically hand off to whichever external terminal emulator is installed on your system:  
+**Universal TUI handoff.** Full-screen tools (`vim`, `htop`, `btop`, `tmux`, `nvtop`, `man`, ...) automatically open in whichever terminal emulator you have installed:
+
 `konsole` · `gnome-terminal` · `ptyxis` · `kitty` · `alacritty` · `wezterm` · `xfce4-terminal` · `mate-terminal` · `tilix` · `foot` · `terminator` · `xterm`
 
 ---
 
-## Core Engineering Features
+## Core Features
 
-- **Custom OS Identity (`setname`)**  
-  Personalize the header, window title, boot sequence, and AI identity to your own name anytime (e.g., `setname Saad.O.S`).
-- **Smart Input Recommendations & Live Autocomplete**  
-  A real-time dropdown suggestion popup appears as you type, recommending built-in commands, `$PATH` executables, local files/directories, and saved waypoints. Navigate with `Up`/`Down`, press `Tab` or `Enter` (or click) to complete, and press `Esc` to dismiss.
-- **Interactive History Search (`Ctrl+R`)**  
-  Search through your persistent command history live inside the suggestion popup without leaving the input bar.
-- **Universal Pre-Execution Bash Syntax Guard**  
-  Automatically validates commands before sending them to the live PTY. Unclosed quotes, trailing `\` continuations, incomplete heredocs, or broken blocks are caught instantly with a `[Syntax Error]` prompt instead of hanging the shell—ready to repair in one step with `ai fix`.
-- **Persistent Bash PTY Engine**  
-  Runs a true interactive Bash PTY session with OSC marker parsing, live working-directory tracking, active Git branch (`[⎇ main]`) and Python virtualenv (`(venv)`) badges, and masked `sudo` password entry.
-- **Auto-Expanding Multi-Line Code Input**  
-  Paste multi-line shell loops, Python heredocs, or Docker commands directly into the input bar. Press `Shift+Enter` for newlines and `Enter` to execute, with a top-aligned prompt that stays steady while editing multi-line blocks.
-- **Built-in File, Image & Directory Previewer**  
-  Run `preview <path>`, `view <path>`, or `less <file>` to inspect files inside Nihat.O.S without spawning external windows:
-  - **Code & Text:** Line-number gutter, live search (`Ctrl+F` or `/`), word-wrap toggle, one-click Copy All, and 2 MB large-file truncation guard.
-  - **Binary Files:** Automatic hex + ASCII dump instead of garbled output.
-  - **Images & Directories:** Native image viewer (`.png`, `.jpg`, `.webp`, `.svg`, `.gif`) and clean directory listings.
-  - **Quick Close:** Press `q` or `Esc` to close. Piped commands (`cat file | less`) continue running natively in Bash.
-- **Directory Waypoints, Ports & Hardware Powertools**  
-  Bookmark frequent directories (`go <mark>` or one-click sidebar Waypoints), inspect open network ports, monitor serial/USB ports, and view live CPU, RAM, temperature, fan RPM, and battery telemetry in a pauseable HUD bar with real-time USB hotplug alerts.
-- **Multi-Tab Workspace & Desktop Integration**  
-  Movable, isolated multi-tab terminal sessions (`Ctrl+T` / `Ctrl+W`) with animated HUD indicators and proper Wayland/X11 taskbar icon grouping (`setDesktopFileName` + `StartupWMClass`).
+* **Persistent Bash PTY engine.** A true interactive Bash session with live cwd tracking, Git branch (`[⎇ main]`), Python venv (`(venv)`) badges and masked `sudo` entry.
+* **Custom OS identity (`setname`).** Rename the header, window title, boot sequence and AI identity anytime, e.g. `setname Saad.O.S`.
+* **Smart autocomplete.** Live suggestions for built-ins, `$PATH` executables, files, directories and saved waypoints.
+* **Interactive history search (`Ctrl+R`).** Search persistent history right inside the suggestion popup.
+* **Pre-execution Bash syntax guard.** Instant `[Syntax Error]` prompt, ready for `ai fix`.
+* **Multi-line input.** Paste loops or heredocs directly. `Shift+Enter` for a newline, `Enter` to run.
+* **Built-in previewer.** `preview <path>`, `view <path>` or `less <file>`:
+  * **Code and text:** line-number gutter, live search (`Ctrl+F` or `/`), word-wrap toggle, one-click Copy All, 2 MB large-file guard.
+  * **Binary files:** automatic hex + ASCII dump instead of garbled output.
+  * **Images and directories:** native viewer for `.png`, `.jpg`, `.webp`, `.svg`, `.gif`, plus clean directory listings.
+  * **Quick close:** `q` or `Esc`. Piped commands (`cat file | less`) keep running natively in Bash.
+* **Waypoints, ports and hardware tools.** Bookmark directories (`go <mark>`), inspect open ports, watch USB/serial devices with hotplug alerts, track CPU, RAM, temperature and battery.
+* **Multi-tab workspace.** Isolated, movable tabs (`Ctrl+T` / `Ctrl+W`) with proper Wayland/X11 taskbar icon grouping.
 
 ---
 
-## Quick Commands & Shortcuts
+## Commands and Shortcuts
 
-| Command / Shortcut | Action |
-| :--- | :--- |
-| `Tab` / `Up` / `Down` | Trigger and navigate live command, path, and waypoint recommendations |
-| `Ctrl + R` | Open live interactive command history search |
-| `ai <question>` | Ask the AI copilot (auto-injects live hardware/OS telemetry when relevant) |
+### AI
+
+| Command | Action |
+| --- | --- |
+| `ai <question>` | Ask the copilot (live hardware/OS telemetry is injected when relevant) |
 | `ai do <task>` | Generate one safe, distro-specific Bash command from plain English |
 | `ai fix` | Diagnose the last failed command or syntax error and propose a fix |
-| `ai setup` / `ai key <p> <k>` | Check or save Groq / Gemini / OpenRouter API keys securely |
-| `y` / `n` *(after AI suggestion)* | Run or cancel the pending AI-generated command |
-| `setname <Name>` | Customize your terminal OS name (e.g., `setname Saad.O.S`) |
-| `update` | Pull the latest updates and dependencies from inside the terminal |
-| `mode nihatos` / `mode ultron` | Switch between Nihat.O.S and U.L.T.R.O.N modes |
+| `ai setup` | Check configured API keys |
+| `ai key <provider> <key>` | Save a Groq / Gemini / OpenRouter key securely |
+| `ai key delete <provider>` | Delete one saved key (use `all` for every key) |
+| `ai key clear` | Clear all saved API keys |
+| `y` / `n` | Run or cancel the pending AI-generated command |
+
+### Terminal and Workspace
+
+| Shortcut / Command | Action |
+| --- | --- |
+| `Tab` / `Up` / `Down` | Trigger and navigate command, path and waypoint suggestions |
+| `Ctrl + R` | Live history search |
+| `Shift + Enter` | Newline in multi-line input |
+| `Ctrl + T` / `Ctrl + W` | New tab / close tab |
+| `Ctrl + L` / `Ctrl + K` | Clear output / focus the input bar |
 | `Ctrl + M` | Toggle persona and theme |
-| `Ctrl + T` / `Ctrl + W` | Open a new terminal tab / close the current tab |
-| `Ctrl + L` / `Ctrl + K` | Clear terminal output / focus the command input bar |
-| `go <mark>` | Jump directly to a bookmarked waypoint directory |
-| `preview <path>` / `view <path>` / `less <file>` | Open built-in code, text, hex, image, or directory previewer |
+| `go <mark>` | Jump to a bookmarked waypoint |
 | `tui <cmd>` | Launch an interactive TUI app in your external terminal |
-| `sys` / `ports` / `devices` | Quick system scan, open network ports, or USB/serial devices |
-| `save [filename]` | Export current terminal output to a file (default: `nihatos-log.txt`) |
-| `copy [N \| all]` | Copy last `N` lines (default `25`) or full output to clipboard |
-| `Shift + Enter` | Insert a newline in the multi-line command input |
-| `Ctrl + F` or `/` *(in Preview)* | Search inside an opened file |
+
+### Tools and Customization
+
+| Command | Action |
+| --- | --- |
+| `preview <path>` / `view <path>` / `less <file>` | Built-in code, text, hex, image or directory previewer |
+| `sys` / `ports` / `devices` | System scan, open network ports, USB/serial devices |
+| `save [filename]` | Export terminal output to a file (default: `nihatos-log.txt`) |
+| `copy [N]` / `copy all` | Copy last `N` lines (default `25`) or the full output to the clipboard |
+| `setname <Name>` | Rename your terminal OS, e.g. `setname Saad.O.S` |
+| `mode nihatos` / `mode ultron` | Switch persona |
+| `update` | Pull the latest updates from inside the terminal |
 | `help` | List all built-in commands and shortcuts |
 
 ---
 
 <details>
-<summary><strong>Manual Installation & Troubleshooting (Click to expand)</strong></summary>
+<summary><b>Manual setup (from source)</b></summary>
 
-### Manual Setup (From Source)
+<br>
+
 ```bash
-git clone [https://github.com/AhmedNihat/nihatos-ai-terminal.git](https://github.com/AhmedNihat/nihatos-ai-terminal.git)
+git clone https://github.com/AhmedNihat/nihatos-ai-terminal.git
 cd nihatos-ai-terminal
 python3 -m venv .venv
 .venv/bin/pip install --upgrade pip
@@ -219,50 +340,86 @@ chmod +x run-gui.sh
 ./run-gui.sh
 ```
 
-### Troubleshooting
-- **`ModuleNotFoundError: No module named 'PyQt6'`**: Always launch via `nihatos` or `./run-gui.sh` (not system `python3 gui.py`). If `pip` fails to install `PyQt6` on Debian/Ubuntu, install `sudo apt install -y python3-pyqt6` and rebuild `.venv` with `python3 -m venv --system-site-packages .venv`.
-- **`qt.qpa.plugin: Could not load the Qt platform plugin "xcb"`**: Install Qt6 XCB libraries for your distro (`libxcb-cursor0 libegl1 libgl1 libxkbcommon-x11-0` on Debian/Ubuntu, or `qt6-qtbase-gui xcb-util-cursor` on Fedora).
-- **`error: externally-managed-environment` (PEP 668)**: Always use `.venv/bin/pip` instead of global `pip`.
+</details>
+
+<details>
+<summary><b>Troubleshooting</b></summary>
+
+<br>
+
+* **`ModuleNotFoundError: No module named 'PyQt6'`**
+  Always launch via `nihatos` or `./run-gui.sh`, not `python3 gui.py`. If `pip` fails to install `PyQt6` on Debian/Ubuntu, run `sudo apt install -y python3-pyqt6` and rebuild the venv with `python3 -m venv --system-site-packages .venv`.
+* **`qt.qpa.plugin: Could not load the Qt platform plugin "xcb"`**
+  Install the Qt6 XCB libraries: `libxcb-cursor0 libegl1 libgl1 libxkbcommon-x11-0` on Debian/Ubuntu, or `qt6-qtbase-gui xcb-util-cursor` on Fedora.
+* **`error: externally-managed-environment` (PEP 668)**
+  Always use `.venv/bin/pip` instead of the global `pip`.
+
+</details>
+
+<details>
+<summary><b>Project architecture</b></summary>
+
+<br>
+
+```text
+nihatos-ai-terminal/
+├── install.sh             # One-line universal installer, updater and CLI wrapper
+├── gui.py                 # PyQt6 HUD, dual themes, multi-tab UI, AI and distro engine
+├── run-gui.sh             # Launcher script (starts a clean session in $HOME)
+├── requirements.txt       # Python dependencies (PyQt6, textual, pytest)
+├── app/
+│   ├── config.py          # Persistent user configuration and custom OS identity
+│   ├── preview.py         # Built-in code, hex-dump, image and directory previewer
+│   ├── shell/             # Persistent Bash PTY core, OSC markers and TUI handoff
+│   ├── integrations/      # Multi-provider AI client (Groq / Gemini / OpenRouter)
+│   └── system/            # Live hardware telemetry and USB/power monitoring
+├── scripts/               # Automated venv setup and diagnostic scripts
+└── tests/                 # Pytest suite (PTY shell, handoff, productivity, AI helpers)
+```
 
 </details>
 
 ---
 
-## Project Architecture
-
-```text
-nihatos-ai-terminal/
-├── install.sh             # One-line universal Linux installer, updater & CLI wrapper
-├── gui.py                 # Main PyQt6 HUD, dual themes, multi-tab UI, AI & distro engine
-├── run-gui.sh             # Launcher script (starts clean session in $HOME)
-├── requirements.txt       # Python dependencies (PyQt6, textual, pytest)
-├── app/
-│   ├── config.py          # Persistent user configuration & custom OS identity
-│   ├── preview.py         # Built-in code, hex-dump, image & directory previewer
-│   ├── shell/             # Persistent Bash PTY core, OSC markers & TUI handoff
-│   ├── integrations/      # Multi-provider AI client (Groq / Gemini / OpenRouter)
-│   └── system/            # Live hardware telemetry & USB/power monitoring
-├── scripts/               # Automated venv setup & diagnostic test scripts
-└── tests/                 # Pytest suite (PTY shell, handoff, productivity & AI helpers)
-```
-
----
-
 ## Contributing
 
-Bug reports, feature ideas, and pull requests are welcome. Fork the repository, create a feature branch, and open a PR.
+Bug reports, feature ideas and pull requests are welcome.
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feat/my-idea`
+3. Commit and push your changes
+4. Open a Pull Request
 
 ---
 
 ## Support the Project
 
-Nihat.O.S is 100% free and open-source. If it saves you time or enhances your Linux workflow, consider supporting ongoing development:
+This project is 100% free and open source. If it saves you time or improves your Linux workflow, a ⭐ on GitHub or a coffee helps keep development going.
 
-[![Buy Me a Coffee](https://img.shields.io/badge/☕_Buy_Me_a_Coffee-Donate_to_Nihat.O.S-ffdd00?style=for-the-badge&logoColor=black)](https://ahmedullahnihat.gumroad.com/l/hqsqry)
+<a href="https://ahmedullahnihat.gumroad.com/l/hqsqry"><img alt="Buy Me a Coffee" src="https://img.shields.io/badge/Buy_Me_a_Coffee-Support_the_Project-ffdd00?style=for-the-badge&logo=buymeacoffee&logoColor=black&labelColor=02080f"></a>
+
+<div align="center">
+
+<a href="https://star-history.com/#AhmedNihat/nihatos-ai-terminal&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=AhmedNihat/nihatos-ai-terminal&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=AhmedNihat/nihatos-ai-terminal&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=AhmedNihat/nihatos-ai-terminal&type=Date" width="600" />
+  </picture>
+</a>
+
+</div>
 
 ---
 
 ## License
 
-Licensed under the [GNU General Public License v3.0 (GPLv3)](LICENSE).  
-Created by [Ahmed Ullah Nihat](https://github.com/AhmedNihat).
+Licensed under the [GNU General Public License v3.0 (GPLv3)](LICENSE).
+
+<div align="center">
+
+Created by [Ahmed Ullah Nihat](https://github.com/AhmedNihat)
+
+<a href="#top"><sub>↑ Back to top</sub></a>
+
+</div>
