@@ -2,7 +2,7 @@
 
 # NIHAT.O.S — AI-Native Linux Terminal
 
-**A modern Linux terminal emulator with a persistent Bash PTY, live system telemetry, smart AI command fixing, built-in file preview, and dual personas.**
+**A modern, privacy-first Linux terminal emulator with a persistent Bash PTY, live system telemetry, smart AI command fixing, built-in file preview, and dual personas.**
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-00e5ff?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![PyQt6](https://img.shields.io/badge/UI-PyQt6-ffb300?style=for-the-badge&logo=qt&logoColor=black)](https://riverbankcomputing.com/software/pyqt/)
@@ -69,8 +69,25 @@ Unlike standalone chat wrappers, **Nihat.O.S** runs directly on top of your acti
   Describe a task in plain English (for example: `ai do find the top 10 largest files in this directory`). Nihat.O.S generates a single distro-compatible Bash command and waits for explicit `y` / `n` confirmation before execution.
 - **Telemetry-Aware Diagnostics (`ai <question>`)**  
   Ask about battery health, disk usage, RAM/swap, CPU load, or kernel/OS version. Nihat.O.S runs read-only system probes in the background and responds with real figures from your machine.
-- **Safety & Privacy by Design**  
-  Every AI-generated command requires manual confirmation before running. API keys and shell history are stored strictly outside the repository (`~/.config/nihatos-terminal/` and `~/.nihatos_history`).
+
+---
+
+## Security & Privacy by Design
+
+Running AI inside a system terminal demands strict guardrails. **Nihat.O.S** is built so you stay in full control of your machine and data at all times:
+
+- **Zero Auto-Execution (Human-in-the-Loop)**  
+  Nihat.O.S never executes an AI-generated command automatically. Every suggestion from `ai do` or `ai fix` is displayed clearly and requires explicit manual `y` / `n` confirmation before touching your shell.
+- **Pre-Execution Bash Syntax Guard**  
+  Commands are validated before being sent to the live PTY, catching unclosed quotes, trailing backslashes, or broken blocks early so malformed input never hangs or misfires in your session.
+- **Masked `sudo` Password Handling**  
+  Password prompts are masked directly in the input bar and are never echoed to the terminal buffer, saved to shell history, or sent to any AI provider.
+- **Strict Local Storage for Keys & History**  
+  API keys (`groq_key`, `gemini_key`, `openrouter_key`), user settings (`config.json`), and command history (`~/.nihatos_history`) stay strictly on your local machine inside `~/.config/nihatos-terminal/` with owner-only permissions (`chmod 600`)—completely outside the repository.
+- **Read-Only Diagnostics & No Background Tracking**  
+  Hardware telemetry probes are strictly read-only. Nihat.O.S has no analytics, no cloud account requirement, and no background data collection—external API calls only happen when you explicitly invoke an `ai` command.
+- **100% Open Source & Auditable (GPLv3)**  
+  No closed-source binaries or hidden wrappers. You can inspect every line of Python code before running it.
 
 ---
 
