@@ -880,6 +880,10 @@ class NihatOSDesktopWindow(QMainWindow):
         self.setMinimumSize(940, 600)
 
         self.config = NihatOSConfig.load()
+        custom_name = (getattr(self.config, "os_name", "") or "Nihat.O.S").strip()
+        THEMES["nihatos"]["name"] = custom_name
+        THEMES["nihatos"]["tag"] = custom_name.replace(".", "")
+        THEMES["nihatos"]["persona"] = THEMES["nihatos"]["persona"].replace("NIHAT.O.S", custom_name.upper())
         self.ai_client = GeminiClient(model=self.config.ai_model)
         self.shell: PtyShellController | None = None
         self.pending_ai_cmd = ""
@@ -1262,7 +1266,7 @@ class NihatOSDesktopWindow(QMainWindow):
         cwd = getattr(self.shell, "cwd", None) or os.getcwd()
         if self.key == "nihatos":
             lines = [
-                ("◈ NIHAT.O.S // SYSTEM INITIALIZATION", "head"),
+                (f"◈ {self.t['name'].upper()} // SYSTEM INITIALIZATION", "head"),
                 ("", "dim"),
                 ("  ▸ Neural Link ............ online", "ok"),
                 ("  ▸ Shell Core ............. attached", "ok"),
@@ -1298,6 +1302,9 @@ class NihatOSDesktopWindow(QMainWindow):
             "  ai do <task>                  AI suggests one command, y/n to run\n"
             "  ai fix                        AI fixes the last failed command\n"
             "  ai reset                      clear AI chat memory\n"
+            "  ai setup · ai key <p> <k>     configure Groq / Gemini / OpenRouter keys\n"
+            "  setname <NewName>             customize your terminal OS name (e.g. Saad.O.S)\n"
+            "  update                        pull latest updates & dependencies\n"
             "  Ctrl+R                        search persistent command history\n"
             "  tui <cmd>                     open interactive/TUI command in external terminal\n"
             "  mode nihatos | ultron          switch persona  (Ctrl+M toggles)\n"
@@ -2435,7 +2442,8 @@ class NihatOSDesktopWindow(QMainWindow):
         if not raw:
             return
         self.input_box.clear()
-        self.input_box.record(raw)
+        if not raw.lower().startswith("ai key "):
+            self.input_box.record(raw)
         self._execute(raw)
 
     def _execute(self, raw: str) -> None:
@@ -2558,6 +2566,61 @@ class NihatOSDesktopWindow(QMainWindow):
 
         if lo in ("ai", "ai do"):
             self.append_line("Usage: ai <question>  |  ai do <task>  |  ai fix  |  ai reset", "warn")
+            return
+
+        if lo == "setname" or lo.startswith("setname "):
+            new_name = raw[7:].strip()
+            if not new_name:
+                self.append_line(f"Current OS Name: {self.config.os_name}", "head")
+                self.append_line("Usage: setname <YourName>  (example: setname Saad.O.S)", "dim")
+                return
+            self.config.os_name = new_name
+            self.config.save()
+            THEMES["nihatos"]["name"] = new_name
+            THEMES["nihatos"]["tag"] = new_name.replace(".", "")
+            self._set_theme(self.key, boot=False)
+            self.append_line(f"◈ OS identity updated to '{new_name}'.", "ok")
+            return
+
+        if lo == "update":
+            self.append_line("◈ Checking for updates…", "head")
+            self._run_shell(
+                f'git -C "{ROOT}" pull --ff-only && "{ROOT}/.venv/bin/pip" install -q -r "{ROOT}/requirements.txt" && echo "✅ Updated! Restart terminal to apply changes."'
+            )
+            return
+
+        if lo in ("ai setup", "ai key"):
+            cfg_dir = Path.home() / ".config" / "nihatos-terminal"
+            self.append_line("◈ AI API KEY STATUS (stored locally in ~/.config/nihatos-terminal/)", "head")
+            for label, fname, url in [
+                ("Groq (Primary)", "groq_key", "https://console.groq.com/keys"),
+                ("Google Gemini", "gemini_key", "https://aistudio.google.com/apikey"),
+                ("OpenRouter", "openrouter_key", "https://openrouter.ai/keys"),
+            ]:
+                kp = cfg_dir / fname
+                status = "✔ configured" if (kp.is_file() and kp.read_text(encoding="utf-8", errors="ignore").strip()) else "✖ not set"
+                self.append_line(f"  ▸ {label:<16} {status}   ({url})", "ok" if "✔" in status else "dim")
+            self.append_line("  Set key:    ai key <groq|gemini|openrouter> <YOUR_API_KEY>", "warn")
+            self.append_line("  Remove key: ai key <groq|gemini|openrouter> remove", "dim")
+            return
+
+        if lo.startswith("ai key "):
+            parts = raw.split(None, 3)
+            if len(parts) < 4 or parts[2].lower() not in ("groq", "gemini", "openrouter"):
+                self.append_line("Usage: ai key <groq|gemini|openrouter> <YOUR_API_KEY | remove>", "warn")
+                return
+            provider, key_val = parts[2].lower(), parts[3].strip()
+            cfg_dir = Path.home() / ".config" / "nihatos-terminal"
+            cfg_dir.mkdir(parents=True, exist_ok=True)
+            kp = cfg_dir / f"{provider}_key"
+            if key_val.lower() == "remove":
+                if kp.exists():
+                    kp.unlink()
+                self.append_line(f"◈ Removed {provider} API key.", "warn")
+                return
+            kp.write_text(key_val + "\n", encoding="utf-8")
+            os.chmod(kp, 0o600)
+            self.append_line(f"◈ Saved {provider} API key securely (chmod 600). Ready to use immediately!", "ok")
             return
 
         if lo == "ai reset":

@@ -1,2 +1,3 @@
+PyQt6>=6.5
 textual>=8.1,<9
 pytest>=8.0

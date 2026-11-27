@@ -32,6 +32,7 @@ class NihatOSConfig:
     hud_subtitle: str = "Sir, you are the Best.. just command me.."
     ai_model: str = "openrouter/free"
     ai_auto_explain: bool = False
+    os_name: str = "Nihat.O.S"
 
     def validate(self) -> "NihatOSConfig":
         if self.theme not in THEMES:
@@ -50,6 +51,8 @@ class NihatOSConfig:
         if not isinstance(self.ai_model, str) or not self.ai_model.strip():
             self.ai_model = "openrouter/free"
         self.ai_auto_explain = bool(self.ai_auto_explain)
+        if not isinstance(self.os_name, str) or not self.os_name.strip():
+            self.os_name = "Nihat.O.S"
         return self
 
     @classmethod
