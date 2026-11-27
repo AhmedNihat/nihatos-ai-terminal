@@ -2604,10 +2604,37 @@ class NihatOSDesktopWindow(QMainWindow):
             self.append_line("  Remove key: ai key <groq|gemini|openrouter> remove", "dim")
             return
 
+        if lo == "ai key clear" or lo == "ai key delete all":
+            cfg_dir = Path.home() / ".config" / "nihatos-terminal"
+            deleted = []
+            for prov in ("groq", "gemini", "openrouter"):
+                kp = cfg_dir / f"{prov}_key"
+                if kp.exists():
+                    kp.unlink()
+                    deleted.append(prov)
+            if deleted:
+                self.append_line(f"◈ Deleted API keys: {", ".join(deleted)}. Run 'ai setup' to add new keys.", "ok")
+            else:
+                self.append_line("◈ No saved API keys found.", "dim")
+            return
+
+        if lo.startswith("ai key delete "):
+            prov = raw.split(None, 3)[3].strip().lower() if len(raw.split(None, 3)) >= 4 else ""
+            if prov not in ("groq", "gemini", "openrouter"):
+                self.append_line("Usage: ai key delete <groq|gemini|openrouter|all>", "warn")
+                return
+            kp = Path.home() / ".config" / "nihatos-terminal" / f"{prov}_key"
+            if kp.exists():
+                kp.unlink()
+                self.append_line(f"◈ Deleted {prov} API key.", "ok")
+            else:
+                self.append_line(f"◈ No saved {prov} key found.", "dim")
+            return
+
         if lo.startswith("ai key "):
             parts = raw.split(None, 3)
             if len(parts) < 4 or parts[2].lower() not in ("groq", "gemini", "openrouter"):
-                self.append_line("Usage: ai key <groq|gemini|openrouter> <YOUR_API_KEY | remove>", "warn")
+                self.append_line("Usage: ai key <groq|gemini|openrouter> <YOUR_API_KEY | remove>  |  ai key delete <provider|all>  |  ai key clear", "warn")
                 return
             provider, key_val = parts[2].lower(), parts[3].strip()
             cfg_dir = Path.home() / ".config" / "nihatos-terminal"
