@@ -13,6 +13,7 @@ readonly CONFIG_DIR="${HOME}/.config/nihatos-terminal"
 readonly BIN_DIR="${HOME}/.local/bin"
 readonly BIN_PATH="${BIN_DIR}/${APP_NAME}"
 readonly DESKTOP_FILE="${HOME}/.local/share/applications/nihatos.desktop"
+readonly DESKTOP_SHORTCUT="${HOME}/Desktop/nihatos.desktop"
 
 log_info()  { printf "\033[1;36m[INFO]\033[0m %s\n" "$1"; }
 log_ok()    { printf "\033[1;32m[OK]\033[0m %s\n" "$1"; }
@@ -67,6 +68,7 @@ uninstall_app() {
     # 2. Remove launcher binary & desktop entry
     [[ -f "${BIN_PATH}" ]] && rm -f "${BIN_PATH}" && log_ok "Removed launcher: ${BIN_PATH}"
     [[ -f "${DESKTOP_FILE}" ]] && rm -f "${DESKTOP_FILE}" && log_ok "Removed desktop entry: ${DESKTOP_FILE}"
+    [[ -f "${DESKTOP_SHORTCUT}" ]] && rm -f "${DESKTOP_SHORTCUT}" && log_ok "Removed desktop shortcut: ${DESKTOP_SHORTCUT}"
 
     # 3. Prompt to delete saved API keys & config
     if [[ -d "${CONFIG_DIR}" ]]; then
@@ -142,6 +144,28 @@ case "\${1:-}" in
 esac
 WRAPPER
     chmod +x "${BIN_PATH}"
+
+    # Create Desktop Entry (App Menu + Desktop shortcut)
+    mkdir -p "${HOME}/.local/share/applications"
+    cat <<DESKTOP > "${DESKTOP_FILE}"
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Nihat.O.S Terminal
+Comment=AI-Native Linux Terminal
+Exec=${BIN_PATH}
+Icon=utilities-terminal
+Terminal=false
+Categories=System;TerminalEmulator;Development;
+StartupNotify=true
+DESKTOP
+    chmod +x "${DESKTOP_FILE}"
+
+    if [[ -d "${HOME}/Desktop" ]]; then
+        cp "${DESKTOP_FILE}" "${DESKTOP_SHORTCUT}"
+        chmod +x "${DESKTOP_SHORTCUT}"
+    fi
+    command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database "${HOME}/.local/share/applications" || true
 
     # Verify PATH
     if [[ ":${PATH}:" != *":${BIN_DIR}:"* ]]; then
