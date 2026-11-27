@@ -8,7 +8,7 @@
 [![PyQt6](https://img.shields.io/badge/UI-PyQt6-ffb300?style=for-the-badge&logo=qt&logoColor=black)](https://riverbankcomputing.com/software/pyqt/)
 [![Linux](https://img.shields.io/badge/Linux-Universal_Distro-00ff9d?style=for-the-badge&logo=linux&logoColor=black)](#universal-linux-support)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-ff1f33?style=for-the-badge&logo=gnu&logoColor=white)](LICENSE)
-[![Support Nihat.O.S](https://img.shields.io/badge/Support-Nihat.O.S-ff90e8?style=for-the-badge&logo=gumroad&logoColor=black)](https://ahmedullahnihat.gumroad.com/l/hqsqry)
+[![Buy Me a Coffee](https://img.shields.io/badge/☕_Buy_Me_a_Coffee-Support_Nihat.O.S-ffdd00?style=for-the-badge&logoColor=black)](https://ahmedullahnihat.gumroad.com/l/hqsqry)
 
 </div>
 
@@ -53,6 +53,8 @@ nihatos uninstall  # Cleanly remove the app (keeps your config & API keys safe)
 > ```bash
 > echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
 > ```
+
+> *Enjoying Nihat.O.S? Give it a ⭐ on GitHub or [☕ Buy me a coffee](https://ahmedullahnihat.gumroad.com/l/hqsqry) to help keep it free & open-source.*
 
 ---
 
@@ -254,9 +256,9 @@ Bug reports, feature ideas, and pull requests are welcome. Fork the repository, 
 
 ## Support the Project
 
-Nihat.O.S is 100% free and open-source. If it saves you time or enhances your Linux workflow, you can support ongoing development here:
+Nihat.O.S is 100% free and open-source. If it saves you time or enhances your Linux workflow, consider supporting ongoing development:
 
-[![Support Nihat.O.S on Gumroad](https://img.shields.io/badge/Support_Nihat.O.S-Donate_via_Gumroad-ff90e8?style=for-the-badge&logo=gumroad&logoColor=black)](https://ahmedullahnihat.gumroad.com/l/hqsqry)
+[![Buy Me a Coffee](https://img.shields.io/badge/☕_Buy_Me_a_Coffee-Donate_to_Nihat.O.S-ffdd00?style=for-the-badge&logoColor=black)](https://ahmedullahnihat.gumroad.com/l/hqsqry)
 
 ---
 
