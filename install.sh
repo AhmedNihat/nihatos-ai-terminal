@@ -2,7 +2,7 @@
 set -e
 
 REPO_URL="https://github.com/AhmedNihat/nihatos-ai-terminal.git"
-INSTALL_DIR="$HOME/.local/share/nihatos-terminal"
+INSTALL_DIR="$HOME/.local/share/nihatos-app"
 CONFIG_DIR="$HOME/.config/nihatos-terminal"
 BIN_DIR="$HOME/.local/bin"
 
@@ -98,7 +98,7 @@ mkdir -p "$BIN_DIR"
 cat <<'CLI' > "$BIN_DIR/nihatos"
 #!/usr/bin/env bash
 set -e
-INSTALL_DIR="$HOME/.local/share/nihatos-terminal"
+INSTALL_DIR="$HOME/.local/share/nihatos-app"
 
 case "${1:-}" in
     update)
