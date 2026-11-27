@@ -159,36 +159,101 @@ Nihat.O.S works across modern Linux distributions out of the box. On startup, it
 
 ---
 
-## Installation
+## Installation & Setup (Step-by-Step)
 
-### 1. Clone the Repository
+Nihat.O.S runs inside an isolated Python virtual environment (`.venv`) so it **never pollutes or breaks your system Python**. Follow these steps on any Linux PC or laptop:
+
+### Step 1: Check Python & Install System Prerequisites
+
+First, verify that you have **Python 3.10 or newer**:
+```bash
+python3 --version
+```
+
+Next, install `git`, `python3-venv`, `pip`, and the required Qt6 display libraries for your Linux distribution:
+
+- **Debian / Ubuntu / Linux Mint / Pop!_OS / Kali:**
+  ```bash
+  sudo apt update
+  sudo apt install -y git python3 python3-venv python3-pip libxcb-cursor0 libegl1 libgl1 libxkbcommon-x11-0
+  ```
+- **Fedora / RHEL / Nobara / AlmaLinux:**
+  ```bash
+  sudo dnf install -y git python3 python3-pip qt6-qtbase-gui xcb-util-cursor
+  ```
+- **Arch Linux / Manjaro / EndeavourOS / CachyOS:**
+  ```bash
+  sudo pacman -S --needed git python python-pip qt6-base xcb-util-cursor
+  ```
+- **openSUSE (Tumbleweed / Leap):**
+  ```bash
+  sudo zypper install -y git python3 python3-pip libqt6-qtbase xcb-util-cursor0
+  ```
+
+---
+
+### Step 2: Clone the Repository & Enter the Project Folder
+
+> **Important:** Make sure to run `cd nihatos-ai-terminal` before running any setup or launch commands.
+
 ```bash
 git clone [https://github.com/AhmedNihat/nihatos-ai-terminal.git](https://github.com/AhmedNihat/nihatos-ai-terminal.git)
 cd nihatos-ai-terminal
 ```
 
-### 2. Set Up Virtual Environment & Dependencies
+---
+
+### Step 3: Create Virtual Environment & Install Python Packages (`PyQt6` & Dependencies)
+
+#### Option A: Automated Setup (Recommended)
+This script automatically creates `.venv` and installs all required Python packages (`PyQt6`, `psutil`, `requests`, etc.) from `requirements.txt`:
+
 ```bash
 chmod +x scripts/setup_venv.sh run-gui.sh
 ./scripts/setup_venv.sh
 ```
-*(Or manually: `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`)*
 
-### 3. Launch Nihat.O.S
+#### Option B: Manual Setup (Using `venv` & `pip`)
+If you prefer to create the virtual environment and install packages manually:
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install --upgrade pip
+.venv/bin/pip install -r requirements.txt
+```
+
+*(Optional verification — confirm `PyQt6` is installed inside `.venv`:)*
+```bash
+.venv/bin/python -c "import PyQt6; print('PyQt6 OK')"
+```
+
+---
+
+### Step 4: Launch Nihat.O.S
+
+Always launch using `./run-gui.sh` (or `.venv/bin/python gui.py`) so it uses the `.venv` environment instead of system Python:
+
 ```bash
 ./run-gui.sh
 ```
 
-### 4. Get & Configure a Free AI API Key
+*(Alternative direct launch command:)*
+```bash
+.venv/bin/python gui.py
+```
+
+---
+
+### Step 5: Get & Configure a Free AI API Key
 
 Nihat.O.S supports **three free-tier AI providers with automatic fallback** in this priority order: **Groq -> Google Gemini -> OpenRouter**. You only need **one** key to start (adding more enables automatic failover).
 
-#### Step A: Get a Free API Key
+#### A. Get a Free API Key
 - **Groq (Recommended — fastest):** Go to [console.groq.com/keys](https://console.groq.com/keys), sign in, click **Create API Key**, and copy the key (`gsk_...`).
 - **Google Gemini:** Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey), sign in with Google, click **Create API key**, and copy the key (`AIza...`).
 - **OpenRouter (Free models fallback):** Go to [openrouter.ai/keys](https://openrouter.ai/keys), sign in, click **Create Key**, and copy the key (`sk-or-...`).
 
-#### Step B: Save Key in `~/.config/nihatos-terminal/`
+#### B. Save Key in `~/.config/nihatos-terminal/`
 All keys and user settings (`config.json`) stay privately inside `~/.config/nihatos-terminal/`, completely outside the repository:
 
 ```bash
@@ -209,7 +274,50 @@ chmod 600 ~/.config/nihatos-terminal/openrouter_key
 
 ---
 
+## Troubleshooting (Common Installation Issues)
+
+### 1. `ModuleNotFoundError: No module named 'PyQt6'`
+This happens if you ran `python3 gui.py` directly outside `.venv`, or if `.venv` was created before `python3-venv` was installed.
+
+**Fix:** Rebuild `.venv` inside the project folder and launch with `.venv`:
+```bash
+cd ~/nihatos-ai-terminal
+rm -rf .venv
+python3 -m venv .venv
+.venv/bin/pip install --upgrade pip
+.venv/bin/pip install -r requirements.txt
+.venv/bin/pip install PyQt6
+.venv/bin/python gui.py
+```
+
+**Debian / Ubuntu Fallback (if `pip install PyQt6` fails on your system):**
+Install Debian's native `python3-pyqt6` package and let `.venv` inherit it:
+```bash
+sudo apt install -y python3-pyqt6
+cd ~/nihatos-ai-terminal
+rm -rf .venv
+python3 -m venv --system-site-packages .venv
+.venv/bin/pip install -r requirements.txt
+./run-gui.sh
+```
+
+### 2. `error: externally-managed-environment` (PEP 668 on Debian 12+ / Ubuntu 24.04+)
+Modern Debian/Ubuntu blocks global `pip install`. Always use `.venv/bin/pip install ...` (never plain `pip install ...`) as shown in Step 3.
+
+### 3. `qt.qpa.plugin: Could not load the Qt platform plugin "xcb"`
+Your system is missing Qt6 XCB display libraries. Run the prerequisite command for your distro from **Step 1** (especially `libxcb-cursor0` on Debian/Ubuntu or `xcb-util-cursor` on Fedora/Arch).
+
+### 4. `chmod: cannot access 'scripts/setup_venv.sh': No such file or directory`
+You are still in your home directory (`~`). Enter the cloned folder first:
+```bash
+cd ~/nihatos-ai-terminal
+```
+
+---
+
 ## Add to Linux App Menu & Desktop (KDE / GNOME / XFCE)
+
+Run this from inside the `nihatos-ai-terminal` folder to add **Nihat.O.S** to your application launcher:
 
 ```bash
 APP_DIR="$(pwd)"
