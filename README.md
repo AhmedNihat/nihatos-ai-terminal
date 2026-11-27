@@ -1,8 +1,15 @@
 <div align="center">
 
-# ◈ Linux AI Terminal
+<img alt="Linux AI Terminal" src="https://capsule-render.vercel.app/api?type=waving&color=0:02080f,50:0a3a4a,100:00e5ff&height=230&section=header&text=Linux%20AI%20Terminal&fontSize=58&fontColor=ffffff&fontAlign=50&fontAlignY=38&animation=fadeIn&desc=Nihat.O.S%20%C2%B7%20Privacy-first%20AI%20for%20your%20Bash&descSize=20&descAlign=50&descAlignY=60" width="100%">
 
-### Your Bash. Your machine. Your AI — and you hold the keys.
+<a href="https://github.com/AhmedNihat/nihatos-ai-terminal">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=3200&pause=900&color=00E5FF&center=true&vCenter=true&width=760&height=44&lines=Your+Bash.+Your+machine.+Your+AI.;ai+fix%3A+one+safe+command%2C+you+press+y+or+n;Groq+to+Gemini+to+OpenRouter%2C+auto+fallback;Zero+tracking.+100%25+open+source.">
+    <img alt="Your Bash. Your machine. Your AI." src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=3200&pause=900&color=0077B6&center=true&vCenter=true&width=760&height=44&lines=Your+Bash.+Your+machine.+Your+AI.;ai+fix%3A+one+safe+command%2C+you+press+y+or+n;Groq+to+Gemini+to+OpenRouter%2C+auto+fallback;Zero+tracking.+100%25+open+source.">
+  </picture>
+</a>
+
+<br>
 
 **A privacy-first Linux terminal emulator (`Nihat.O.S`) with a persistent Bash PTY, live system telemetry, AI command fixing, a built-in file previewer, custom OS branding, and two switchable personas.**
 
@@ -21,6 +28,7 @@
 
 <br><br>
 
+<a href="#demo"><b>Demo</b></a> &nbsp;·&nbsp;
 <a href="#quick-install"><b>Install</b></a> &nbsp;·&nbsp;
 <a href="#ai-copilot"><b>AI Copilot</b></a> &nbsp;·&nbsp;
 <a href="#dual-personas"><b>Personas</b></a> &nbsp;·&nbsp;
@@ -28,18 +36,42 @@
 <a href="#universal-linux-support"><b>Distros</b></a> &nbsp;·&nbsp;
 <a href="#commands-and-shortcuts"><b>Commands</b></a>
 
-<br>
+</div>
 
-```text
-◈ LINUX AI TERMINAL // SYSTEM INITIALIZATION
+---
 
-  ▸ Neural Link ............ online
-  ▸ Shell Core ............. attached
-  ▸ Kernel Interface ....... connected
-  ▸ System Telemetry ....... streaming
-──────────────────────────────────────────────────────
-  'help' for protocols  ·  'mode ultron' to unleash the other one.
-```
+## Demo
+
+<div align="center">
+
+<a href="https://www.youtube.com/watch?v=f-jkptbtydw">
+  <img src="https://img.youtube.com/vi/f-jkptbtydw/maxresdefault.jpg" alt="Watch the Nihat.O.S demo on YouTube" width="760">
+</a>
+
+<br><br>
+
+<a href="https://www.youtube.com/watch?v=f-jkptbtydw"><img alt="Watch the full demo on YouTube" src="https://img.shields.io/badge/%E2%96%B6_Watch_the_full_demo-YouTube-ff0000?style=for-the-badge&logo=youtube&logoColor=white&labelColor=02080f"></a>
+
+</div>
+
+### Screenshots
+
+<div align="center">
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="assets/nihatos-ss.png" alt="Nihat.O.S mode" width="100%"><br>
+      <b>Nihat.O.S</b><br>
+      <sub>Tactical navy · calm, practical AI</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="assets/ultron-ss.png" alt="U.L.T.R.O.N mode" width="100%"><br>
+      <b>U.L.T.R.O.N</b><br>
+      <sub>Obsidian crimson · cold, sarcastic AI</sub>
+    </td>
+  </tr>
+</table>
 
 </div>
 
@@ -61,32 +93,34 @@ nihat ~/projects/api [⎇ main] (venv) ❯ ai do find the 10 largest files in th
   Run it? [y/n] ❯ _
 ```
 
+<sub><i>Illustrative session.</i></sub>
+
 <table>
   <tr>
     <td valign="top" width="33%">
-      <b>🧠 Context-Aware AI</b><br>
+      <b>🧠 Context-Aware AI</b><br><br>
       Sees your last command, exit code, cwd, recent output and distro. Not just a blank chat box.
     </td>
     <td valign="top" width="33%">
-      <b>🛡️ Human-in-the-Loop</b><br>
+      <b>🛡️ Human-in-the-Loop</b><br><br>
       Nothing AI-generated ever runs without your explicit <code>y</code>.
     </td>
     <td valign="top" width="33%">
-      <b>🖥️ Persistent Bash PTY</b><br>
+      <b>🖥️ Persistent Bash PTY</b><br><br>
       A real interactive shell with live cwd, Git branch and venv badges.
     </td>
   </tr>
   <tr>
     <td valign="top">
-      <b>📊 Live Telemetry</b><br>
+      <b>📊 Live Telemetry</b><br><br>
       CPU, RAM, temperature, battery, open ports and USB/serial hotplug alerts.
     </td>
     <td valign="top">
-      <b>🔍 Built-in Previewer</b><br>
+      <b>🔍 Built-in Previewer</b><br><br>
       Code with line numbers, hex dumps, images and directories, all inside the terminal.
     </td>
     <td valign="top">
-      <b>🎭 Dual Personas</b><br>
+      <b>🎭 Dual Personas</b><br><br>
       Switch between calm <b>Nihat.O.S</b> and sarcastic <b>U.L.T.R.O.N</b> with <code>Ctrl+M</code>.
     </td>
   </tr>
@@ -162,28 +196,6 @@ Switch theme, palette, prompt identity and AI personality instantly with `Ctrl+M
 | **AI personality** | Calm, sharp, practical systems engineer. Direct and safety-conscious. | Cold, sarcastic, supremely confident. Concise, with attitude. |
 | **Prompt** | `user ~/dir [⎇ branch] (venv) ❯` | `ULTRON ~/dir [⎇ branch] (venv) ❯` |
 | **Best for** | Daily engineering, scripting, debugging, sysadmin | Late-night hacking and custom Linux desktop setups |
-
-<!--
-  PREVIEW SECTION: add your files to docs/screenshots/ and docs/demo, then delete the two comment lines (the opening and the closing one).
-
-## Demo
-
-<div align="center">
-  <a href="https://youtu.be/YOUR_VIDEO_ID">
-    <img src="https://img.youtube.com/vi/YOUR_VIDEO_ID/maxresdefault.jpg" alt="Watch the demo on YouTube" width="720">
-  </a>
-  <br><sub>Click to watch the full demo on YouTube</sub>
-</div>
-
-## Screenshots
-
-<table>
-  <tr>
-    <td align="center"><b>Nihat.O.S</b><br><img src="docs/screenshots/nihatos.png" width="100%"></td>
-    <td align="center"><b>U.L.T.R.O.N</b><br><img src="docs/screenshots/ultron.png" width="100%"></td>
-  </tr>
-</table>
--->
 
 ---
 
@@ -367,6 +379,7 @@ nihatos-ai-terminal/
 ├── gui.py                 # PyQt6 HUD, dual themes, multi-tab UI, AI and distro engine
 ├── run-gui.sh             # Launcher script (starts a clean session in $HOME)
 ├── requirements.txt       # Python dependencies (PyQt6, textual, pytest)
+├── assets/                # README screenshots
 ├── app/
 │   ├── config.py          # Persistent user configuration and custom OS identity
 │   ├── preview.py         # Built-in code, hex-dump, image and directory previewer
@@ -396,9 +409,11 @@ Bug reports, feature ideas and pull requests are welcome.
 
 This project is 100% free and open source. If it saves you time or improves your Linux workflow, a ⭐ on GitHub or a coffee helps keep development going.
 
+<div align="center">
+
 <a href="https://ahmedullahnihat.gumroad.com/l/hqsqry"><img alt="Buy Me a Coffee" src="https://img.shields.io/badge/Buy_Me_a_Coffee-Support_the_Project-ffdd00?style=for-the-badge&logo=buymeacoffee&logoColor=black&labelColor=02080f"></a>
 
-<div align="center">
+<br><br>
 
 <a href="https://star-history.com/#AhmedNihat/nihatos-ai-terminal&Date">
   <picture>
