@@ -3,7 +3,6 @@ set -euo pipefail
 
 # ==============================================================================
 # Nihat.O.S Universal Installer & Uninstaller
-# Engineering Standards: Strict mode, explicit path guards, atomic cleanup
 # ==============================================================================
 
 readonly APP_NAME="nihatos"
@@ -20,7 +19,6 @@ log_ok()    { printf "\033[1;32m[OK]\033[0m %s\n" "$1"; }
 log_warn()  { printf "\033[1;33m[WARN]\033[0m %s\n" "$1"; }
 log_error() { printf "\033[1;31m[ERROR]\033[0m %s\n" "$1" >&2; }
 
-# Safety guard: Never allow rm -rf on empty, root, or $HOME paths
 safe_remove_dir() {
     local target="$1"
     if [[ -z "${target}" || "${target}" == "/" || "${target}" == "${HOME}" ]]; then
@@ -58,19 +56,14 @@ clear_api_keys() {
 uninstall_app() {
     log_info "Starting Nihat.O.S uninstallation..."
 
-    # 1. Verify and remove app directory
-    if [[ -d "${INSTALL_DIR}" ]]; then
-        safe_remove_dir "${INSTALL_DIR}"
-    else
-        log_warn "Install directory not found at ${INSTALL_DIR}."
-    fi
+    safe_remove_dir "${INSTALL_DIR}"
 
-    # 2. Remove launcher binary & desktop entry
     [[ -f "${BIN_PATH}" ]] && rm -f "${BIN_PATH}" && log_ok "Removed launcher: ${BIN_PATH}"
-    [[ -f "${DESKTOP_FILE}" ]] && rm -f "${DESKTOP_FILE}" && log_ok "Removed desktop entry: ${DESKTOP_FILE}"
+    [[ -f "${DESKTOP_FILE}" ]] && rm -f "${DESKTOP_FILE}" && log_ok "Removed app menu entry: ${DESKTOP_FILE}"
     [[ -f "${DESKTOP_SHORTCUT}" ]] && rm -f "${DESKTOP_SHORTCUT}" && log_ok "Removed desktop shortcut: ${DESKTOP_SHORTCUT}"
 
-    # 3. Prompt to delete saved API keys & config
+    command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database "${HOME}/.local/share/applications" || true
+
     if [[ -d "${CONFIG_DIR}" ]]; then
         printf "\033[1;33m[PROMPT]\033[0m Also delete saved API keys & config (%s)? [y/N]: " "${CONFIG_DIR}"
         read -r answer </dev/tty || answer="n"
@@ -89,20 +82,20 @@ install_app() {
     log_info "Checking prerequisites..."
     for cmd in git python3; do
         if ! command -v "${cmd}" >/dev/null 2>&1; then
-            log_error "Required command '${cmd}' is not installed. Please install it first."
+            log_error "Required command '${cmd}' is not installed."
             exit 1
         fi
     done
 
-    mkdir -p "${HOME}/.local/share" "${BIN_DIR}" "${CONFIG_DIR}"
+    mkdir -p "${HOME}/.local/share" "${HOME}/.local/share/applications" "${BIN_DIR}" "${CONFIG_DIR}"
 
-    # Strict directory check: Update if valid git repo, else clean reinstall
+    # Strict directory check: Update if valid git repo, else clean clone
     if [[ -d "${INSTALL_DIR}" ]]; then
         if [[ -d "${INSTALL_DIR}/.git" ]]; then
             log_info "Existing Nihat.O.S installation detected. Updating..."
             git -C "${INSTALL_DIR}" pull --ff-only
         else
-            log_warn "Directory ${INSTALL_DIR} exists but is not a valid git repo. Rebuilding cleanly..."
+            log_warn "${INSTALL_DIR} is not a valid git repo. Rebuilding cleanly..."
             safe_remove_dir "${INSTALL_DIR}"
             git clone "${REPO_URL}" "${INSTALL_DIR}"
         fi
@@ -122,7 +115,7 @@ install_app() {
         "${INSTALL_DIR}/.venv/bin/pip" install -r "${INSTALL_DIR}/requirements.txt"
     fi
 
-    # Create smart wrapper launcher with built-in uninstall & key-clear commands
+    # Create CLI wrapper launcher (points to gui.py)
     cat <<WRAPPER > "${BIN_PATH}"
 #!/usr/bin/env bash
 set -euo pipefail
@@ -139,14 +132,22 @@ case "\${1:-}" in
         ;;
     *)
         cd "${INSTALL_DIR}"
-        exec "${INSTALL_DIR}/.venv/bin/python" "${INSTALL_DIR}/main.py" "\$@"
+        exec "${INSTALL_DIR}/.venv/bin/python" "${INSTALL_DIR}/gui.py" "\$@"
         ;;
 esac
 WRAPPER
     chmod +x "${BIN_PATH}"
 
-    # Create Desktop Entry (App Menu + Desktop shortcut)
-    mkdir -p "${HOME}/.local/share/applications"
+    # Pick custom icon from assets/ if available, else default terminal icon
+    local app_icon="utilities-terminal"
+    for candidate in "${INSTALL_DIR}/assets/icon.png" "${INSTALL_DIR}/assets/logo.png" "${INSTALL_DIR}/assets/nihatos.png"; do
+        if [[ -f "${candidate}" ]]; then
+            app_icon="${candidate}"
+            break
+        fi
+    done
+
+    # Create App Menu & Desktop shortcut
     cat <<DESKTOP > "${DESKTOP_FILE}"
 [Desktop Entry]
 Version=1.0
@@ -154,7 +155,7 @@ Type=Application
 Name=Nihat.O.S Terminal
 Comment=AI-Native Linux Terminal
 Exec=${BIN_PATH}
-Icon=utilities-terminal
+Icon=${app_icon}
 Terminal=false
 Categories=System;TerminalEmulator;Development;
 StartupNotify=true
@@ -169,8 +170,8 @@ DESKTOP
 
     # Verify PATH
     if [[ ":${PATH}:" != *":${BIN_DIR}:"* ]]; then
-        log_warn "${BIN_DIR} is not in your PATH. Add this to ~/.bashrc or ~/.zshrc:"
-        echo "  export PATH=\"\$HOME/.local/bin:\$PATH\""
+        log_warn "${BIN_DIR} is not in your PATH. Run:"
+        echo "  echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> ~/.bashrc && source ~/.bashrc"
     fi
 
     log_ok "Nihat.O.S installed successfully!"
@@ -180,7 +181,6 @@ DESKTOP
     echo "  Uninstall app : nihatos uninstall"
 }
 
-# Argument routing
 case "${1:-}" in
     --uninstall|uninstall)
         uninstall_app
