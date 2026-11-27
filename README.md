@@ -2,7 +2,7 @@
 
 # NIHAT.O.S — AI-Native Linux Terminal
 
-**A modern, privacy-first Linux terminal emulator with a persistent Bash PTY, live system telemetry, smart AI command fixing, built-in file preview, and dual personas.**
+**A modern, privacy-first Linux terminal emulator with a persistent Bash PTY, live system telemetry, smart AI command fixing, built-in file preview, custom OS branding, and dual personas.**
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-00e5ff?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![PyQt6](https://img.shields.io/badge/UI-PyQt6-ffb300?style=for-the-badge&logo=qt&logoColor=black)](https://riverbankcomputing.com/software/pyqt/)
@@ -23,6 +23,35 @@
 ──────────────────────────────────────────────────────
   'help' for protocols  ·  'mode ultron' to unleash the other one.
 ```
+
+---
+
+## Quick Install (One-Line Universal Installer)
+
+Paste this single command into your Linux terminal. It works out of the box on **Ubuntu, Debian, Fedora, Arch, openSUSE, and Alpine**:
+
+```bash
+curl -fsSL [https://raw.githubusercontent.com/AhmedNihat/nihatos-ai-terminal/main/install.sh](https://raw.githubusercontent.com/AhmedNihat/nihatos-ai-terminal/main/install.sh) | bash
+```
+
+**What the installer does automatically:**
+- Detects your Linux distribution and installs required system dependencies (`git`, `python3-venv`, Qt6/XCB libraries).
+- Sets up an isolated Python `.venv` with `PyQt6` (zero conflict with your system Python).
+- Lets you personalize your **custom OS name** (e.g., `Saad.O.S`, `Alex.O.S`) and optionally add a free AI API key.
+- Installs the global `nihatos` CLI command and adds a desktop launcher to your Linux App Menu.
+
+### Launch, Update & Manage
+
+```bash
+nihatos            # Launch the terminal (or open it from your App Menu)
+nihatos update     # Pull the latest version & dependencies
+nihatos uninstall  # Cleanly remove the app (keeps your config & API keys safe)
+```
+
+> **Note:** If `nihatos` isn't recognized immediately after install, add `~/.local/bin` to your `PATH`:
+> ```bash
+> echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+> ```
 
 ---
 
@@ -59,9 +88,9 @@ Switch the terminal's visual theme, color palette, prompt identity, and AI perso
 
 ---
 
-## Context-Aware AI Copilot
+## Context-Aware AI Copilot & Built-in Key Setup
 
-Unlike standalone chat wrappers, **Nihat.O.S** runs directly on top of your active Bash session and local system telemetry.
+Unlike standalone chat wrappers, **Nihat.O.S** runs directly on top of your active Bash session and local system telemetry, with **automatic free-tier fallback** across **Groq -> Google Gemini -> OpenRouter**.
 
 - **Smart Command Fixing (`ai fix`)**  
   When a command fails, run `ai fix`. Nihat.O.S inspects your last command, exit code, working directory, recent terminal output, and Linux distribution, then proposes one safe corrected command ready to execute with `y`.
@@ -69,6 +98,15 @@ Unlike standalone chat wrappers, **Nihat.O.S** runs directly on top of your acti
   Describe a task in plain English (for example: `ai do find the top 10 largest files in this directory`). Nihat.O.S generates a single distro-compatible Bash command and waits for explicit `y` / `n` confirmation before execution.
 - **Telemetry-Aware Diagnostics (`ai <question>`)**  
   Ask about battery health, disk usage, RAM/swap, CPU load, or kernel/OS version. Nihat.O.S runs read-only system probes in the background and responds with real figures from your machine.
+- **Built-in API Key Management (`ai setup` / `ai key`)**  
+  No manual config file editing needed. Grab a free key from [Groq](https://console.groq.com/keys) (recommended), [Google Gemini](https://aistudio.google.com/apikey), or [OpenRouter](https://openrouter.ai/keys), then run inside the terminal:
+  ```text
+  ai setup                             # Check configured keys & links
+  ai key groq YOUR_GROQ_API_KEY        # Save Groq key securely (chmod 600)
+  ai key gemini YOUR_GEMINI_API_KEY    # Optional fallback
+  ai key openrouter YOUR_KEY           # Optional fallback
+  ```
+  Keys are saved locally in `~/.config/nihatos-terminal/`, excluded from shell history, and take effect immediately without restarting.
 
 ---
 
@@ -110,6 +148,8 @@ Nihat.O.S works across modern Linux distributions out of the box. On startup, it
 
 ## Core Engineering Features
 
+- **Custom OS Identity (`setname`)**  
+  Personalize the header, window title, boot sequence, and AI identity to your own name anytime (e.g., `setname Saad.O.S`).
 - **Smart Input Recommendations & Live Autocomplete**  
   A real-time dropdown suggestion popup appears as you type, recommending built-in commands, `$PATH` executables, local files/directories, and saved waypoints. Navigate with `Up`/`Down`, press `Tab` or `Enter` (or click) to complete, and press `Esc` to dismiss.
 - **Interactive History Search (`Ctrl+R`)**  
@@ -142,7 +182,10 @@ Nihat.O.S works across modern Linux distributions out of the box. On startup, it
 | `ai <question>` | Ask the AI copilot (auto-injects live hardware/OS telemetry when relevant) |
 | `ai do <task>` | Generate one safe, distro-specific Bash command from plain English |
 | `ai fix` | Diagnose the last failed command or syntax error and propose a fix |
+| `ai setup` / `ai key <p> <k>` | Check or save Groq / Gemini / OpenRouter API keys securely |
 | `y` / `n` *(after AI suggestion)* | Run or cancel the pending AI-generated command |
+| `setname <Name>` | Customize your terminal OS name (e.g., `setname Saad.O.S`) |
+| `update` | Pull the latest updates and dependencies from inside the terminal |
 | `mode nihatos` / `mode ultron` | Switch between Nihat.O.S and U.L.T.R.O.N modes |
 | `Ctrl + M` | Toggle persona and theme |
 | `Ctrl + T` / `Ctrl + W` | Open a new terminal tab / close the current tab |
@@ -150,7 +193,7 @@ Nihat.O.S works across modern Linux distributions out of the box. On startup, it
 | `go <mark>` | Jump directly to a bookmarked waypoint directory |
 | `preview <path>` / `view <path>` / `less <file>` | Open built-in code, text, hex, image, or directory previewer |
 | `tui <cmd>` | Launch an interactive TUI app in your external terminal |
-| `sys` | Display quick system scan (kernel, uptime, memory) |
+| `sys` / `ports` / `devices` | Quick system scan, open network ports, or USB/serial devices |
 | `save [filename]` | Export current terminal output to a file (default: `nihatos-log.txt`) |
 | `copy [N \| all]` | Copy last `N` lines (default `25`) or full output to clipboard |
 | `Shift + Enter` | Insert a newline in the multi-line command input |
@@ -159,189 +202,26 @@ Nihat.O.S works across modern Linux distributions out of the box. On startup, it
 
 ---
 
-## Installation & Setup (Step-by-Step)
+<details>
+<summary><strong>Manual Installation & Troubleshooting (Click to expand)</strong></summary>
 
-Nihat.O.S runs inside an isolated Python virtual environment (`.venv`) so it **never pollutes or breaks your system Python**. Follow these steps on any Linux PC or laptop:
-
-### Step 1: Check Python & Install System Prerequisites
-
-First, verify that you have **Python 3.10 or newer**:
-```bash
-python3 --version
-```
-
-Next, install `git`, `python3-venv`, `pip`, and the required Qt6 display libraries for your Linux distribution:
-
-- **Debian / Ubuntu / Linux Mint / Pop!_OS / Kali:**
-  ```bash
-  sudo apt update
-  sudo apt install -y git python3 python3-venv python3-pip libxcb-cursor0 libegl1 libgl1 libxkbcommon-x11-0
-  ```
-- **Fedora / RHEL / Nobara / AlmaLinux:**
-  ```bash
-  sudo dnf install -y git python3 python3-pip qt6-qtbase-gui xcb-util-cursor
-  ```
-- **Arch Linux / Manjaro / EndeavourOS / CachyOS:**
-  ```bash
-  sudo pacman -S --needed git python python-pip qt6-base xcb-util-cursor
-  ```
-- **openSUSE (Tumbleweed / Leap):**
-  ```bash
-  sudo zypper install -y git python3 python3-pip libqt6-qtbase xcb-util-cursor0
-  ```
-
----
-
-### Step 2: Clone the Repository & Enter the Project Folder
-
-> **Important:** Make sure to run `cd nihatos-ai-terminal` before running any setup or launch commands.
-
+### Manual Setup (From Source)
 ```bash
 git clone [https://github.com/AhmedNihat/nihatos-ai-terminal.git](https://github.com/AhmedNihat/nihatos-ai-terminal.git)
 cd nihatos-ai-terminal
-```
-
----
-
-### Step 3: Create Virtual Environment & Install Python Packages (`PyQt6` & Dependencies)
-
-#### Option A: Automated Setup (Recommended)
-This script automatically creates `.venv` and installs all required Python packages (`PyQt6`, `psutil`, `requests`, etc.) from `requirements.txt`:
-
-```bash
-chmod +x scripts/setup_venv.sh run-gui.sh
-./scripts/setup_venv.sh
-```
-
-#### Option B: Manual Setup (Using `venv` & `pip`)
-If you prefer to create the virtual environment and install packages manually:
-
-```bash
 python3 -m venv .venv
 .venv/bin/pip install --upgrade pip
 .venv/bin/pip install -r requirements.txt
-```
-
-*(Optional verification — confirm `PyQt6` is installed inside `.venv`:)*
-```bash
-.venv/bin/python -c "import PyQt6; print('PyQt6 OK')"
-```
-
----
-
-### Step 4: Launch Nihat.O.S
-
-Always launch using `./run-gui.sh` (or `.venv/bin/python gui.py`) so it uses the `.venv` environment instead of system Python:
-
-```bash
+chmod +x run-gui.sh
 ./run-gui.sh
 ```
 
-*(Alternative direct launch command:)*
-```bash
-.venv/bin/python gui.py
-```
+### Troubleshooting
+- **`ModuleNotFoundError: No module named 'PyQt6'`**: Always launch via `nihatos` or `./run-gui.sh` (not system `python3 gui.py`). If `pip` fails to install `PyQt6` on Debian/Ubuntu, install `sudo apt install -y python3-pyqt6` and rebuild `.venv` with `python3 -m venv --system-site-packages .venv`.
+- **`qt.qpa.plugin: Could not load the Qt platform plugin "xcb"`**: Install Qt6 XCB libraries for your distro (`libxcb-cursor0 libegl1 libgl1 libxkbcommon-x11-0` on Debian/Ubuntu, or `qt6-qtbase-gui xcb-util-cursor` on Fedora).
+- **`error: externally-managed-environment` (PEP 668)**: Always use `.venv/bin/pip` instead of global `pip`.
 
----
-
-### Step 5: Get & Configure a Free AI API Key
-
-Nihat.O.S supports **three free-tier AI providers with automatic fallback** in this priority order: **Groq -> Google Gemini -> OpenRouter**. You only need **one** key to start (adding more enables automatic failover).
-
-#### A. Get a Free API Key
-- **Groq (Recommended — fastest):** Go to [console.groq.com/keys](https://console.groq.com/keys), sign in, click **Create API Key**, and copy the key (`gsk_...`).
-- **Google Gemini:** Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey), sign in with Google, click **Create API key**, and copy the key (`AIza...`).
-- **OpenRouter (Free models fallback):** Go to [openrouter.ai/keys](https://openrouter.ai/keys), sign in, click **Create Key**, and copy the key (`sk-or-...`).
-
-#### B. Save Key in `~/.config/nihatos-terminal/`
-All keys and user settings (`config.json`) stay privately inside `~/.config/nihatos-terminal/`, completely outside the repository:
-
-```bash
-mkdir -p ~/.config/nihatos-terminal
-
-# Primary: Groq (recommended)
-echo "YOUR_GROQ_API_KEY" > ~/.config/nihatos-terminal/groq_key
-chmod 600 ~/.config/nihatos-terminal/groq_key
-
-# Optional fallback: Google Gemini
-echo "YOUR_GEMINI_API_KEY" > ~/.config/nihatos-terminal/gemini_key
-chmod 600 ~/.config/nihatos-terminal/gemini_key
-
-# Optional fallback: OpenRouter
-echo "YOUR_OPENROUTER_API_KEY" > ~/.config/nihatos-terminal/openrouter_key
-chmod 600 ~/.config/nihatos-terminal/openrouter_key
-```
-
----
-
-## Troubleshooting (Common Installation Issues)
-
-### 1. `ModuleNotFoundError: No module named 'PyQt6'`
-This happens if you ran `python3 gui.py` directly outside `.venv`, or if `.venv` was created before `python3-venv` was installed.
-
-**Fix:** Rebuild `.venv` inside the project folder and launch with `.venv`:
-```bash
-cd ~/nihatos-ai-terminal
-rm -rf .venv
-python3 -m venv .venv
-.venv/bin/pip install --upgrade pip
-.venv/bin/pip install -r requirements.txt
-.venv/bin/pip install PyQt6
-.venv/bin/python gui.py
-```
-
-**Debian / Ubuntu Fallback (if `pip install PyQt6` fails on your system):**
-Install Debian's native `python3-pyqt6` package and let `.venv` inherit it:
-```bash
-sudo apt install -y python3-pyqt6
-cd ~/nihatos-ai-terminal
-rm -rf .venv
-python3 -m venv --system-site-packages .venv
-.venv/bin/pip install -r requirements.txt
-./run-gui.sh
-```
-
-### 2. `error: externally-managed-environment` (PEP 668 on Debian 12+ / Ubuntu 24.04+)
-Modern Debian/Ubuntu blocks global `pip install`. Always use `.venv/bin/pip install ...` (never plain `pip install ...`) as shown in Step 3.
-
-### 3. `qt.qpa.plugin: Could not load the Qt platform plugin "xcb"`
-Your system is missing Qt6 XCB display libraries. Run the prerequisite command for your distro from **Step 1** (especially `libxcb-cursor0` on Debian/Ubuntu or `xcb-util-cursor` on Fedora/Arch).
-
-### 4. `chmod: cannot access 'scripts/setup_venv.sh': No such file or directory`
-You are still in your home directory (`~`). Enter the cloned folder first:
-```bash
-cd ~/nihatos-ai-terminal
-```
-
----
-
-## Add to Linux App Menu & Desktop (KDE / GNOME / XFCE)
-
-Run this from inside the `nihatos-ai-terminal` folder to add **Nihat.O.S** to your application launcher:
-
-```bash
-APP_DIR="$(pwd)"
-mkdir -p ~/.local/share/applications
-
-cat <<DESKTOP> ~/.local/share/applications/nihatos-terminal.desktop
-[Desktop Entry]
-Version=1.0
-Type=Application
-Name=Nihat.O.S
-GenericName=AI Native Terminal
-Comment=Nihat.O.S Intelligent Native Terminal System
-Exec=$APP_DIR/run-gui.sh
-Path=$HOME
-Icon=utilities-terminal
-Terminal=false
-Categories=System;TerminalEmulator;Utility;
-Keywords=terminal;shell;ai;nihatos;ultron;jarvis;
-StartupNotify=true
-StartupWMClass=nihatos-terminal
-DESKTOP
-
-update-desktop-database ~/.local/share/applications 2>/dev/null || true
-```
+</details>
 
 ---
 
@@ -349,13 +229,15 @@ update-desktop-database ~/.local/share/applications 2>/dev/null || true
 
 ```text
 nihatos-ai-terminal/
+├── install.sh             # One-line universal Linux installer, updater & CLI wrapper
 ├── gui.py                 # Main PyQt6 HUD, dual themes, multi-tab UI, AI & distro engine
 ├── run-gui.sh             # Launcher script (starts clean session in $HOME)
-├── requirements.txt       # Python dependencies
+├── requirements.txt       # Python dependencies (PyQt6, textual, pytest)
 ├── app/
+│   ├── config.py          # Persistent user configuration & custom OS identity
 │   ├── preview.py         # Built-in code, hex-dump, image & directory previewer
 │   ├── shell/             # Persistent Bash PTY core, OSC markers & TUI handoff
-│   ├── integrations/      # AI API client & private key management
+│   ├── integrations/      # Multi-provider AI client (Groq / Gemini / OpenRouter)
 │   └── system/            # Live hardware telemetry & USB/power monitoring
 ├── scripts/               # Automated venv setup & diagnostic test scripts
 └── tests/                 # Pytest suite (PTY shell, handoff, productivity & AI helpers)
