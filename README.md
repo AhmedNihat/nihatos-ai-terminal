@@ -8,6 +8,7 @@
 [![PyQt6](https://img.shields.io/badge/UI-PyQt6-ffb300?style=for-the-badge&logo=qt&logoColor=black)](https://riverbankcomputing.com/software/pyqt/)
 [![Linux](https://img.shields.io/badge/Linux-Universal_Distro-00ff9d?style=for-the-badge&logo=linux&logoColor=black)](#universal-linux-support)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-ff1f33?style=for-the-badge&logo=gnu&logoColor=white)](LICENSE)
+[![Support Nihat.O.S](https://img.shields.io/badge/Support-Nihat.O.S-ff90e8?style=for-the-badge&logo=gumroad&logoColor=black)](https://ahmedullahnihat.gumroad.com/l/hqsqry)
 
 </div>
 
@@ -248,6 +249,14 @@ nihatos-ai-terminal/
 ## Contributing
 
 Bug reports, feature ideas, and pull requests are welcome. Fork the repository, create a feature branch, and open a PR.
+
+---
+
+## Support the Project
+
+Nihat.O.S is 100% free and open-source. If it saves you time or enhances your Linux workflow, you can support ongoing development here:
+
+[![Support Nihat.O.S on Gumroad](https://img.shields.io/badge/Support_Nihat.O.S-Donate_via_Gumroad-ff90e8?style=for-the-badge&logo=gumroad&logoColor=black)](https://ahmedullahnihat.gumroad.com/l/hqsqry)
 
 ---
 
