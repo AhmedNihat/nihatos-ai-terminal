@@ -2619,20 +2619,42 @@ class N1BroXDesktopWindow(QMainWindow):
             )
             return
 
-        if lo in ("ai setup", "ai key"):
+        if lo in ("ai setup", "ai key", "ai key setup", "ai key status", "ai key help"):
             cfg_dir = DEFAULT_CONFIG_DIR
-            self.append_line("◈ AI API KEY STATUS (stored locally in ~/.config/n1brox-terminal/)", "head")
-            for label, fname, url in [
-                ("Groq (Primary)", "groq_key", "https://console.groq.com/keys"),
-                ("Google Gemini", "gemini_key", "https://aistudio.google.com/apikey"),
-                ("OpenRouter", "openrouter_key", "https://openrouter.ai/keys"),
-            ]:
+            short_dir = str(cfg_dir).replace(str(Path.home()), "~", 1)
+            self.append_line("◈ AI API KEY SETUP & STATUS", "head")
+            self.append_line("  Auto-fallback order: 1. Groq → 2. Google Gemini → 3. OpenRouter (any 1 key works)", "dim")
+            for idx, (label, fname, url) in enumerate(
+                [
+                    ("Groq (Fastest)", "groq_key", "https://console.groq.com/keys"),
+                    ("Google Gemini", "gemini_key", "https://aistudio.google.com/apikey"),
+                    ("OpenRouter", "openrouter_key", "https://openrouter.ai/keys"),
+                ],
+                start=1,
+            ):
                 kp = cfg_dir / fname
-                status = "✔ configured" if (kp.is_file() and kp.read_text(encoding="utf-8", errors="ignore").strip()) else "✖ not set"
-                self.append_line(f"  ▸ {label:<16} {status}   ({url})", "ok" if "✔" in status else "dim")
-            self.append_line("  Set key:    ai key <groq|gemini|openrouter> <YOUR_API_KEY>", "warn")
-            self.append_line("  Example:    ai key groq gsk_1234567890abcdef   (no < > or quotes)", "dim")
-            self.append_line("  Remove key: ai key <groq|gemini|openrouter> remove", "dim")
+                has_key = kp.is_file() and bool(kp.read_text(encoding="utf-8", errors="ignore").strip())
+                status = "✔ configured" if has_key else "✖ not set"
+                self.append_line(f"  {idx}. {label:<16} {status}  ·  {url}", "ok" if has_key else "dim")
+            self.append_line(
+                "◈ HOW TO SET A KEY (paste key directly — no < > brackets or quotes)
+"
+                "  ▸ Groq       : ai key groq gsk_YOUR_API_KEY
+"
+                "  ▸ Gemini     : ai key gemini AIzaYOUR_API_KEY
+"
+                "  ▸ OpenRouter : ai key openrouter sk-or-v1-YOUR_API_KEY
+"
+                "◈ MANAGE SAVED KEYS
+"
+                "  ▸ Remove one : ai key delete <groq|gemini|openrouter>
+"
+                "  ▸ Clear all  : ai key clear"
+            )
+            self.append_line(
+                f"  Stored locally in {short_dir}/ (chmod 600, excluded from history, active immediately).",
+                "dim",
+            )
             return
 
         if lo == "ai key clear" or lo == "ai key delete all":
@@ -2666,7 +2688,8 @@ class N1BroXDesktopWindow(QMainWindow):
         if lo.startswith("ai key "):
             parts = raw.split(None, 3)
             if len(parts) < 4 or parts[2].lower() not in ("groq", "gemini", "openrouter"):
-                self.append_line("Usage: ai key <groq|gemini|openrouter> <YOUR_API_KEY | remove>  |  ai key delete <provider|all>  |  ai key clear", "warn")
+                self.append_line("Usage: ai key <groq|gemini|openrouter> <YOUR_API_KEY>  |  ai key delete <provider|all>  |  ai key clear", "warn")
+                self.append_line("Tip: run 'ai key setup' for provider links, examples, and key status.", "dim")
                 return
             provider, key_val = parts[2].lower(), parts[3].strip().strip("<>\"'")
             cfg_dir = DEFAULT_CONFIG_DIR
