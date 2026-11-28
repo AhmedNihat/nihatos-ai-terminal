@@ -76,13 +76,15 @@ save_key_file() {
     chmod 600 "${CONFIG_DIR}/${provider}_key"
 }
 
-save_os_name() {
-    local name_val
-    name_val="$(printf "%s" "$1" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
-    [[ -n "${name_val}" ]] || return 1
-    N1_CFG="${CONFIG_DIR}/config.json" N1_OS_NAME="${name_val}" python3 - << 'PYEOF'
+INSTALL_USER_NAME=""
+
+save_config_fields() {
+    local user_val="$1" os_val="$2"
+    [[ -n "${user_val}${os_val}" ]] || return 1
+    N1_CFG="${CONFIG_DIR}/config.json" N1_USER="${user_val}" N1_OS="${os_val}" python3 - << 'PYCFG'
 import json, os
 from pathlib import Path
+
 p = Path(os.environ["N1_CFG"])
 try:
     data = json.loads(p.read_text(encoding="utf-8")) if p.is_file() else {}
@@ -90,30 +92,54 @@ try:
         data = {}
 except Exception:
     data = {}
-data["os_name"] = os.environ["N1_OS_NAME"]
+
+if os.environ["N1_USER"]:
+    data["user_name"] = os.environ["N1_USER"]
+if os.environ["N1_OS"]:
+    data["os_name"] = os.environ["N1_OS"]
+
 p.parent.mkdir(parents=True, exist_ok=True)
-p.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+p.write_text(json.dumps(data, indent=2) + "
+", encoding="utf-8")
 os.chmod(p, 0o600)
-PYEOF
+PYCFG
 }
 
 setup_initial_config() {
     [[ -r /dev/tty ]] || return 0
     echo ""
     echo "================================================================"
-    echo "  N1BroX Setup (Press Enter to skip any field)"
+    echo "  N1BroX Quick Setup (Press Enter to skip any step)"
     echo "================================================================"
-    echo "Skip? You can set name and API keys anytime in n1brox terminal:"
-    echo "  Name : setname <YourName>"
-    echo "  API  : ai key <groq|gemini|openrouter> <YOUR_API_KEY>"
-    echo "  Check: ai setup"
+    echo "Skip now? You can configure everything anytime inside n1brox:"
+    echo "  Your Name : setuser <YourName>"
+    echo "  OS Name   : setname <CustomName>"
+    echo "  API Keys  : ai key <groq|gemini|openrouter> <YOUR_API_KEY>"
+    echo "  API Guide : ai key setup"
     echo ""
 
-    local saved=() custom_name spec provider label val
-    custom_name="$(read_tty "Custom Terminal Name [N1BroX] (Enter to skip): ")"
-    save_os_name "${custom_name}" && saved+=("name=${custom_name}")
+    local saved=() raw_user raw_os clean_user clean_os spec provider label val
 
-    for spec in "gemini|Google (Gemini) API Key" "groq|Groq API Key" "openrouter|OpenRouter API Key"; do
+    # 1. User's display name (used in "Hello Boss, <Name>!")
+    raw_user="$(read_tty "1) Your Name (Enter to skip): ")"
+    clean_user="$(printf "%s" "${raw_user}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+    # 2. Custom N1BroX OS name
+    raw_os="$(read_tty "2) Custom N1BroX Name [N1BroX] (Enter to skip): ")"
+    clean_os="$(printf "%s" "${raw_os}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+    if save_config_fields "${clean_user}" "${clean_os}"; then
+        if [[ -n "${clean_user}" ]]; then
+            INSTALL_USER_NAME="${clean_user}"
+            saved+=("user=${clean_user}")
+        fi
+        [[ -n "${clean_os}" ]] && saved+=("os=${clean_os}")
+    fi
+
+    # 3. AI API Keys (optional)
+    echo ""
+    echo "3) AI API Keys (optional — any 1 key enables AI):"
+    for spec in         "gemini|   Google (Gemini) API Key"         "groq|   Groq API Key"         "openrouter|   OpenRouter API Key"; do
         provider="${spec%%|*}"
         label="${spec#*|}"
         val="$(read_tty "${label} (Enter to skip): ")"
@@ -124,10 +150,9 @@ setup_initial_config() {
     if (( ${#saved[@]} > 0 )); then
         log_ok "Saved (${saved[*]}) securely in ${CONFIG_DIR}."
     else
-        log_info "Skipped setup. Set anytime in n1brox terminal using 'setname <YourName>' and 'ai key <groq|gemini|openrouter> <YOUR_API_KEY>'."
+        log_info "Skipped setup. Run 'setuser <Name>', 'setname <OS>', or 'ai key setup' inside n1brox."
     fi
 }
-
 clear_api_keys() {
     [[ -d "${CONFIG_DIR}" ]] || { log_info "No config directory found at ${CONFIG_DIR}."; return 0; }
     local removed=0 key_file
@@ -244,7 +269,11 @@ DESKTOP
         echo "  echo 'export PATH=\"\$HOME/.local/bin:\$PATH\"' >> ~/.bashrc && source ~/.bashrc"
     fi
 
-    log_ok "N1BroX installed successfully!"
+    if [[ -n "${INSTALL_USER_NAME:-}" ]]; then
+        log_ok "Hello Boss, ${INSTALL_USER_NAME}! N1BroX installed successfully!"
+    else
+        log_ok "N1BroX installed successfully!"
+    fi
     echo "  Run app       : n1brox"
     echo "  Update app    : n1brox update"
     echo "  Clear API keys: n1brox key-clear"

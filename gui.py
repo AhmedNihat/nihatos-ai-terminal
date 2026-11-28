@@ -84,7 +84,7 @@ THEMES = {
         warn="#ffb300",
         err="#ff5252",
         ai="#9fe9ff",
-        hint="At your service, sir… try 'help'",
+        hint="Ready, Boss… type a command or 'help'",
         persona=(
             "You are N1BROX, a sharp, calm Linux AI copilot. "
             "Act like an experienced Linux systems engineer: concise, accurate, and practical. "
@@ -903,7 +903,7 @@ class N1BroXDesktopWindow(QMainWindow):
         self._usb_alert_text: str = ""
         self._usb_alert_until: float = 0.0
         self._workers: list[QThread] = []
-        self._user = getpass.getuser()
+        self._user = (getattr(self.config, "user_name", "") or "").strip() or getpass.getuser()
         self._last_cpu: tuple[int, int] | None = None
         self._q: list[tuple[str, str]] = []
         self._q_token: int = 0
@@ -1277,7 +1277,7 @@ class N1BroXDesktopWindow(QMainWindow):
                 ("  ▸ System Telemetry ....... streaming", "ok"),
                 ("", "dim"),
                 ("─" * 36, "dim"),
-                (f"Assalamualaikum, sir. All systems are operational, {self._user}.", "ai"),
+                (f"Hello Boss, {self._user}! All systems are online and ready for your command.", "ai"),
                 ("  'help' for protocols  ·  'mode ultron' to unleash the other one.", "dim"),
             ]
         else:
@@ -2596,6 +2596,18 @@ class N1BroXDesktopWindow(QMainWindow):
 
         if lo in ("ai", "ai do"):
             self.append_line("Usage: ai <question>  |  ai do <task>  |  ai fix  |  ai reset", "warn")
+            return
+
+        if lo == "setuser" or lo.startswith("setuser "):
+            new_user = raw[7:].strip()
+            if not new_user:
+                self.append_line(f"Current User Name: {self._user}", "head")
+                self.append_line("Usage: setuser <YourName>  (example: setuser Alex)", "dim")
+                return
+            self.config.user_name = new_user
+            self.config.save()
+            self._user = new_user
+            self.append_line(f"◈ User profile updated. Hello Boss, {new_user}!", "ok")
             return
 
         if lo == "setname" or lo.startswith("setname "):

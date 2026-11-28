@@ -33,6 +33,7 @@ class N1BroXConfig:
     ai_model: str = "openrouter/free"
     ai_auto_explain: bool = False
     os_name: str = "N1BroX"
+    user_name: str = ""
 
     def validate(self) -> "N1BroXConfig":
         if self.theme not in THEMES:
@@ -53,6 +54,7 @@ class N1BroXConfig:
         self.ai_auto_explain = bool(self.ai_auto_explain)
         if not isinstance(self.os_name, str) or not self.os_name.strip():
             self.os_name = "N1BroX"
+        self.user_name = self.user_name.strip() if isinstance(self.user_name, str) else ""
         return self
 
     @classmethod
