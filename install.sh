@@ -143,7 +143,9 @@ setup_initial_config() {
         provider="${spec%%|*}"
         label="${spec#*|}"
         val="$(read_tty "${label} (Enter to skip): ")"
-        save_key_file "${provider}" "${val}" && saved+=("${provider}_key")
+        if save_key_file "${provider}" "${val}"; then
+            saved+=("${provider}_key")
+        fi
     done
 
     echo ""
@@ -163,7 +165,9 @@ clear_api_keys() {
             removed=1
         fi
     done
-    [[ "${removed}" -eq 0 ]] && log_info "No saved API keys found in ${CONFIG_DIR}."
+    if [[ "${removed}" -eq 0 ]]; then
+        log_info "No saved API keys found in ${CONFIG_DIR}."
+    fi
 }
 
 uninstall_app() {
@@ -262,7 +266,9 @@ DESKTOP
     [[ -d "${HOME}/Desktop" ]] && { cp "${DESKTOP_FILE}" "${DESKTOP_SHORTCUT}"; chmod +x "${DESKTOP_SHORTCUT}"; }
     command -v update-desktop-database >/dev/null 2>&1 && update-desktop-database "${HOME}/.local/share/applications" || true
 
-    [[ "${is_update}" -eq 0 ]] && setup_initial_config
+    if [[ "${is_update}" -eq 0 ]]; then
+        setup_initial_config
+    fi
 
     if [[ ":${PATH}:" != *":${BIN_DIR}:"* ]]; then
         log_warn "${BIN_DIR} is not in your PATH. Run:"
