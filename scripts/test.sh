@@ -12,7 +12,7 @@ fi
 REPORT_FILE="test-report.txt"
 
 {
-    echo "=== NihatOS Terminal Automated Test Report ==="
+    echo "=== N1BroX Terminal Automated Test Report ==="
     echo "Date: $(date -Is)"
     echo "OS: $(grep PRETTY_NAME /etc/os-release 2>/dev/null || uname -srm)"
     echo "Python: $(.venv/bin/python --version)"
@@ -29,4 +29,4 @@ REPORT_FILE="test-report.txt"
 } | tee "${REPORT_FILE}"
 
 echo ""
-echo "[NihatOS Terminal] Report saved to ${REPORT_FILE}"
+echo "[N1BroX Terminal] Report saved to ${REPORT_FILE}"

@@ -3,8 +3,8 @@ from pathlib import Path
 import subprocess
 from textual.geometry import Size
 
-from app.application import NihatOSApp
-from app.config import NihatOSConfig
+from app.application import N1BroXApp
+from app.config import N1BroXConfig
 from app.integrations.error_hints import explain_failure
 from app.integrations.git import get_git_status
 from app.shell.completion import CompletionEngine
@@ -50,11 +50,11 @@ def test_autocomplete_and_syntax_highlighting(tmp_path: Path) -> None:
     new_line, _, matches = engine.complete("cd nihat_d", len("cd nihat_d"), str(tmp_path))
     assert new_line == "cd nihat_dir/"
 
-    # Built-in nihatos subcommand & theme completion
-    new_line, _, _ = engine.complete("nihatos th", len("nihatos th"), str(tmp_path))
-    assert new_line == "nihatos theme "
-    new_line, _, _ = engine.complete("nihatos theme gr", len("nihatos theme gr"), str(tmp_path))
-    assert new_line == "nihatos theme graphite "
+    # Built-in n1brox subcommand & theme completion
+    new_line, _, _ = engine.complete("n1brox th", len("n1brox th"), str(tmp_path))
+    assert new_line == "n1brox theme "
+    new_line, _, _ = engine.complete("n1brox theme gr", len("n1brox theme gr"), str(tmp_path))
+    assert new_line == "n1brox theme graphite "
 
     # Syntax highlighting distinguishes valid vs unknown command
     pal = get_palette("holographic_blue")
@@ -83,8 +83,8 @@ def test_error_hints_and_interactive_ghost_and_ctrl_r(tmp_path: Path) -> None:
 
     async def _run() -> None:
         hist_file = tmp_path / "history.jsonl"
-        app = NihatOSApp(
-            config=NihatOSConfig(),
+        app = N1BroXApp(
+            config=N1BroXConfig(),
             config_path=tmp_path / "config.json",
             history_path=hist_file,
         )
@@ -93,16 +93,16 @@ def test_error_hints_and_interactive_ghost_and_ctrl_r(tmp_path: Path) -> None:
             input_bar = app.query_one("#input-bar", InputBar)
 
             # Seed history via real command
-            input_bar.set_text("echo NIHATOS_AUTOSUGGEST_TARGET")
+            input_bar.set_text("echo N1BROX_AUTOSUGGEST_TARGET")
             await pilot.press("enter")
             await pilot.pause(0.25)
 
             # Ghost autosuggestion appears and accepts on Right arrow
-            input_bar.set_text("echo NIHATOS_AUTO")
+            input_bar.set_text("echo N1BROX_AUTO")
             await pilot.pause(0.05)
             assert input_bar.get_ghost_suffix() == "SUGGEST_TARGET"
             await pilot.press("right")
-            assert input_bar.text == "echo NIHATOS_AUTOSUGGEST_TARGET"
+            assert input_bar.text == "echo N1BROX_AUTOSUGGEST_TARGET"
 
             # Ctrl+R reverse search finds the command and Tab loads it for editing
             input_bar.clear_input()
@@ -112,14 +112,14 @@ def test_error_hints_and_interactive_ghost_and_ctrl_r(tmp_path: Path) -> None:
                 await pilot.press(ch)
             await pilot.press("tab")
             assert input_bar.search_mode is False
-            assert input_bar.text == "echo NIHATOS_AUTOSUGGEST_TARGET"
+            assert input_bar.text == "echo N1BROX_AUTOSUGGEST_TARGET"
 
-            # Trigger failed command -> verify [NihatOS Hint] appears in output
+            # Trigger failed command -> verify [N1BroX Hint] appears in output
             input_bar.set_text("definitely_missing_nihat_cmd_404")
             await pilot.press("enter")
             await pilot.pause(0.35)
             strips = app.screen._compositor.render_strips(Size(110, 28))
             rendered = "\n".join("".join(seg.text for seg in st) for st in strips)
-            assert "[NihatOS Hint]" in rendered
+            assert "[N1BroX Hint]" in rendered
 
     asyncio.run(_run())

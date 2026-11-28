@@ -1,1 +1,1 @@
-"""Persistent Bash PTY engine and stream parsers for NihatOS Terminal."""
+"""Persistent Bash PTY engine and stream parsers for N1BroX Terminal."""

@@ -37,14 +37,14 @@ def test_startup_no_readline_escapes_and_no_echo() -> None:
             assert "\x1b[?2004h" not in startup_text
 
             chunks.clear()
-            ok, err = session.send_command("echo NIHATOS_NO_ECHO_CHECK")
+            ok, err = session.send_command("echo N1BROX_NO_ECHO_CHECK")
             assert ok and err is None
             await _wait_until(lambda: ready_count >= 2)
 
             out = "".join(chunks)
             lines = [ln.strip() for ln in out.splitlines() if ln.strip()]
             # Output must contain only the result, NOT the echoed command string
-            assert lines == ["NIHATOS_NO_ECHO_CHECK"]
+            assert lines == ["N1BROX_NO_ECHO_CHECK"]
         finally:
             session.close()
 
@@ -82,11 +82,11 @@ def test_persistent_bash_state_and_bangla_unicode() -> None:
                 assert os.path.realpath(session.cwd) == real_tmp
 
                 # 2. Exported environment variable persistence
-                session.send_command("export NIHATOS_ENV_CHECK='fedora45_ok'")
+                session.send_command("export N1BROX_ENV_CHECK='fedora45_ok'")
                 await _wait_until(lambda: ready_count >= 4)
 
                 chunks.clear()
-                session.send_command('echo "$NIHATOS_ENV_CHECK"')
+                session.send_command('echo "$N1BROX_ENV_CHECK"')
                 await _wait_until(lambda: ready_count >= 5)
                 assert "".join(chunks).strip() == "fedora45_ok"
 

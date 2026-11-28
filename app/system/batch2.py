@@ -17,7 +17,7 @@ def search_output_lines(lines: list[str], query: str, limit: int = 30) -> list[t
 
 def export_output_lines(lines: list[str], filename: str, cwd: str = "") -> tuple[bool, str]:
     """Save output lines to a plain-text file."""
-    clean = filename.strip().strip('"').strip("'") or "nihatos-log.txt"
+    clean = filename.strip().strip('"').strip("'") or "n1brox-log.txt"
     base = Path(cwd) if cwd else Path.cwd()
     target = Path(clean).expanduser()
     if not target.is_absolute():

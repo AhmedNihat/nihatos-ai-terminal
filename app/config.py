@@ -8,19 +8,19 @@ try:
     from app.themes.palettes import THEMES
 except ImportError:
     THEMES = {
-        "nihatos": {"name": "Nihat.O.S", "accent": "#00e5ff", "accent2": "#ffb300"},
+        "n1brox": {"name": "N1BroX", "accent": "#00e5ff", "accent2": "#ffb300"},
         "ultron": {"name": "U.L.T.R.O.N", "accent": "#ff1f33", "accent2": "#ff8a00"},
     }
 
-DEFAULT_CONFIG_DIR = Path.home() / ".config" / "nihatos-terminal"
+DEFAULT_CONFIG_DIR = Path.home() / ".config" / "n1brox-terminal"
 DEFAULT_CONFIG_FILE = DEFAULT_CONFIG_DIR / "config.json"
 DEFAULT_BACKUP_FILE = DEFAULT_CONFIG_DIR / "config.backup.json"
-DEFAULT_DATA_DIR = Path.home() / ".local" / "share" / "nihatos-terminal"
+DEFAULT_DATA_DIR = Path.home() / ".local" / "share" / "n1brox-terminal"
 
 
 @dataclass
-class NihatOSConfig:
-    """Validated user-level configuration for NihatOS Terminal."""
+class N1BroXConfig:
+    """Validated user-level configuration for N1BroX Terminal."""
 
     theme: str = "holographic_blue"
     center_mode: Literal["usable", "geometric"] = "usable"
@@ -32,9 +32,9 @@ class NihatOSConfig:
     hud_subtitle: str = "Sir, you are the Best.. just command me.."
     ai_model: str = "openrouter/free"
     ai_auto_explain: bool = False
-    os_name: str = "Nihat.O.S"
+    os_name: str = "N1BroX"
 
-    def validate(self) -> "NihatOSConfig":
+    def validate(self) -> "N1BroXConfig":
         if self.theme not in THEMES:
             self.theme = "holographic_blue"
         if self.center_mode not in ("usable", "geometric"):
@@ -52,11 +52,11 @@ class NihatOSConfig:
             self.ai_model = "openrouter/free"
         self.ai_auto_explain = bool(self.ai_auto_explain)
         if not isinstance(self.os_name, str) or not self.os_name.strip():
-            self.os_name = "Nihat.O.S"
+            self.os_name = "N1BroX"
         return self
 
     @classmethod
-    def load(cls, path: Path = DEFAULT_CONFIG_FILE) -> "NihatOSConfig":
+    def load(cls, path: Path = DEFAULT_CONFIG_FILE) -> "N1BroXConfig":
         cfg = cls()
         if not path.is_file():
             return cfg
@@ -94,7 +94,7 @@ class NihatOSConfig:
         cls,
         config_path: Path = DEFAULT_CONFIG_FILE,
         backup_path: Path = DEFAULT_BACKUP_FILE,
-    ) -> tuple["NihatOSConfig | None", str]:
+    ) -> tuple["N1BroXConfig | None", str]:
         if not backup_path.is_file():
             return None, f"No backup found at {backup_path}"
         restored = cls.load(backup_path)

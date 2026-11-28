@@ -3,29 +3,29 @@ import os
 import tempfile
 from textual.geometry import Size
 
-from app.application import NihatOSApp
-from app.config import NihatOSConfig
+from app.application import N1BroXApp
+from app.config import N1BroXConfig
 from app.ui.input_bar import InputBar
 from app.ui.output_panel import OutputPanel
 
 
-def _render_rows(app: NihatOSApp) -> list[str]:
+def _render_rows(app: N1BroXApp) -> list[str]:
     w, h = app.size.width, app.size.height
     strips = app.screen._compositor.render_strips(Size(w, h))
     return ["".join(seg.text for seg in strip) for strip in strips]
 
 
-def _find_prompt_row(app: NihatOSApp) -> int:
+def _find_prompt_row(app: N1BroXApp) -> int:
     for row_idx, plain in enumerate(_render_rows(app)):
-        if "NIHATOS " in plain and "❯" in plain:
+        if "N1BROX " in plain and "❯" in plain:
             return row_idx
-    raise AssertionError("Could not find 'NIHATOS <cwd> ❯' prompt on rendered screen")
+    raise AssertionError("Could not find 'N1BROX <cwd> ❯' prompt on rendered screen")
 
 
 def test_two_box_layout_28x110_and_flood_invariance() -> None:
     async def _run() -> None:
-        config = NihatOSConfig(max_output_lines=200)
-        app = NihatOSApp(config=config)
+        config = N1BroXConfig(max_output_lines=200)
+        app = N1BroXApp(config=config)
         async with app.run_test(size=(110, 28)) as pilot:
             await pilot.pause(0.2)
 
@@ -66,7 +66,7 @@ def test_two_box_layout_28x110_and_flood_invariance() -> None:
 
 def test_latest_answer_stays_on_top_and_older_moves_below() -> None:
     async def _run() -> None:
-        app = NihatOSApp()
+        app = N1BroXApp()
         async with app.run_test(size=(110, 28)) as pilot:
             await pilot.pause(0.3)
             input_bar = app.query_one("#input-bar", InputBar)
@@ -81,7 +81,7 @@ def test_latest_answer_stays_on_top_and_older_moves_below() -> None:
 
             rows = _render_rows(app)
             # Verify centered header greeting
-            assert "NIHAT OS" in rows[0] and "NihatOS Terminal" in rows[0]
+            assert "N1BROX" in rows[0] and "N1BroX Terminal" in rows[0]
             assert "Welcome, Nihat Sir" in rows[1]
 
             # Verify output block header shows directory + ❯ + command
@@ -100,7 +100,7 @@ def test_latest_answer_stays_on_top_and_older_moves_below() -> None:
 
 def test_responsive_layout_resizes_and_history() -> None:
     async def _run() -> None:
-        app = NihatOSApp()
+        app = N1BroXApp()
         async with app.run_test(size=(110, 28)) as pilot:
             await pilot.pause(0.2)
             output = app.query_one("#output-panel", OutputPanel)
@@ -142,11 +142,11 @@ def test_responsive_layout_resizes_and_history() -> None:
 
 def test_prompt_shows_current_directory_and_updates_on_cd() -> None:
     async def _run() -> None:
-        app = NihatOSApp()
+        app = N1BroXApp()
         async with app.run_test(size=(110, 28)) as pilot:
             await pilot.pause(0.3)
 
-            with tempfile.TemporaryDirectory(prefix="nihatos_dir_") as tmpdir:
+            with tempfile.TemporaryDirectory(prefix="n1brox_dir_") as tmpdir:
                 real_tmp = os.path.realpath(tmpdir)
                 dir_name = os.path.basename(real_tmp)
 
@@ -156,7 +156,7 @@ def test_prompt_shows_current_directory_and_updates_on_cd() -> None:
                 await pilot.pause(0.3)
 
                 prompt_line = _render_rows(app)[_find_prompt_row(app)]
-                assert "NIHATOS " in prompt_line
+                assert "N1BROX " in prompt_line
                 assert dir_name in prompt_line
                 assert _find_prompt_row(app) == 4
 
@@ -165,7 +165,7 @@ def test_prompt_shows_current_directory_and_updates_on_cd() -> None:
 
 def test_multiline_paste_warns_and_does_not_auto_execute() -> None:
     async def _run() -> None:
-        app = NihatOSApp()
+        app = N1BroXApp()
         async with app.run_test(size=(110, 28)) as pilot:
             await pilot.pause(0.2)
             input_bar = app.query_one("#input-bar", InputBar)
@@ -182,7 +182,7 @@ def test_multiline_paste_warns_and_does_not_auto_execute() -> None:
 
 def test_clear_command_clears_output_box() -> None:
     async def _run() -> None:
-        app = NihatOSApp()
+        app = N1BroXApp()
         async with app.run_test(size=(110, 28)) as pilot:
             await pilot.pause(0.3)
             input_bar = app.query_one("#input-bar", InputBar)

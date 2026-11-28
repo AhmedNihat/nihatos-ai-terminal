@@ -2,9 +2,9 @@
 
 <div align="center">
 
-<img alt="Nihat.O.S — Linux AI Terminal" src="https://capsule-render.vercel.app/api?type=waving&color=0:02080f,50:0a3a4a,100:00e5ff&height=230&section=header&text=Linux%20AI%20Terminal&fontSize=58&fontColor=ffffff&fontAlign=50&fontAlignY=38&animation=fadeIn&desc=Nihat.O.S%20%C2%B7%20Privacy-first%20AI%20for%20your%20Bash&descSize=20&descAlign=50&descAlignY=60" width="100%">
+<img alt="N1BroX — Linux AI Terminal" src="https://capsule-render.vercel.app/api?type=waving&color=0:02080f,50:0a3a4a,100:00e5ff&height=230&section=header&text=Linux%20AI%20Terminal&fontSize=58&fontColor=ffffff&fontAlign=50&fontAlignY=38&animation=fadeIn&desc=N1BroX%20%C2%B7%20Privacy-first%20AI%20for%20your%20Bash&descSize=20&descAlign=50&descAlignY=60" width="100%">
 
-<a href="https://github.com/AhmedNihat/nihatos-ai-terminal">
+<a href="https://github.com/AhmedNihat/linux-ai-terminal-n1brox">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=3200&pause=900&color=00E5FF&center=true&vCenter=true&width=760&height=44&lines=Your+Bash.+Your+machine.+Your+AI.;Mistype+a+command+%E2%86%92+click+Need+help%3F+%E2%86%92+fixed.;Groq+%E2%86%92+Gemini+%E2%86%92+OpenRouter%2C+auto+fallback.;Zero+accounts.+Zero+tracking.+100%25+GPLv3.">
     <img alt="Your Bash. Your machine. Your AI." src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=3200&pause=900&color=0077B6&center=true&vCenter=true&width=760&height=44&lines=Your+Bash.+Your+machine.+Your+AI.;Mistype+a+command+%E2%86%92+click+Need+help%3F+%E2%86%92+fixed.;Groq+%E2%86%92+Gemini+%E2%86%92+OpenRouter%2C+auto+fallback.;Zero+accounts.+Zero+tracking.+100%25+GPLv3.">
@@ -13,7 +13,7 @@
 
 <br>
 
-**Stop copy-pasting terminal errors into a browser. Nihat.O.S reads what went wrong, proposes one safe fix, and runs it only when you say `y`.**
+**Stop copy-pasting terminal errors into a browser. N1BroX reads what went wrong, proposes one safe fix, and runs it only when you say `y`.**
 
 A native PyQt6 Linux terminal emulator built on a persistent Bash PTY — with live system telemetry, human-in-the-loop AI command fixing, a built-in file previewer, custom OS branding, and two switchable personas.
 
@@ -28,17 +28,17 @@ A native PyQt6 Linux terminal emulator built on a persistent Bash PTY — with l
 
 <br>
 
-<a href="https://github.com/AhmedNihat/nihatos-ai-terminal/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/AhmedNihat/nihatos-ai-terminal?style=flat-square&logo=github&color=ffb300&labelColor=02080f"></a>
-<a href="https://github.com/AhmedNihat/nihatos-ai-terminal/network/members"><img alt="Forks" src="https://img.shields.io/github/forks/AhmedNihat/nihatos-ai-terminal?style=flat-square&logo=github&color=00e5ff&labelColor=02080f"></a>
-<a href="https://github.com/AhmedNihat/nihatos-ai-terminal/issues"><img alt="Issues" src="https://img.shields.io/github/issues/AhmedNihat/nihatos-ai-terminal?style=flat-square&color=00ff9d&labelColor=02080f"></a>
-<a href="https://github.com/AhmedNihat/nihatos-ai-terminal/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/AhmedNihat/nihatos-ai-terminal?style=flat-square&color=ff8a00&labelColor=02080f"></a>
+<a href="https://github.com/AhmedNihat/linux-ai-terminal-n1brox/stargazers"><img alt="Stars" src="https://img.shields.io/github/stars/AhmedNihat/linux-ai-terminal-n1brox?style=flat-square&logo=github&color=ffb300&labelColor=02080f"></a>
+<a href="https://github.com/AhmedNihat/linux-ai-terminal-n1brox/network/members"><img alt="Forks" src="https://img.shields.io/github/forks/AhmedNihat/linux-ai-terminal-n1brox?style=flat-square&logo=github&color=00e5ff&labelColor=02080f"></a>
+<a href="https://github.com/AhmedNihat/linux-ai-terminal-n1brox/issues"><img alt="Issues" src="https://img.shields.io/github/issues/AhmedNihat/linux-ai-terminal-n1brox?style=flat-square&color=00ff9d&labelColor=02080f"></a>
+<a href="https://github.com/AhmedNihat/linux-ai-terminal-n1brox/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/AhmedNihat/linux-ai-terminal-n1brox?style=flat-square&color=ff8a00&labelColor=02080f"></a>
 <a href="https://ahmedullahnihat.gumroad.com/l/hqsqry"><img alt="Support on Gumroad" src="https://img.shields.io/badge/Support_the_Project-Gumroad-36a9ae?style=flat-square&logo=gumroad&logoColor=white&labelColor=02080f"></a>
 
 <br><br>
 
 <a href="#demo"><b>Demo</b></a> &nbsp;·&nbsp;
 <a href="#quick-install"><b>Quick Install</b></a> &nbsp;·&nbsp;
-<a href="#why-linux-ai-terminal"><b>Why Nihat.O.S</b></a> &nbsp;·&nbsp;
+<a href="#why-linux-ai-terminal"><b>Why N1BroX</b></a> &nbsp;·&nbsp;
 <a href="#ai-copilot"><b>AI Copilot</b></a> &nbsp;·&nbsp;
 <a href="#dual-personas"><b>Personas</b></a> &nbsp;·&nbsp;
 <a href="#security-and-privacy"><b>Security</b></a> &nbsp;·&nbsp;
@@ -53,7 +53,7 @@ A native PyQt6 Linux terminal emulator built on a persistent Bash PTY — with l
 
 You mistype a command. The terminal answers `command not found`. You copy the error, open a browser, scroll through a few forum threads, and finally come back to try again.
 
-**Nihat.O.S turns that whole loop into a single click.** It sees what failed, understands your distro, and proposes exactly one fix. You read it, press `y`, and get back to work.
+**N1BroX turns that whole loop into a single click.** It sees what failed, understands your distro, and proposes exactly one fix. You read it, press `y`, and get back to work.
 
 * ✅ **Fix mistakes in one click.** No more context-switching to a search engine.
 * ✅ **Stay in control.** Nothing runs until you confirm it.
@@ -67,7 +67,7 @@ You mistype a command. The terminal answers `command not found`. You copy the er
 <div align="center">
 
 <a href="https://www.youtube.com/watch?v=f-jkptbtydw">
-  <img src="https://img.youtube.com/vi/f-jkptbtydw/maxresdefault.jpg" alt="Watch the Nihat.O.S demo on YouTube" width="760">
+  <img src="https://img.youtube.com/vi/f-jkptbtydw/maxresdefault.jpg" alt="Watch the N1BroX demo on YouTube" width="760">
 </a>
 
 <br><br>
@@ -83,8 +83,8 @@ You mistype a command. The terminal answers `command not found`. You copy the er
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="assets/nihatos-ss.png" alt="Nihat.O.S mode" width="100%"><br>
-      <b>Nihat.O.S</b><br>
+      <img src="assets/n1brox-ss.png" alt="N1BroX mode" width="100%"><br>
+      <b>N1BroX</b><br>
       <sub>Tactical navy · calm, practical systems engineer</sub>
     </td>
     <td align="center" width="50%">
@@ -130,13 +130,13 @@ nihat ~/projects/api [⎇ main] (venv) ❯ ai do find the 10 largest files in th
 One command. Works on **Ubuntu, Debian, Fedora, Arch, and openSUSE** — no `sudo` required:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/AhmedNihat/nihatos-ai-terminal/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/AhmedNihat/linux-ai-terminal-n1brox/main/install.sh | bash
 ```
 
 Prefer to read the script before running it? Smart move. Download it, inspect it, then run it:
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/AhmedNihat/nihatos-ai-terminal/main/install.sh
+curl -fsSLO https://raw.githubusercontent.com/AhmedNihat/linux-ai-terminal-n1brox/main/install.sh
 less install.sh
 bash install.sh
 ```
@@ -144,21 +144,21 @@ bash install.sh
 **What the installer does:**
 
 * Verifies Python `3.10+` and `venv` availability, then detects your distro and desktop environment.
-* Creates an isolated `.venv` with `PyQt6` inside `~/.local/share/nihatos-app` — zero conflict with system Python.
-* Installs the `nihatos` CLI in `~/.local/bin` and adds an App Menu & Desktop launcher with the custom app icon.
+* Creates an isolated `.venv` with `PyQt6` inside `~/.local/share/n1brox-app` — zero conflict with system Python.
+* Installs the `n1brox` CLI in `~/.local/bin` and adds an App Menu & Desktop launcher with the custom app icon.
 * Includes built-in update, API-key reset, and clean uninstall commands.
 
 ### Launch, Update & Manage
 
 ```bash
-nihatos            # Launch the terminal (or open it from your App Menu / Desktop)
-nihatos update     # Pull the latest version and dependencies
-nihatos key-clear  # Delete all saved AI API keys for a fresh setup
-nihatos uninstall  # Cleanly remove the app (prompts before deleting config or history)
+n1brox            # Launch the terminal (or open it from your App Menu / Desktop)
+n1brox update     # Pull the latest version and dependencies
+n1brox key-clear  # Delete all saved AI API keys for a fresh setup
+n1brox uninstall  # Cleanly remove the app (prompts before deleting config or history)
 ```
 
 > [!TIP]
-> If `nihatos` is not found right after install, add `~/.local/bin` to your `PATH`:
+> If `n1brox` is not found right after install, add `~/.local/bin` to your `PATH`:
 >
 > ```bash
 > echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
@@ -166,7 +166,7 @@ nihatos uninstall  # Cleanly remove the app (prompts before deleting config or h
 
 ### Your First Fix in 3 Steps
 
-1. **Install** with the one-liner above, then run `nihatos`.
+1. **Install** with the one-liner above, then run `n1brox`.
 2. **Add a free API key.** Run `ai setup`, then save one, for example `ai key groq gsk_your_key_here` (see [Built-in API Key Setup](#built-in-api-key-setup)).
 3. **Break something on purpose.** Type `mkdin test`, click **Need help?**, and press `y`. That's it.
 
@@ -176,7 +176,7 @@ Enjoying it so far? A ⭐ on GitHub helps other Linux users find the project.
 
 ## Why Linux AI Terminal
 
-| Feature | Typical AI terminal / wrapper | **Nihat.O.S (Linux AI Terminal)** |
+| Feature | Typical AI terminal / wrapper | **N1BroX (Linux AI Terminal)** |
 | --- | --- | --- |
 | **Shell** | Stateless or fresh subprocess per command | Persistent Bash PTY |
 | **Error recovery** | Copy-paste errors into a browser | Clickable `Need help?` link + `ai fix` with exit code, cwd & distro |
@@ -189,9 +189,9 @@ Enjoying it so far? A ⭐ on GitHub helps other Linux users find the project.
 
 ## Dual Personas
 
-Switch theme, palette, prompt identity, and AI personality instantly with `Ctrl+M`, or `mode ultron` / `mode nihatos`.
+Switch theme, palette, prompt identity, and AI personality instantly with `Ctrl+M`, or `mode ultron` / `mode n1brox`.
 
-| Aspect | **Nihat.O.S** *(J.A.R.V.I.S-inspired)* | **U.L.T.R.O.N** *(override mode)* |
+| Aspect | **N1BroX** *(J.A.R.V.I.S-inspired)* | **U.L.T.R.O.N** *(override mode)* |
 | --- | --- | --- |
 | **Visual HUD** | Tactical navy `#02080f`, cyan `#00e5ff`, amber `#ffb300` | Obsidian crimson `#0a0204`, red `#ff1f33`, orange `#ff8a00` |
 | **AI personality** | Calm, sharp, practical systems engineer. Direct and safety-conscious. | Cold, sarcastic, supremely confident. Concise, with attitude. |
@@ -237,7 +237,7 @@ ai key clear                                  # Clear all saved API keys
 ```
 
 > [!NOTE]
-> Keys live in `~/.config/nihatos-terminal/` (`chmod 600`), stay out of command history, automatically strip accidental `< >` or quotes, and take effect immediately with no restart.
+> Keys live in `~/.config/n1brox-terminal/` (`chmod 600`), stay out of command history, automatically strip accidental `< >` or quotes, and take effect immediately with no restart.
 
 ---
 
@@ -250,7 +250,7 @@ Running AI inside a system terminal demands strict guardrails. You stay in contr
 | **Zero auto-execution** | Every suggestion from `ai do` or `ai fix` requires a manual `y` / `n`. Nothing runs on its own. |
 | **Pre-execution syntax guard** | Catches unclosed quotes, trailing backslashes, and broken blocks *before* they reach the PTY, so malformed input never hangs your shell. |
 | **Masked `sudo` prompts** | Password input is masked and never echoed to the buffer, saved to history, or sent to any AI provider. |
-| **Strict local storage** | API keys and `config.json` stay inside `~/.config/nihatos-terminal/`, and command history is stored at `~/.nihatos_history`, all with owner-only permissions (`chmod 600`). |
+| **Strict local storage** | API keys and `config.json` stay inside `~/.config/n1brox-terminal/`, and command history is stored at `~/.n1brox_history`, all with owner-only permissions (`chmod 600`). |
 | **Read-only diagnostics** | System probes only read. No writes, no side effects. |
 | **Zero tracking** | No analytics, no cloud accounts. External API calls happen only when you explicitly run an `ai` command. |
 | **Open and auditable** | GPLv3. Read every line before you run it. |
@@ -334,10 +334,10 @@ On startup it reads `/etc/os-release` and auto-detects your package manager and 
 | `preview <path>` / `view <path>` / `less <file>` | Built-in code, text, hex, image, or directory previewer |
 | `sys` / `ports` / `devices` | System scan, open network ports, USB/serial devices |
 | `search <txt>` | Search the current terminal output |
-| `save [filename]` | Export terminal output to a file (default: `nihatos-log.txt`) |
+| `save [filename]` | Export terminal output to a file (default: `n1brox-log.txt`) |
 | `copy [N]` / `copy all` | Copy last `N` lines (default `25`) or the full output to the clipboard |
 | `setname <Name>` | Rename your terminal OS, e.g. `setname Saad.O.S` |
-| `mode nihatos` / `mode ultron` | Switch persona |
+| `mode n1brox` / `mode ultron` | Switch persona |
 | `update` | Pull the latest updates from inside the terminal |
 | `help` | List all built-in commands and shortcuts |
 
@@ -348,8 +348,8 @@ On startup it reads `/etc/os-release` and auto-detects your package manager and 
 Want to hack on it or run it without the installer? Clone the repo and launch it with the included script:
 
 ```bash
-git clone https://github.com/AhmedNihat/nihatos-ai-terminal.git
-cd nihatos-ai-terminal
+git clone https://github.com/AhmedNihat/linux-ai-terminal-n1brox.git
+cd linux-ai-terminal-n1brox
 python3 -m venv .venv
 .venv/bin/pip install --upgrade pip
 .venv/bin/pip install -r requirements.txt
@@ -362,16 +362,16 @@ chmod +x run-gui.sh
 
 | Problem | Fix |
 | --- | --- |
-| `ModuleNotFoundError: No module named 'PyQt6'` | Always launch via `nihatos` or `./run-gui.sh`, not `python3 gui.py`. If `pip` fails to install `PyQt6` on Debian/Ubuntu, run `sudo apt install -y python3-pyqt6` and rebuild the venv with `python3 -m venv --system-site-packages .venv`. |
+| `ModuleNotFoundError: No module named 'PyQt6'` | Always launch via `n1brox` or `./run-gui.sh`, not `python3 gui.py`. If `pip` fails to install `PyQt6` on Debian/Ubuntu, run `sudo apt install -y python3-pyqt6` and rebuild the venv with `python3 -m venv --system-site-packages .venv`. |
 | `qt.qpa.plugin: Could not load the Qt platform plugin "xcb"` | Install the Qt6 XCB libraries: `libxcb-cursor0 libegl1 libgl1 libxkbcommon-x11-0` on Debian/Ubuntu, or `qt6-qtbase-gui xcb-util-cursor` on Fedora. |
 | `error: externally-managed-environment` (PEP 668) | Always use `.venv/bin/pip` instead of the global `pip`. |
 
-Still stuck? [Open an issue](https://github.com/AhmedNihat/nihatos-ai-terminal/issues) and include your distro and the full error message.
+Still stuck? [Open an issue](https://github.com/AhmedNihat/linux-ai-terminal-n1brox/issues) and include your distro and the full error message.
 
 ### Project Structure
 
 ```text
-nihatos-ai-terminal/
+linux-ai-terminal-n1brox/
 ├── install.sh             # One-line universal installer, updater, and CLI wrapper
 ├── gui.py                 # PyQt6 HUD, dual themes, multi-tab UI, AI, and distro engine
 ├── run-gui.sh             # Launcher script (starts a clean session in $HOME)
@@ -393,7 +393,7 @@ nihatos-ai-terminal/
 ## FAQ
 
 <details>
-<summary><b>Is Nihat.O.S really free?</b></summary>
+<summary><b>Is N1BroX really free?</b></summary>
 
 <br>
 
@@ -424,7 +424,7 @@ Only when you run an `ai` command, and only to the provider you configured. Ther
 
 <br>
 
-In `~/.config/nihatos-terminal/` with owner-only permissions (`chmod 600`). They stay out of your command history, and you can wipe them anytime with `ai key clear` or `nihatos key-clear`.
+In `~/.config/n1brox-terminal/` with owner-only permissions (`chmod 600`). They stay out of your command history, and you can wipe them anytime with `ai key clear` or `n1brox key-clear`.
 
 </details>
 
@@ -461,7 +461,7 @@ Bug reports, feature ideas, and pull requests are all welcome — every contribu
 
 ## Support the Project
 
-Nihat.O.S is **free, open source, and built to stay that way**. No paywalls, no ads, no tracking — just a tool designed to make your terminal life easier.
+N1BroX is **free, open source, and built to stay that way**. No paywalls, no ads, no tracking — just a tool designed to make your terminal life easier.
 
 If it has saved you time, spared you a few trips to a search engine, or simply made your terminal more fun to use, here is how you can say thanks:
 
@@ -469,14 +469,14 @@ If it has saved you time, spared you a few trips to a search engine, or simply m
 | --- | --- |
 | ⭐ **Star the repo** | Free, takes one second, and helps other Linux users discover the project. |
 | ☕ **Support on Gumroad** | Helps keep development going: new features, faster fixes, and wider distro testing. |
-| 🐛 **Report a bug or share an idea** | Makes Nihat.O.S better for everyone. |
+| 🐛 **Report a bug or share an idea** | Makes N1BroX better for everyone. |
 | 📣 **Tell a friend** | Share it with a teammate, a classmate, or your favorite Linux community. |
 
 <div align="center">
 
-<a href="https://ahmedullahnihat.gumroad.com/l/hqsqry"><img alt="Support Nihat.O.S on Gumroad" src="https://img.shields.io/badge/%E2%98%95_Support_Nihat.O.S-Gumroad-36a9ae?style=for-the-badge&logo=gumroad&logoColor=white&labelColor=02080f"></a>
+<a href="https://ahmedullahnihat.gumroad.com/l/hqsqry"><img alt="Support N1BroX on Gumroad" src="https://img.shields.io/badge/%E2%98%95_Support_N1BroX-Gumroad-36a9ae?style=for-the-badge&logo=gumroad&logoColor=white&labelColor=02080f"></a>
 
-<sub>Thank you for using Nihat.O.S. Your support truly means a lot.</sub>
+<sub>Thank you for using N1BroX. Your support truly means a lot.</sub>
 
 </div>
 

@@ -64,16 +64,16 @@ class PersistentBashSession:
             termios.tcsetattr(slave_fd, termios.TCSANOW, attrs)
             fcntl.ioctl(slave_fd, termios.TIOCSWINSZ, struct.pack("HHHH", max(1, rows), max(1, cols), 0, 0))
 
-            rcfile_path = Path(__file__).with_name("nihatos_bashrc").resolve()
+            rcfile_path = Path(__file__).with_name("n1brox_bashrc").resolve()
             try:
                 os.chmod(rcfile_path, 0o444)
             except OSError:
                 pass
 
             child_env = os.environ.copy()
-            child_env["NIHATOS_NONCE"] = self.nonce
-            child_env["NIHATOS_USER_BASHRC"] = str(Path.home() / ".bashrc")
-            child_env["NIHATOS_TERMINAL"] = "1"
+            child_env["N1BROX_NONCE"] = self.nonce
+            child_env["N1BROX_USER_BASHRC"] = str(Path.home() / ".bashrc")
+            child_env["N1BROX_TERMINAL"] = "1"
             child_env.setdefault("TERM", "xterm-256color")
 
             setsid_bin = shutil.which("setsid")
@@ -124,7 +124,7 @@ class PersistentBashSession:
     def is_pty_raw_mode(self) -> bool:
         return False if (self.master_fd is None or self._closed) else HandoffDetector.is_pty_raw_mode(self.master_fd)
 
-    def restore_nihatos_termios(self) -> None:
+    def restore_n1brox_termios(self) -> None:
         if self.master_fd is None or self._closed:
             return
         try:

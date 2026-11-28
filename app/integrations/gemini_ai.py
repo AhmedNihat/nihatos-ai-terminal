@@ -7,6 +7,8 @@ import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 
+from app.config import DEFAULT_CONFIG_DIR
+
 
 @dataclass
 class AIResponse:
@@ -36,7 +38,7 @@ def _clean_key(raw: str) -> str:
 
 
 def _read_key_file(name: str) -> str:
-    kp = Path.home() / ".config" / "nihatos-terminal" / name
+    kp = DEFAULT_CONFIG_DIR / name
     if kp.is_file():
         try:
             return _clean_key(kp.read_text(encoding="utf-8"))
@@ -69,7 +71,7 @@ class GeminiClient:
         self.timeout = timeout
 
     def _get_json(self, url: str, headers: dict[str, str] | None = None) -> dict | None:
-        req_headers = {"User-Agent": "NihatOS-Terminal/1.0", **(headers or {})}
+        req_headers = {"User-Agent": "N1BroX-Terminal/1.0", **(headers or {})}
         req = urllib.request.Request(url, headers=req_headers, method="GET")
         try:
             with urllib.request.urlopen(req, timeout=8) as resp:
@@ -78,7 +80,7 @@ class GeminiClient:
             return None
 
     def _post_json(self, url: str, payload: dict, headers: dict[str, str]) -> tuple[int, dict | str]:
-        req_headers = {"User-Agent": "NihatOS-Terminal/1.0", **headers}
+        req_headers = {"User-Agent": "N1BroX-Terminal/1.0", **headers}
         data = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(url, data=data, headers=req_headers, method="POST")
         try:
@@ -216,8 +218,8 @@ class GeminiClient:
         headers = {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://nihatos.local",
-            "X-Title": "NihatOS Terminal",
+            "HTTP-Referer": "https://n1brox.local",
+            "X-Title": "N1BroX Terminal",
         }
         last_err = ""
         for m in models:
@@ -270,5 +272,5 @@ class GeminiClient:
 
         return AIResponse(
             ok=False,
-            error="No API key found in ~/.config/nihatos-terminal/ (groq_key, gemini_key, or openrouter_key).",
+            error="No API key found in ~/.config/n1brox-terminal/ (groq_key, gemini_key, or openrouter_key).",
         )

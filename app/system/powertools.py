@@ -6,7 +6,7 @@ import shutil
 import signal
 import subprocess
 
-DEFAULT_BOOKMARKS_FILE = Path.home() / ".config" / "nihatos-terminal" / "bookmarks.json"
+DEFAULT_BOOKMARKS_FILE = Path.home() / ".config" / "n1brox-terminal" / "bookmarks.json"
 
 
 # --- 1. Quick Folder Bookmarks ---

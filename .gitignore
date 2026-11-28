@@ -5,7 +5,7 @@ __pycache__/
 .env
 *_key
 *.log
-nihatos-log.txt
+n1brox-log.txt
 test-report.txt
 .vscode/
 .idea/

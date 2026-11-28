@@ -84,7 +84,7 @@ class StreamMarkerParser:
             self._buf = self._buf[term_idx + term_len :]
 
             if payload.startswith("7777;"):
-                parsed = self._parse_nihatos_payload(payload[len("7777;") :])
+                parsed = self._parse_n1brox_payload(payload[len("7777;") :])
                 if parsed is not None:
                     events.append(parsed)
             elif payload.startswith("8;"):
@@ -100,7 +100,7 @@ class StreamMarkerParser:
 
         return events
 
-    def _parse_nihatos_payload(self, payload: str) -> StreamEvent | None:
+    def _parse_n1brox_payload(self, payload: str) -> StreamEvent | None:
         parts = payload.split(";")
         if len(parts) >= 2 and parts[0] == "CONT":
             if parts[1] == self.nonce:

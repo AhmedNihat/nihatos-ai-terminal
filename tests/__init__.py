@@ -1,1 +1,1 @@
-"""Automated test suite for NihatOS Terminal Phase 2a."""
+"""Automated test suite for N1BroX Terminal Phase 2a."""

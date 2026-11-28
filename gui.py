@@ -55,7 +55,7 @@ ROOT = Path(__file__).resolve().parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from app.config import NihatOSConfig
+from app.config import DEFAULT_CONFIG_DIR, N1BroXConfig
 from app.integrations.gemini_ai import GeminiClient
 from app.shell.pty_session import PersistentBashSession
 from app.system.batch2 import export_output_lines, extract_shell_command, search_output_lines
@@ -68,9 +68,9 @@ ANSI_RE = re.compile(
 
 # ───────────────────────── Themes ─────────────────────────
 THEMES = {
-    "nihatos": dict(
-        name="Nihat.O.S",
-        tag="NihatOS",
+    "n1brox": dict(
+        name="N1BroX",
+        tag="N1BroX",
         sub="Intelligent Native Terminal System",
         bg="#02080f",
         panel="#061522",
@@ -86,7 +86,7 @@ THEMES = {
         ai="#9fe9ff",
         hint="At your service, sir… try 'help'",
         persona=(
-            "You are NIHAT.O.S, a sharp, calm Linux AI copilot. "
+            "You are N1BROX, a sharp, calm Linux AI copilot. "
             "Act like an experienced Linux systems engineer: concise, accurate, and practical. "
             "Never invent system info or command outputs. Warn before destructive commands. "
             "Assume Fedora Linux ONLY when giving OS-specific commands; do NOT mention Fedora or KDE in casual chat. "
@@ -148,8 +148,8 @@ _LINUX_ENV_LABEL = (
     else _DETECTED_DISTRO
 )
 
-if "nihatos" in THEMES and "persona" in THEMES["nihatos"]:
-    THEMES["nihatos"]["persona"] = THEMES["nihatos"]["persona"].replace(
+if "n1brox" in THEMES and "persona" in THEMES["n1brox"]:
+    THEMES["n1brox"]["persona"] = THEMES["n1brox"]["persona"].replace(
         "Assume Fedora Linux ONLY when giving OS-specific commands; do NOT mention Fedora or KDE in casual chat.",
         f"Assume {_LINUX_ENV_LABEL} ONLY when giving OS-specific commands; do NOT mention the distro or desktop environment in casual chat.",
     )
@@ -344,13 +344,13 @@ QTabBar::tab:selected {{
 
 # ───────────────────────── Arc Reactor ─────────────────────────
 class ArcReactor(QWidget):
-    """Animated core. NihatOS = arc reactor rings, ULTRON = spiked red core."""
+    """Animated core. N1BroX = arc reactor rings, ULTRON = spiked red core."""
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setFixedSize(84, 84)
-        self.kind = "nihatos"
-        self.t = THEMES["nihatos"]
+        self.kind = "n1brox"
+        self.t = THEMES["n1brox"]
         self.angle = 0.0
         self.phase = 0.0
         self.speed = 1.0
@@ -394,7 +394,7 @@ class ArcReactor(QWidget):
 
         p.save()
         p.rotate(self.angle)
-        if self.kind == "nihatos":
+        if self.kind == "n1brox":
             pen = QPen(col2, 2)
             pen.setDashPattern([3, 5])
             p.setPen(pen)
@@ -434,7 +434,7 @@ class ActivityBeam(QWidget):
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setFixedHeight(3)
-        self.t = THEMES["nihatos"]
+        self.t = THEMES["n1brox"]
         self.busy = False
         self.phase = 0.0
         self._timer = QTimer(self)
@@ -484,7 +484,7 @@ class ActivityBeam(QWidget):
 
 
 # ───────────────────────── Widgets / Workers ─────────────────────────
-HISTORY_FILE = Path.home() / ".nihatos_history"
+HISTORY_FILE = Path.home() / ".n1brox_history"
 MAX_HISTORY = 500
 
 
@@ -853,7 +853,7 @@ class AIWorker(QThread):
 
 
 # ───────────────────────── Main Window ─────────────────────────
-class NihatOSDesktopWindow(QMainWindow):
+class N1BroXDesktopWindow(QMainWindow):
     TUI_APPS = {
         "nano", "vim", "vi", "nvim", "emacs", "micro", "htop", "btop", "top",
         "atop", "iotop", "nvtop", "less", "more", "man", "tmux", "screen",
@@ -877,15 +877,15 @@ class NihatOSDesktopWindow(QMainWindow):
         self._cmd_running = False
         self._password_mode = False
         self._stream_tail = ""
-        self.setWindowTitle("Nihat.O.S Interface")
+        self.setWindowTitle("N1BroX Interface")
         self.resize(1280, 800)
         self.setMinimumSize(940, 600)
 
-        self.config = NihatOSConfig.load()
-        custom_name = (getattr(self.config, "os_name", "") or "Nihat.O.S").strip()
-        THEMES["nihatos"]["name"] = custom_name
-        THEMES["nihatos"]["tag"] = custom_name.replace(".", "")
-        THEMES["nihatos"]["persona"] = THEMES["nihatos"]["persona"].replace("NIHAT.O.S", custom_name.upper())
+        self.config = N1BroXConfig.load()
+        custom_name = (getattr(self.config, "os_name", "") or "N1BroX").strip()
+        THEMES["n1brox"]["name"] = custom_name
+        THEMES["n1brox"]["tag"] = custom_name.replace(".", "")
+        THEMES["n1brox"]["persona"] = THEMES["n1brox"]["persona"].replace("N1BROX", custom_name.upper())
         self.ai_client = GeminiClient(model=self.config.ai_model)
         self.shell: PtyShellController | None = None
         self.pending_ai_cmd = ""
@@ -907,12 +907,12 @@ class NihatOSDesktopWindow(QMainWindow):
         self._last_cpu: tuple[int, int] | None = None
         self._q: list[tuple[str, str]] = []
         self._q_token: int = 0
-        self.key = "nihatos"
+        self.key = "n1brox"
         self.t = THEMES[self.key]
         self.glows: list[QGraphicsDropShadowEffect] = []
 
         self._build_ui()
-        self._set_theme("nihatos", boot=False)
+        self._set_theme("n1brox", boot=False)
         self._start_timers()
         self._refresh_bookmarks()
 
@@ -1139,7 +1139,7 @@ class NihatOSDesktopWindow(QMainWindow):
 
     # ── Theme ──
     def _toggle_mode(self) -> None:
-        self._set_theme("ultron" if self.key == "nihatos" else "nihatos", boot=True)
+        self._set_theme("ultron" if self.key == "n1brox" else "n1brox", boot=True)
 
     def _set_theme(self, key: str, boot: bool = True) -> None:
         self.key, self.t = key, THEMES[key]
@@ -1152,7 +1152,7 @@ class NihatOSDesktopWindow(QMainWindow):
             g.setColor(gc)
         self.title_lbl.setText(self.t["name"])
         self.sub_lbl.setText(self.t["sub"].upper())
-        self.mode_btn.setText("☠  ULTRON MODE" if key == "nihatos" else "◈  Nihat.O.S MODE")
+        self.mode_btn.setText("☠  ULTRON MODE" if key == "n1brox" else f"◈  {THEMES['n1brox']['name']} MODE")
         self.input_box.setPlaceholderText(self.t["hint"])
         self.setWindowTitle(f"{self.t['name']} Interface")
         self._update_prompt()
@@ -1266,7 +1266,7 @@ class NihatOSDesktopWindow(QMainWindow):
 
     def _boot(self) -> None:
         cwd = getattr(self.shell, "cwd", None) or os.getcwd()
-        if self.key == "nihatos":
+        if self.key == "n1brox":
             lines = [
                 (f"◈ {self.t['name'].upper()} // SYSTEM INITIALIZATION", "head"),
                 ("", "dim"),
@@ -1289,7 +1289,7 @@ class NihatOSDesktopWindow(QMainWindow):
                 ("  ▸ Telemetry ........... watching you", "ok"),
                 ("─" * 72, "dim"),
                 (f"I have control now, {self._user}. Try to keep up.", "ai"),
-                ("  'help' for commands  ·  'mode nihatos' to restore the leash.", "dim"),
+                ("  'help' for commands  ·  'mode n1brox' to restore the leash.", "dim"),
             ]
         self._queue(lines)
 
@@ -1309,7 +1309,7 @@ class NihatOSDesktopWindow(QMainWindow):
             "  update                        pull latest updates & dependencies\n"
             "  Ctrl+R                        search persistent command history\n"
             "  tui <cmd>                     open interactive/TUI command in external terminal\n"
-            "  mode nihatos | ultron          switch persona  (Ctrl+M toggles)\n"
+            "  mode n1brox | ultron          switch persona  (Ctrl+M toggles)\n"
             "  Ctrl+T / Ctrl+W               new tab / close tab\n"
             "  clear                         wipe screen     (Ctrl+L)"
         )
@@ -1380,7 +1380,7 @@ class NihatOSDesktopWindow(QMainWindow):
         venv_name = Path(venv_raw).name if venv_raw else ""
 
         parts = [
-            f"<span style='color:{t['accent2']};'>{html.escape((os.environ.get('USER') or os.environ.get('LOGNAME') or Path.home().name) if self.key == 'nihatos' else t['tag'])}</span>",
+            f"<span style='color:{t['accent2']};'>{html.escape((os.environ.get('USER') or os.environ.get('LOGNAME') or Path.home().name) if self.key == 'n1brox' else t['tag'])}</span>",
             f"<span style='color:{t['text']};'>{html.escape(self._short_cwd())}</span>",
         ]
         if branch:
@@ -1577,7 +1577,7 @@ class NihatOSDesktopWindow(QMainWindow):
         if notify_bin:
             try:
                 subprocess.Popen(
-                    [notify_bin, "-a", "Nihat.O.S", f"{icon} {title} {status_word}", detail],
+                    [notify_bin, "-a", "N1BroX", f"{icon} {title} {status_word}", detail],
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
                 )
@@ -1691,7 +1691,7 @@ class NihatOSDesktopWindow(QMainWindow):
         link_fmt.setForeground(QColor(self.t["accent"]))
         link_fmt.setFontUnderline(True)
         link_fmt.setAnchor(True)
-        link_fmt.setAnchorHref("nihatos://ai-fix")
+        link_fmt.setAnchorHref("n1brox://ai-fix")
         cur.insertText("Need help?", link_fmt)
         cur.insertText(" (click to run ai fix)", self._fmt("dim"))
         cur.insertBlock()
@@ -1702,7 +1702,7 @@ class NihatOSDesktopWindow(QMainWindow):
         self._follow_live_cursor(cur)
 
     def _on_output_anchor_clicked(self, url) -> None:
-        if url.toString() == "nihatos://ai-fix":
+        if url.toString() == "n1brox://ai-fix":
             self._execute("ai fix")
 
     # ── Multi-tab management ──
@@ -2494,7 +2494,7 @@ class NihatOSDesktopWindow(QMainWindow):
             elif arg in ("", "toggle"):
                 self._toggle_mode()
             else:
-                self.append_line("Usage: mode nihatos | ultron")
+                self.append_line("Usage: mode n1brox | ultron")
             return
         if lo == "sys":
             self._run_quick_sys_cmd(
@@ -2588,7 +2588,7 @@ class NihatOSDesktopWindow(QMainWindow):
                     return
 
         if lo == "save" or lo.startswith("save "):
-            fname = raw[5:].strip() if lo.startswith("save ") else "nihatos-log.txt"
+            fname = raw[5:].strip() if lo.startswith("save ") else "n1brox-log.txt"
             safe_cwd = getattr(self.shell, "cwd", None) or os.getcwd()
             ok, msg = export_output_lines(self._get_lines(), fname, cwd=safe_cwd)
             self.append_line(f"[Export] {msg}" if ok else f"[Export Error] {msg}")
@@ -2606,8 +2606,8 @@ class NihatOSDesktopWindow(QMainWindow):
                 return
             self.config.os_name = new_name
             self.config.save()
-            THEMES["nihatos"]["name"] = new_name
-            THEMES["nihatos"]["tag"] = new_name.replace(".", "")
+            THEMES["n1brox"]["name"] = new_name
+            THEMES["n1brox"]["tag"] = new_name.replace(".", "")
             self._set_theme(self.key, boot=False)
             self.append_line(f"◈ OS identity updated to '{new_name}'.", "ok")
             return
@@ -2620,8 +2620,8 @@ class NihatOSDesktopWindow(QMainWindow):
             return
 
         if lo in ("ai setup", "ai key"):
-            cfg_dir = Path.home() / ".config" / "nihatos-terminal"
-            self.append_line("◈ AI API KEY STATUS (stored locally in ~/.config/nihatos-terminal/)", "head")
+            cfg_dir = DEFAULT_CONFIG_DIR
+            self.append_line("◈ AI API KEY STATUS (stored locally in ~/.config/n1brox-terminal/)", "head")
             for label, fname, url in [
                 ("Groq (Primary)", "groq_key", "https://console.groq.com/keys"),
                 ("Google Gemini", "gemini_key", "https://aistudio.google.com/apikey"),
@@ -2636,7 +2636,7 @@ class NihatOSDesktopWindow(QMainWindow):
             return
 
         if lo == "ai key clear" or lo == "ai key delete all":
-            cfg_dir = Path.home() / ".config" / "nihatos-terminal"
+            cfg_dir = DEFAULT_CONFIG_DIR
             deleted = []
             for prov in ("groq", "gemini", "openrouter"):
                 kp = cfg_dir / f"{prov}_key"
@@ -2655,7 +2655,7 @@ class NihatOSDesktopWindow(QMainWindow):
             if prov not in ("groq", "gemini", "openrouter"):
                 self.append_line("Usage: ai key delete <groq|gemini|openrouter|all>", "warn")
                 return
-            kp = Path.home() / ".config" / "nihatos-terminal" / f"{prov}_key"
+            kp = DEFAULT_CONFIG_DIR / f"{prov}_key"
             if kp.exists():
                 kp.unlink()
                 self.append_line(f"◈ Deleted {prov} API key.", "ok")
@@ -2669,7 +2669,7 @@ class NihatOSDesktopWindow(QMainWindow):
                 self.append_line("Usage: ai key <groq|gemini|openrouter> <YOUR_API_KEY | remove>  |  ai key delete <provider|all>  |  ai key clear", "warn")
                 return
             provider, key_val = parts[2].lower(), parts[3].strip().strip("<>\"'")
-            cfg_dir = Path.home() / ".config" / "nihatos-terminal"
+            cfg_dir = DEFAULT_CONFIG_DIR
             cfg_dir.mkdir(parents=True, exist_ok=True)
             kp = cfg_dir / f"{provider}_key"
             if key_val.lower() == "remove":
@@ -2735,7 +2735,7 @@ class NihatOSDesktopWindow(QMainWindow):
                 self.append_line("Usage: ai <your question>")
                 return
             if q.lower().startswith("mode "):
-                self.append_line("Tip: use 'mode nihatos' or 'mode ultron' directly to switch personas.")
+                self.append_line("Tip: use 'mode n1brox' or 'mode ultron' directly to switch personas.")
                 return
             self._last_ai_q = q
             self.append_line(f"◈ {self.t['tag']} analysing…")
@@ -2883,10 +2883,10 @@ def main() -> int:
 
     start_cwd, initial_cmd = _parse_cli_args(sys.argv[1:])
     app = QApplication(sys.argv)
-    app.setApplicationName("Nihat.O.S")
-    app.setDesktopFileName("nihatos-terminal")
+    app.setApplicationName("N1BroX")
+    app.setDesktopFileName("n1brox-terminal")
     app.setWindowIcon(QIcon.fromTheme("utilities-terminal"))
-    win = NihatOSDesktopWindow(start_cwd=start_cwd, initial_cmd=initial_cmd)
+    win = N1BroXDesktopWindow(start_cwd=start_cwd, initial_cmd=initial_cmd)
     win.show()
     return app.exec()
 

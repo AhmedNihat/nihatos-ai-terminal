@@ -1,0 +1,40 @@
+# N1BroX Terminal static read-only shell wrapper
+# Never modifies ~/.bashrc
+
+bind() { :; }
+
+if [ -n "${N1BROX_USER_BASHRC:-}" ] && [ -r "${N1BROX_USER_BASHRC}" ]; then
+    source "${N1BROX_USER_BASHRC}"
+fi
+
+unset -f bind
+
+export N1BROX_TERMINAL=1
+
+__n1brox_prompt_hook() {
+    local last_exit=$?
+    local venv_name=""
+    if [ -n "${VIRTUAL_ENV:-}" ]; then
+        venv_name="${VIRTUAL_ENV##*/}"
+    fi
+    printf '\033]7777;READY;%s;%d;%s;%s\007' \
+        "${N1BROX_NONCE}" \
+        "${last_exit}" \
+        "${PWD}" \
+        "${venv_name}"
+}
+
+if [[ "$(declare -p PROMPT_COMMAND 2>/dev/null)" == "declare -a"* ]]; then
+    PROMPT_COMMAND+=("__n1brox_prompt_hook")
+elif [ -n "${PROMPT_COMMAND:-}" ]; then
+    PROMPT_COMMAND="${PROMPT_COMMAND};__n1brox_prompt_hook"
+else
+    PROMPT_COMMAND="__n1brox_prompt_hook"
+fi
+
+PS0=""
+PS1=""
+PS2=$'\033]7777;CONT;'"${N1BROX_NONCE}"$'\007'
+
+# Disable slow Fedora PackageKit D-Bus lookup so N1BroX Hint responds instantly
+unset -f command_not_found_handle 2>/dev/null || true

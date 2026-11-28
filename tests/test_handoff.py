@@ -144,7 +144,7 @@ def test_layer1_detects_raw_mode_and_handoff_pump_roundtrip() -> None:
             os.close(host_slave)
             os.close(host_master)
 
-            session.restore_nihatos_termios()
+            session.restore_n1brox_termios()
             session.resume_async_reader()
 
             assert len(result_box) == 1
@@ -209,7 +209,7 @@ def test_handoff_pump_panic_chord_detaches_cleanly() -> None:
             assert result_box[0].detached_by_panic is True
 
             # Clean up the still-running sleep via Ctrl+C and verify shell recovers
-            session.restore_nihatos_termios()
+            session.restore_n1brox_termios()
             session.resume_async_reader()
             session.send_interrupt()
             await _wait_until(lambda: ready_count >= 2, timeout=3.0)
