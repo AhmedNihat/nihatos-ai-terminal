@@ -99,8 +99,7 @@ if os.environ["N1_OS"]:
     data["os_name"] = os.environ["N1_OS"]
 
 p.parent.mkdir(parents=True, exist_ok=True)
-p.write_text(json.dumps(data, indent=2) + "
-", encoding="utf-8")
+p.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
 os.chmod(p, 0o600)
 PYCFG
 }

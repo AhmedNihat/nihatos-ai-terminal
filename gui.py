@@ -2649,18 +2649,12 @@ class N1BroXDesktopWindow(QMainWindow):
                 status = "✔ configured" if has_key else "✖ not set"
                 self.append_line(f"  {idx}. {label:<16} {status}  ·  {url}", "ok" if has_key else "dim")
             self.append_line(
-                "◈ HOW TO SET A KEY (paste key directly — no < > brackets or quotes)
-"
-                "  ▸ Groq       : ai key groq gsk_YOUR_API_KEY
-"
-                "  ▸ Gemini     : ai key gemini AIzaYOUR_API_KEY
-"
-                "  ▸ OpenRouter : ai key openrouter sk-or-v1-YOUR_API_KEY
-"
-                "◈ MANAGE SAVED KEYS
-"
-                "  ▸ Remove one : ai key delete <groq|gemini|openrouter>
-"
+                "◈ HOW TO SET A KEY (paste key directly — no < > brackets or quotes)\n"
+                "  ▸ Groq       : ai key groq gsk_YOUR_API_KEY\n"
+                "  ▸ Gemini     : ai key gemini AIzaYOUR_API_KEY\n"
+                "  ▸ OpenRouter : ai key openrouter sk-or-v1-YOUR_API_KEY\n"
+                "◈ MANAGE SAVED KEYS\n"
+                "  ▸ Remove one : ai key delete <groq|gemini|openrouter>\n"
                 "  ▸ Clear all  : ai key clear"
             )
             self.append_line(
